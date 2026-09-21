@@ -124,3 +124,727 @@ It records what the government sources reported.
 ## Moving to the Raspberry Pi
 
 Copy this entire folder to the Pi and run the same commands. Later, use a systemd service so the collector starts automatically when the Pi boots.
+
+
+
+## Human Test 9/21/26
+
+Testing running it in the Terminal on my computer using: python3 collector.py --once
+
+and it started: 
+Collecting NWS alerts...
+NWS: 407 new alert version(s)
+Collecting FEMA IPAWS archive...
+FEMA: 9 new alert version(s)
+
+# Successfully Provided:
+
+======================================================================
+Source:       FEMA
+Event:        Flash Flood Warning
+Headline:     Flash Flood Warning issued September 20 at 1:54AM EDT until September 20 at 5:00AM EDT by NWS Wilmington OH
+Severity:     Severe
+Urgency:      Immediate
+Certainty:    Likely
+Area:         Clinton, OH; Warren, OH
+Sent:         2026-09-20T05:54:00+00:00
+Effective:    2026-09-20T01:54:00+00:00
+Expires:      2026-09-20T05:00:00+00:00
+Collected:    2026-09-21T19:16:26.917342+00:00
+Sender:       NWS Wilmington OH
+
+Description:
+FFWILN
+
+The National Weather Service in Wilmington has issued a
+
+* Flash Flood Warning for...
+Southwestern Clinton County in southwestern Ohio...
+Southern Warren County in southwestern Ohio...
+
+* Until 500 AM EDT.
+
+* At 154 AM EDT, radar indicated thunderstorms producing heavy rain
+across the warned area. Between 2 and 3.5 inches of rain have
+fallen. Additional rainfall amounts of 0.5 to 1.5 inches are
+possible in the warned area. Flash flooding is ongoing or expected
+to begin shortly.
+
+HAZARD...Life threatening flash flooding. Thunderstorms producing
+flash flooding.
+
+SOURCE...Radar indicated.
+
+IMPACT...Life threatening flash flooding of creeks and streams,
+urban areas, highways, streets and underpasses.
+
+* Some locations that may experience flash flooding include...
+Mason, Lebanon, Monroe, Loveland, Blanchester, Morrow, Kings
+Island, Highpoint, South Lebanon, Maineville, Clarksville, Midland,
+Butlerville, Pleasant Plain, State Route 123 at State Route 132,
+Middleboro, Fort Ancient, Dallasburg, State Route 350 at US Route
+22 and Murdock.
+
+
+Instructions:
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+Be especially cautious at night when it is harder to recognize the
+dangers of flooding.
+
+To report flash flooding, go to our website at weather.gov/iln and
+submit your report via social media, when you can do so safely.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       FEMA
+Event:        Local Area Emergency
+Headline:     I-10 West @ MM118 All Lanes Closed Follow Detour
+Severity:     Severe
+Urgency:      Immediate
+Certainty:    Observed
+Area:         AffectedArea
+Sent:         2026-09-20T05:16:53+00:00
+Effective:    2026-09-20T00:16:53+00:00
+Expires:      2026-09-20T06:16:53+00:00
+Collected:    2026-09-21T19:16:26.916412+00:00
+Sender:       TXDOT,Austin,TX
+======================================================================
+Source:       FEMA
+Event:        Flash Flood Warning
+Headline:     Flash Flood Warning issued September 19 at 11:57PM EDT until September 20 at 3:00AM EDT by NWS Wilmington OH
+Severity:     Severe
+Urgency:      Immediate
+Certainty:    Likely
+Area:         Hocking, OH; Pickaway, OH; Ross, OH
+Sent:         2026-09-20T03:57:00+00:00
+Effective:    2026-09-19T23:57:00+00:00
+Expires:      2026-09-20T03:00:00+00:00
+Collected:    2026-09-21T19:16:26.915432+00:00
+Sender:       NWS Wilmington OH
+
+Description:
+FFWILN
+
+The National Weather Service in Wilmington has issued a
+
+* Flash Flood Warning for...
+Hocking County in central Ohio...
+Southeastern Pickaway County in central Ohio...
+Northeastern Ross County in south central Ohio...
+
+* Until 300 AM EDT.
+
+* At 1157 PM EDT, radar indicated thunderstorms producing heavy rain
+across the warned area. Between 1.5 and 3 inches of rain have
+fallen. Additional rainfall amounts of 1 to 2 inches are possible
+in the warned area. Flash flooding is ongoing or expected to begin
+shortly.
+
+HAZARD...Life threatening flash flooding. Thunderstorms producing
+flash flooding.
+
+SOURCE...Radar indicated.
+
+IMPACT...Life threatening flash flooding of creeks and streams,
+urban areas, highways, streets and underpasses.
+
+* Some locations that may experience flash flooding include...
+Logan, Hocking Hills State Park, Starr, Laurelville, Murray City,
+Adelphi, Tarlton, Gibisonville, Lake Logan State Park, Ilesboro,
+Enterprise, Rockbridge, South Bloomingville, Union Furnace, Buena
+Vista in Hocking County, Haydenville, Oreville, Carbon Hill and
+Whisler.
+
+
+Instructions:
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+To report flash flooding, go to our website at weather.gov/iln and
+submit your report via social media, when you can do so safely.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       FEMA
+Event:        Law Enforcement Warning
+Headline:     Unknown
+Severity:     Extreme
+Urgency:      Immediate
+Certainty:    Observed
+Area:         HWY 84 E
+Sent:         2026-09-20T02:48:45+00:00
+Effective:    2026-09-19T22:34:00+00:00
+Expires:      2026-09-20T06:48:45+00:00
+Collected:    2026-09-21T19:16:26.914213+00:00
+Sender:       GAThomasCountyEMA
+======================================================================
+Source:       FEMA
+Event:        Missing and Endangered Persons
+Headline:     Silver Alert
+Severity:     Extreme
+Urgency:      Immediate
+Certainty:    Observed
+Area:         Limited Geographic Area
+Sent:         2026-09-20T01:32:05+00:00
+Effective:    Unknown
+Expires:      2026-09-19T21:32:05+00:00
+Collected:    2026-09-21T19:16:26.912998+00:00
+Sender:       201794,DCI,WI Department of Justice
+======================================================================
+Source:       FEMA
+Event:        Flash Flood Warning
+Headline:     Flash Flood Warning issued September 19 at 8:03PM CDT until September 19 at 10:00PM CDT by NWS Midland/Odessa TX
+Severity:     Severe
+Urgency:      Immediate
+Certainty:    Likely
+Area:         Gaines, TX
+Sent:         2026-09-20T01:03:00+00:00
+Effective:    2026-09-19T20:03:00+00:00
+Expires:      2026-09-19T22:00:00+00:00
+Collected:    2026-09-21T19:16:26.911926+00:00
+Sender:       NWS Midland/Odessa TX
+
+Description:
+FFWMAF
+
+The National Weather Service in Midland/Odessa has issued a
+
+* Flash Flood Warning for...
+Central Gaines County in western Texas...
+
+* Until 1000 PM CDT.
+
+* At 803 PM CDT, Doppler radar indicated thunderstorms producing
+heavy rain across the warned area. Between 1.5 and 2.5 inches of
+rain have fallen. The expected rainfall rate is 2 to 3 inches in 1
+hour. Flash flooding is ongoing or expected to begin shortly.
+
+HAZARD...Life threatening flash flooding. Thunderstorms producing
+flash flooding.
+
+SOURCE...Radar indicated.
+
+IMPACT...Life threatening flash flooding of creeks and streams,
+urban areas, highways, streets and underpasses.
+
+* Some locations that will experience flash flooding include...
+Seminole, Seagraves, Gaines County Airport, Gaines County Park,
+Paynes Corner and Loop.
+
+This includes the following streams and drainages...
+Seminole Draw, Wardswell Draw and McKenzie Draw.
+
+
+Instructions:
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+Please report observed flooding to local emergency services or law
+enforcement and request they pass this information to the National
+Weather Service when you can do so safely.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       FEMA
+Event:        Tornado Warning
+Headline:     Tornado Warning issued September 19 at 6:36PM MDT until September 19 at 6:45PM MDT by NWS Goodland KS
+Severity:     Extreme
+Urgency:      Immediate
+Certainty:    Observed
+Area:         Cheyenne, CO; Wallace, KS
+Sent:         2026-09-20T00:36:00+00:00
+Effective:    2026-09-19T18:36:00+00:00
+Expires:      2026-09-19T18:45:00+00:00
+Collected:    2026-09-21T19:16:26.910800+00:00
+Sender:       NWS Goodland KS
+
+Description:
+TORGLD
+
+The National Weather Service in Goodland has issued a
+
+* Tornado Warning for...
+East central Cheyenne County in east central Colorado...
+Southwestern Wallace County in west central Kansas...
+
+* Until 645 PM MDT.
+
+* At 635 PM MDT, a severe thunderstorm capable of producing a tornado
+was located 4 miles southwest of Weskan, or 15 miles west of Sharon
+Springs, moving east at 25 mph.
+
+HAZARD...Tornado and quarter size hail.
+
+SOURCE...Radar indicated rotation.
+
+IMPACT...Flying debris will be dangerous to those caught without
+shelter. Mobile homes will be damaged or destroyed.
+Damage to roofs, windows, and vehicles will occur.  Tree
+damage is likely.
+
+* This dangerous storm will be near...
+Weskan around 640 PM MDT.
+
+
+Instructions:
+TAKE COVER NOW! Move to a basement or an interior room on the lowest
+floor of a sturdy building. Avoid windows. If you are outdoors, in a
+mobile home, or in a vehicle, move to the closest substantial shelter
+and protect yourself from flying debris.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       FEMA
+Event:        Flash Flood Warning
+Headline:     Flash Flood Warning issued September 19 at 6:19PM MDT until September 19 at 9:15PM MDT by NWS Grand Junction CO
+Severity:     Severe
+Urgency:      Immediate
+Certainty:    Likely
+Area:         Garfield, CO
+Sent:         2026-09-20T00:19:00+00:00
+Effective:    2026-09-19T18:19:00+00:00
+Expires:      2026-09-19T21:15:00+00:00
+Collected:    2026-09-21T19:16:26.909381+00:00
+Sender:       NWS Grand Junction CO
+
+Description:
+FFWGJT
+
+The National Weather Service in Grand Junction has issued a
+
+* Flash Flood Warning for...
+Western Garfield County in west central Colorado...
+
+* Until 915 PM MDT.
+
+* At 619 PM MDT, Doppler radar indicated thunderstorms producing
+heavy rain across the warned area along Highway 139 near and south
+of Douglas Pass. Between 0.6 and 0.8 inches of rain have fallen.
+The expected rainfall rate is 1 to 3 inches in 1 hour. Flash
+flooding is ongoing or expected to begin shortly.
+
+HAZARD...Life threatening flash flooding. Thunderstorms producing
+flash flooding.
+
+SOURCE...Radar indicated.
+
+IMPACT...Life threatening flash flooding of creeks and streams,
+urban areas, highways, streets and underpasses.
+
+* Some locations that will experience flash flooding include...
+Mainly rural areas of Western Garfield County.
+
+
+Instructions:
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+Highway 139 near Douglas Pass is prone to rockslides and mudslides in
+heavy rain. Stay alert for rocks and debris on roads, and avoid
+driving on flooded roads. Find an alternate route.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       FEMA
+Event:        Flash Flood Warning
+Headline:     Flash Flood Warning issued September 19 at 6:01PM MDT until September 19 at 9:00PM MDT by NWS Grand Junction CO
+Severity:     Severe
+Urgency:      Immediate
+Certainty:    Likely
+Area:         Rio Blanco, CO
+Sent:         2026-09-20T00:01:00+00:00
+Effective:    2026-09-19T18:01:00+00:00
+Expires:      2026-09-19T21:00:00+00:00
+Collected:    2026-09-21T19:16:26.907567+00:00
+Sender:       NWS Grand Junction CO
+
+Description:
+FFWGJT
+
+The National Weather Service in Grand Junction has issued a
+
+* Flash Flood Warning for...
+The Lee burn scar in...
+Central Rio Blanco County in northwestern Colorado...
+
+* Until 900 PM MDT.
+
+* At 601 PM MDT, Doppler radar indicated thunderstorms producing
+heavy rain over the Lee Burn Scar. Between 0.3 and 0.5 inches of
+rain have fallen. The expected rainfall rate is 1 to 3 inches in 1
+hour. Flash flooding is ongoing or expected to begin shortly.
+Excessive rainfall over the burn scar will result in debris flow.
+The debris flow can consist of rock, mud, vegetation and other
+loose materials.
+
+HAZARD...Life threatening flash flooding. Thunderstorms producing
+flash flooding in and around the Lee Burn Scar.
+
+SOURCE...Radar indicated.
+
+IMPACT...Life threatening flash flooding of areas in and around the
+Lee Burn Scar.
+
+* Some locations that will experience flash flooding include...
+Mainly rural areas of Central Rio Blanco County.
+
+
+Instructions:
+This is a life threatening situation. Heavy rainfall will cause
+extensive and severe flash flooding of creeks...streams...and ditches
+in the Lee Burn Scar. Severe debris flows can also be anticipated
+across roads. Roads and driveways may be washed away in places. If
+you encounter flood waters...climb to safety.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Marmot Island To Sitkinak from 15 to 85 NM
+Sent:         2026-09-20T02:43:00-08:00
+Effective:    2026-09-20T02:43:00-08:00
+Expires:      2026-09-20T15:30:00-08:00
+Collected:    2026-09-21T19:16:21.865215+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for the Northern Gulf of Alaska Coast
+up to 100 nm out including Kodiak Island and Cook Inlet.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NW wind 30 kt. Seas 13 ft.
+.TONIGHT...W wind 30 kt. Seas 13 ft.
+.MON...NW wind 25 kt. N of Dangerous Cape, SW wind 20 kt in the
+morning becoming variable 10 kt. Seas 9 ft.
+.MON NIGHT...N wind 25 kt. Seas 7 ft.
+.TUE...N wind 25 kt. Seas 9 ft.
+.WED...W wind 20 kt. Seas 8 ft.
+.THU...S wind 30 kt. Seas 11 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         West of Barren Islands Including Kamishak Bay
+Sent:         2026-09-20T02:43:00-08:00
+Effective:    2026-09-20T02:43:00-08:00
+Expires:      2026-09-20T15:30:00-08:00
+Collected:    2026-09-21T19:16:21.864885+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for the Northern Gulf of Alaska Coast
+up to 100 nm out including Kodiak Island and Cook Inlet.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NW wind 25 kt. Seas 6 ft.
+.TONIGHT...W wind 25 kt. Seas 6 ft.
+.MON...W wind 25 kt. Seas 5 ft. Rain.
+.MON NIGHT...W wind 25 kt. Seas 5 ft.
+.TUE THROUGH WED...W wind 25 kt. Seas 6 ft.
+.THU...SE wind 35 kt. Seas 10 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Shelikof Strait
+Sent:         2026-09-20T02:43:00-08:00
+Effective:    2026-09-20T02:43:00-08:00
+Expires:      2026-09-20T15:30:00-08:00
+Collected:    2026-09-21T19:16:21.864589+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for the Northern Gulf of Alaska Coast
+up to 100 nm out including Kodiak Island and Cook Inlet.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NW wind 25 kt. Seas 5 ft.
+.TONIGHT...W wind 25 kt. Seas 5 ft.
+.MON...NW wind 25 kt. Seas 4 ft.
+.MON NIGHT...NW wind 25 kt. Seas 4 ft.
+.TUE...NW wind 20 kt. Seas 4 ft.
+.WED...SW wind 20 kt. Seas 3 ft.
+.THU...SE wind 30 kt. Seas 6 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Barren Islands East
+Sent:         2026-09-20T02:43:00-08:00
+Effective:    2026-09-20T02:43:00-08:00
+Expires:      2026-09-20T15:30:00-08:00
+Collected:    2026-09-21T19:16:21.864288+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for the Northern Gulf of Alaska Coast
+up to 100 nm out including Kodiak Island and Cook Inlet.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NW wind 25 kt. Seas 9 ft.
+.TONIGHT...W wind 25 kt. Seas 7 ft.
+.MON...NW wind 25 kt. Seas 5 ft.
+.MON NIGHT...N wind 20 kt. Seas 4 ft.
+.TUE THROUGH WED...NW wind 25 kt. Seas 7 ft.
+.THU...SE wind 30 kt. Seas 6 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Gravel Point to Cape Cleare out to 15 NM
+Sent:         2026-09-20T02:43:00-08:00
+Effective:    2026-09-20T02:43:00-08:00
+Expires:      2026-09-20T15:30:00-08:00
+Collected:    2026-09-21T19:16:21.863900+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for the Northern Gulf of Alaska Coast
+up to 100 nm out including Kodiak Island and Cook Inlet.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...E wind 30 kt becoming N 20 kt by late afternoon. Seas 11
+ft. Rain showers. Isolated thunderstorms.
+.TONIGHT...W wind 15 kt in the evening becoming SW. Seas 9 ft.
+Isolated thunderstorms.
+.MON...S wind 20 kt. Seas 8 ft. Rain showers.
+.MON NIGHT...SE wind 15 kt. Seas 7 ft.
+.TUE...NE wind 20 kt. Seas 7 ft.
+.WED...E wind 15 kt. Seas 6 ft.
+.THU...SE wind 25 kt. Seas 4 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Gore Point to Marmot Island from 15 to 80 NM
+Sent:         2026-09-20T02:43:00-08:00
+Effective:    2026-09-20T02:43:00-08:00
+Expires:      2026-09-20T15:30:00-08:00
+Collected:    2026-09-21T19:16:21.863559+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for the Northern Gulf of Alaska Coast
+up to 100 nm out including Kodiak Island and Cook Inlet.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...N wind 20 kt. Seas 10 ft.
+.TONIGHT...W wind 25 kt. Seas 8 ft.
+.MON...SW wind 20 kt. Seas 8 ft.
+.MON NIGHT...NE wind 15 kt. Seas 5 ft.
+.TUE...N wind 25 kt. Seas 8 ft.
+.WED...NW wind 20 kt. Seas 8 ft.
+.THU...SE wind 25 kt. Seas 6 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Cape Suckling to Cape Cleare from 15 to 75 NM
+Sent:         2026-09-20T02:43:00-08:00
+Effective:    2026-09-20T02:43:00-08:00
+Expires:      2026-09-20T15:30:00-08:00
+Collected:    2026-09-21T19:16:21.863245+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for the Northern Gulf of Alaska Coast
+up to 100 nm out including Kodiak Island and Cook Inlet.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...E wind 30 kt becoming W 30 kt in the afternoon. Seas 14 ft.
+Rain showers. Isolated thunderstorms.
+.TONIGHT...SW wind 20 kt. Seas 11 ft. Rain showers. Isolated
+thunderstorms.
+.MON...SW wind 20 kt. Seas 10 ft.
+.MON NIGHT...SE wind 15 kt. Seas 8 ft.
+.TUE...E wind 30 kt. Seas 10 ft.
+.WED...E wind 20 kt. Seas 8 ft.
+.THU...SE wind 25 kt. Seas 5 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Cape Suckling to Gravel Point out to 15 NM
+Sent:         2026-09-20T02:43:00-08:00
+Effective:    2026-09-20T02:43:00-08:00
+Expires:      2026-09-20T15:30:00-08:00
+Collected:    2026-09-21T19:16:21.862910+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for the Northern Gulf of Alaska Coast
+up to 100 nm out including Kodiak Island and Cook Inlet.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...E wind 35 kt becoming S by late this afternoon. Seas 12 ft.
+Rain showers. Isolated thunderstorms.
+.TONIGHT...S wind 25 kt diminishing to 15 kt after midnight. Seas
+10 ft. Rain showers. Isolated thunderstorms.
+.MON...S wind 15 kt. Seas 9 ft. Rain showers.
+.MON NIGHT...SE wind 15 kt. Seas 7 ft.
+.TUE...NE wind 25 kt. Seas 8 ft.
+.WED...E wind 20 kt. Seas 6 ft.
+.THU...E wind 25 kt. Seas 4 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Cape Cleare to Gore Point from 15 to 75 NM
+Sent:         2026-09-20T02:43:00-08:00
+Effective:    2026-09-20T02:43:00-08:00
+Expires:      2026-09-20T15:30:00-08:00
+Collected:    2026-09-21T19:16:21.862529+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for the Northern Gulf of Alaska Coast
+up to 100 nm out including Kodiak Island and Cook Inlet.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NE wind 25 kt becoming NW 20 kt by late afternoon. Seas 11
+ft. Rain showers. Isolated thunderstorms.
+.TONIGHT...W wind 20 kt. Seas 8 ft.
+.MON...SW wind 20 kt. Seas 8 ft.
+.MON NIGHT...SE wind 15 kt. Seas 7 ft.
+.TUE...NE wind 25 kt. Seas 9 ft.
+.WED...NE wind 15 kt. Seas 7 ft.
+.THU...SE wind 25 kt. Seas 5 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 3:28AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Kuskokwim Delta from 15 to 80 NM
+Sent:         2026-09-20T03:28:00-08:00
+Effective:    2026-09-20T03:28:00-08:00
+Expires:      2026-09-20T16:00:00-08:00
+Collected:    2026-09-21T19:16:21.862169+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for Southwest Alaska+Bristol Bay+The
+Alaska Peninsula Waters and the Aleutian Islands up to 100 nm out.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NW wind 30 kt. Seas 9 ft.
+.TONIGHT...NW wind 30 kt. Seas 10 ft.
+.MON...NW wind 25 kt. Seas 8 ft.
+.MON NIGHT...NW wind 20 kt. Seas 6 ft.
+.TUE...S wind 20 kt. Seas 4 ft.
+.WED THROUGH THU...S wind 45 kt. Seas 14 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 3:28AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Port Heiden to Nelson Lagoon from 15 to 60 NM
+Sent:         2026-09-20T03:28:00-08:00
+Effective:    2026-09-20T03:28:00-08:00
+Expires:      2026-09-20T16:00:00-08:00
+Collected:    2026-09-21T19:16:21.861823+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for Southwest Alaska+Bristol Bay+The
+Alaska Peninsula Waters and the Aleutian Islands up to 100 nm out.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NW wind 30 kt. Seas 10 ft. Rain showers. Isolated
+thunderstorms.
+.TONIGHT...NW wind 30 kt. Seas 11 ft. Rain showers.
+.MON...NW wind 30 kt. Seas 10 ft.
+.MON NIGHT...NW wind 20 kt. Seas 7 ft.
+.TUE...NW wind 15 kt. Seas 5 ft.
+.WED...SE wind 35 kt. Seas 7 ft.
+.THU...S wind 35 kt. Seas 12 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+
