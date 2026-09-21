@@ -1,3 +1,5 @@
+This is a AI made code, human edited. It is for a research project referring to Natural Disasters and a way to track updated and live data all over the nation. 
+
 # Emergency Alert Collector
 
 A small Python collector for:
