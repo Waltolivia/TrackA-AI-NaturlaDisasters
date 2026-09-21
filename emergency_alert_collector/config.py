@@ -2,7 +2,7 @@
 
 # NWS asks API clients to identify themselves with a User-Agent.
 # Replace the example email with your contact information.
-NWS_USER_AGENT = "EmergencyAlertCollector/1.0 your-email@example.com"
+NWS_USER_AGENT = "EmergencyAlertCollector/1.0 livwalton1@gmail.com"
 
 NWS_URL = "https://api.weather.gov/alerts/active"
 
