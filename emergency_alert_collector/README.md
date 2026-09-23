@@ -150,7 +150,7 @@ Area:         Clinton, OH; Warren, OH
 Sent:         2026-09-20T05:54:00+00:00
 Effective:    2026-09-20T01:54:00+00:00
 Expires:      2026-09-20T05:00:00+00:00
-Collected:    2026-09-21T19:16:26.917342+00:00
+Collected:    2026-09-21T20:06:28.361224+00:00
 Sender:       NWS Wilmington OH
 
 Description:
@@ -199,19 +199,6 @@ submit your report via social media, when you can do so safely.
 Source URL:   http://www.weather.gov
 ======================================================================
 Source:       FEMA
-Event:        Local Area Emergency
-Headline:     I-10 West @ MM118 All Lanes Closed Follow Detour
-Severity:     Severe
-Urgency:      Immediate
-Certainty:    Observed
-Area:         AffectedArea
-Sent:         2026-09-20T05:16:53+00:00
-Effective:    2026-09-20T00:16:53+00:00
-Expires:      2026-09-20T06:16:53+00:00
-Collected:    2026-09-21T19:16:26.916412+00:00
-Sender:       TXDOT,Austin,TX
-======================================================================
-Source:       FEMA
 Event:        Flash Flood Warning
 Headline:     Flash Flood Warning issued September 19 at 11:57PM EDT until September 20 at 3:00AM EDT by NWS Wilmington OH
 Severity:     Severe
@@ -221,7 +208,7 @@ Area:         Hocking, OH; Pickaway, OH; Ross, OH
 Sent:         2026-09-20T03:57:00+00:00
 Effective:    2026-09-19T23:57:00+00:00
 Expires:      2026-09-20T03:00:00+00:00
-Collected:    2026-09-21T19:16:26.915432+00:00
+Collected:    2026-09-21T20:06:28.358901+00:00
 Sender:       NWS Wilmington OH
 
 Description:
@@ -268,32 +255,6 @@ submit your report via social media, when you can do so safely.
 Source URL:   http://www.weather.gov
 ======================================================================
 Source:       FEMA
-Event:        Law Enforcement Warning
-Headline:     Unknown
-Severity:     Extreme
-Urgency:      Immediate
-Certainty:    Observed
-Area:         HWY 84 E
-Sent:         2026-09-20T02:48:45+00:00
-Effective:    2026-09-19T22:34:00+00:00
-Expires:      2026-09-20T06:48:45+00:00
-Collected:    2026-09-21T19:16:26.914213+00:00
-Sender:       GAThomasCountyEMA
-======================================================================
-Source:       FEMA
-Event:        Missing and Endangered Persons
-Headline:     Silver Alert
-Severity:     Extreme
-Urgency:      Immediate
-Certainty:    Observed
-Area:         Limited Geographic Area
-Sent:         2026-09-20T01:32:05+00:00
-Effective:    Unknown
-Expires:      2026-09-19T21:32:05+00:00
-Collected:    2026-09-21T19:16:26.912998+00:00
-Sender:       201794,DCI,WI Department of Justice
-======================================================================
-Source:       FEMA
 Event:        Flash Flood Warning
 Headline:     Flash Flood Warning issued September 19 at 8:03PM CDT until September 19 at 10:00PM CDT by NWS Midland/Odessa TX
 Severity:     Severe
@@ -303,7 +264,7 @@ Area:         Gaines, TX
 Sent:         2026-09-20T01:03:00+00:00
 Effective:    2026-09-19T20:03:00+00:00
 Expires:      2026-09-19T22:00:00+00:00
-Collected:    2026-09-21T19:16:26.911926+00:00
+Collected:    2026-09-21T20:06:28.357233+00:00
 Sender:       NWS Midland/Odessa TX
 
 Description:
@@ -357,7 +318,7 @@ Area:         Cheyenne, CO; Wallace, KS
 Sent:         2026-09-20T00:36:00+00:00
 Effective:    2026-09-19T18:36:00+00:00
 Expires:      2026-09-19T18:45:00+00:00
-Collected:    2026-09-21T19:16:26.910800+00:00
+Collected:    2026-09-21T20:06:28.356109+00:00
 Sender:       NWS Goodland KS
 
 Description:
@@ -406,7 +367,7 @@ Area:         Garfield, CO
 Sent:         2026-09-20T00:19:00+00:00
 Effective:    2026-09-19T18:19:00+00:00
 Expires:      2026-09-19T21:15:00+00:00
-Collected:    2026-09-21T19:16:26.909381+00:00
+Collected:    2026-09-21T20:06:28.354976+00:00
 Sender:       NWS Grand Junction CO
 
 Description:
@@ -457,7 +418,7 @@ Area:         Rio Blanco, CO
 Sent:         2026-09-20T00:01:00+00:00
 Effective:    2026-09-19T18:01:00+00:00
 Expires:      2026-09-19T21:00:00+00:00
-Collected:    2026-09-21T19:16:26.907567+00:00
+Collected:    2026-09-21T20:06:28.353184+00:00
 Sender:       NWS Grand Junction CO
 
 Description:
@@ -506,134 +467,11 @@ Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until Sept
 Severity:     Minor
 Urgency:      Expected
 Certainty:    Likely
-Area:         Marmot Island To Sitkinak from 15 to 85 NM
-Sent:         2026-09-20T02:43:00-08:00
-Effective:    2026-09-20T02:43:00-08:00
-Expires:      2026-09-20T15:30:00-08:00
-Collected:    2026-09-21T19:16:21.865215+00:00
-Sender:       NWS Anchorage AK
-
-Description:
-Coastal Waters Forecast for the Northern Gulf of Alaska Coast
-up to 100 nm out including Kodiak Island and Cook Inlet.
-
-Wind forecasts reflect the predominant speed and direction
-expected. Sea forecasts represent an average of the highest
-one-third of the combined wind wave and swell height.
-
-.TODAY...NW wind 30 kt. Seas 13 ft.
-.TONIGHT...W wind 30 kt. Seas 13 ft.
-.MON...NW wind 25 kt. N of Dangerous Cape, SW wind 20 kt in the
-morning becoming variable 10 kt. Seas 9 ft.
-.MON NIGHT...N wind 25 kt. Seas 7 ft.
-.TUE...N wind 25 kt. Seas 9 ft.
-.WED...W wind 20 kt. Seas 8 ft.
-.THU...S wind 30 kt. Seas 11 ft.
-
-Source URL:   http://www.weather.gov
-======================================================================
-Source:       NWS
-Event:        Small Craft Advisory
-Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
-Severity:     Minor
-Urgency:      Expected
-Certainty:    Likely
-Area:         West of Barren Islands Including Kamishak Bay
-Sent:         2026-09-20T02:43:00-08:00
-Effective:    2026-09-20T02:43:00-08:00
-Expires:      2026-09-20T15:30:00-08:00
-Collected:    2026-09-21T19:16:21.864885+00:00
-Sender:       NWS Anchorage AK
-
-Description:
-Coastal Waters Forecast for the Northern Gulf of Alaska Coast
-up to 100 nm out including Kodiak Island and Cook Inlet.
-
-Wind forecasts reflect the predominant speed and direction
-expected. Sea forecasts represent an average of the highest
-one-third of the combined wind wave and swell height.
-
-.TODAY...NW wind 25 kt. Seas 6 ft.
-.TONIGHT...W wind 25 kt. Seas 6 ft.
-.MON...W wind 25 kt. Seas 5 ft. Rain.
-.MON NIGHT...W wind 25 kt. Seas 5 ft.
-.TUE THROUGH WED...W wind 25 kt. Seas 6 ft.
-.THU...SE wind 35 kt. Seas 10 ft.
-
-Source URL:   http://www.weather.gov
-======================================================================
-Source:       NWS
-Event:        Small Craft Advisory
-Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
-Severity:     Minor
-Urgency:      Expected
-Certainty:    Likely
-Area:         Shelikof Strait
-Sent:         2026-09-20T02:43:00-08:00
-Effective:    2026-09-20T02:43:00-08:00
-Expires:      2026-09-20T15:30:00-08:00
-Collected:    2026-09-21T19:16:21.864589+00:00
-Sender:       NWS Anchorage AK
-
-Description:
-Coastal Waters Forecast for the Northern Gulf of Alaska Coast
-up to 100 nm out including Kodiak Island and Cook Inlet.
-
-Wind forecasts reflect the predominant speed and direction
-expected. Sea forecasts represent an average of the highest
-one-third of the combined wind wave and swell height.
-
-.TODAY...NW wind 25 kt. Seas 5 ft.
-.TONIGHT...W wind 25 kt. Seas 5 ft.
-.MON...NW wind 25 kt. Seas 4 ft.
-.MON NIGHT...NW wind 25 kt. Seas 4 ft.
-.TUE...NW wind 20 kt. Seas 4 ft.
-.WED...SW wind 20 kt. Seas 3 ft.
-.THU...SE wind 30 kt. Seas 6 ft.
-
-Source URL:   http://www.weather.gov
-======================================================================
-Source:       NWS
-Event:        Small Craft Advisory
-Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
-Severity:     Minor
-Urgency:      Expected
-Certainty:    Likely
-Area:         Barren Islands East
-Sent:         2026-09-20T02:43:00-08:00
-Effective:    2026-09-20T02:43:00-08:00
-Expires:      2026-09-20T15:30:00-08:00
-Collected:    2026-09-21T19:16:21.864288+00:00
-Sender:       NWS Anchorage AK
-
-Description:
-Coastal Waters Forecast for the Northern Gulf of Alaska Coast
-up to 100 nm out including Kodiak Island and Cook Inlet.
-
-Wind forecasts reflect the predominant speed and direction
-expected. Sea forecasts represent an average of the highest
-one-third of the combined wind wave and swell height.
-
-.TODAY...NW wind 25 kt. Seas 9 ft.
-.TONIGHT...W wind 25 kt. Seas 7 ft.
-.MON...NW wind 25 kt. Seas 5 ft.
-.MON NIGHT...N wind 20 kt. Seas 4 ft.
-.TUE THROUGH WED...NW wind 25 kt. Seas 7 ft.
-.THU...SE wind 30 kt. Seas 6 ft.
-
-Source URL:   http://www.weather.gov
-======================================================================
-Source:       NWS
-Event:        Small Craft Advisory
-Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
-Severity:     Minor
-Urgency:      Expected
-Certainty:    Likely
 Area:         Gravel Point to Cape Cleare out to 15 NM
 Sent:         2026-09-20T02:43:00-08:00
 Effective:    2026-09-20T02:43:00-08:00
 Expires:      2026-09-20T15:30:00-08:00
-Collected:    2026-09-21T19:16:21.863900+00:00
+Collected:    2026-09-21T20:06:27.297436+00:00
 Sender:       NWS Anchorage AK
 
 Description:
@@ -662,42 +500,11 @@ Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until Sept
 Severity:     Minor
 Urgency:      Expected
 Certainty:    Likely
-Area:         Gore Point to Marmot Island from 15 to 80 NM
-Sent:         2026-09-20T02:43:00-08:00
-Effective:    2026-09-20T02:43:00-08:00
-Expires:      2026-09-20T15:30:00-08:00
-Collected:    2026-09-21T19:16:21.863559+00:00
-Sender:       NWS Anchorage AK
-
-Description:
-Coastal Waters Forecast for the Northern Gulf of Alaska Coast
-up to 100 nm out including Kodiak Island and Cook Inlet.
-
-Wind forecasts reflect the predominant speed and direction
-expected. Sea forecasts represent an average of the highest
-one-third of the combined wind wave and swell height.
-
-.TODAY...N wind 20 kt. Seas 10 ft.
-.TONIGHT...W wind 25 kt. Seas 8 ft.
-.MON...SW wind 20 kt. Seas 8 ft.
-.MON NIGHT...NE wind 15 kt. Seas 5 ft.
-.TUE...N wind 25 kt. Seas 8 ft.
-.WED...NW wind 20 kt. Seas 8 ft.
-.THU...SE wind 25 kt. Seas 6 ft.
-
-Source URL:   http://www.weather.gov
-======================================================================
-Source:       NWS
-Event:        Small Craft Advisory
-Headline:     Small Craft Advisory issued September 20 at 2:43AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
-Severity:     Minor
-Urgency:      Expected
-Certainty:    Likely
 Area:         Cape Suckling to Cape Cleare from 15 to 75 NM
 Sent:         2026-09-20T02:43:00-08:00
 Effective:    2026-09-20T02:43:00-08:00
 Expires:      2026-09-20T15:30:00-08:00
-Collected:    2026-09-21T19:16:21.863245+00:00
+Collected:    2026-09-21T20:06:27.297045+00:00
 Sender:       NWS Anchorage AK
 
 Description:
@@ -730,7 +537,7 @@ Area:         Cape Suckling to Gravel Point out to 15 NM
 Sent:         2026-09-20T02:43:00-08:00
 Effective:    2026-09-20T02:43:00-08:00
 Expires:      2026-09-20T15:30:00-08:00
-Collected:    2026-09-21T19:16:21.862910+00:00
+Collected:    2026-09-21T20:06:27.296650+00:00
 Sender:       NWS Anchorage AK
 
 Description:
@@ -763,7 +570,7 @@ Area:         Cape Cleare to Gore Point from 15 to 75 NM
 Sent:         2026-09-20T02:43:00-08:00
 Effective:    2026-09-20T02:43:00-08:00
 Expires:      2026-09-20T15:30:00-08:00
-Collected:    2026-09-21T19:16:21.862529+00:00
+Collected:    2026-09-21T20:06:27.296262+00:00
 Sender:       NWS Anchorage AK
 
 Description:
@@ -791,41 +598,11 @@ Headline:     Small Craft Advisory issued September 20 at 3:28AM AKDT until Sept
 Severity:     Minor
 Urgency:      Expected
 Certainty:    Likely
-Area:         Kuskokwim Delta from 15 to 80 NM
-Sent:         2026-09-20T03:28:00-08:00
-Effective:    2026-09-20T03:28:00-08:00
-Expires:      2026-09-20T16:00:00-08:00
-Collected:    2026-09-21T19:16:21.862169+00:00
-Sender:       NWS Anchorage AK
-
-Description:
-Coastal Waters Forecast for Southwest Alaska+Bristol Bay+The
-Alaska Peninsula Waters and the Aleutian Islands up to 100 nm out.
-
-Wind forecasts reflect the predominant speed and direction
-expected. Sea forecasts represent an average of the highest
-one-third of the combined wind wave and swell height.
-
-.TODAY...NW wind 30 kt. Seas 9 ft.
-.TONIGHT...NW wind 30 kt. Seas 10 ft.
-.MON...NW wind 25 kt. Seas 8 ft.
-.MON NIGHT...NW wind 20 kt. Seas 6 ft.
-.TUE...S wind 20 kt. Seas 4 ft.
-.WED THROUGH THU...S wind 45 kt. Seas 14 ft.
-
-Source URL:   http://www.weather.gov
-======================================================================
-Source:       NWS
-Event:        Small Craft Advisory
-Headline:     Small Craft Advisory issued September 20 at 3:28AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
-Severity:     Minor
-Urgency:      Expected
-Certainty:    Likely
 Area:         Port Heiden to Nelson Lagoon from 15 to 60 NM
 Sent:         2026-09-20T03:28:00-08:00
 Effective:    2026-09-20T03:28:00-08:00
 Expires:      2026-09-20T16:00:00-08:00
-Collected:    2026-09-21T19:16:21.861823+00:00
+Collected:    2026-09-21T20:06:27.295862+00:00
 Sender:       NWS Anchorage AK
 
 Description:
@@ -847,4 +624,301 @@ thunderstorms.
 
 Source URL:   http://www.weather.gov
 ======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 3:28AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Nelson Lagoon to Cape Sarichef out to 15 NM
+Sent:         2026-09-20T03:28:00-08:00
+Effective:    2026-09-20T03:28:00-08:00
+Expires:      2026-09-20T16:00:00-08:00
+Collected:    2026-09-21T20:06:27.295364+00:00
+Sender:       NWS Anchorage AK
 
+Description:
+Coastal Waters Forecast for Southwest Alaska+Bristol Bay+The
+Alaska Peninsula Waters and the Aleutian Islands up to 100 nm out.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NW wind 30 kt. Seas 9 ft. Widespread rain showers. Isolated
+thunderstorms.
+.TONIGHT...NW wind 30 kt. Seas 10 ft. Rain showers.
+.MON...NW wind 25 kt. Seas 9 ft. Rain showers.
+.MON NIGHT...NW wind 20 kt. Seas 6 ft.
+.TUE...W wind 15 kt. Seas 5 ft.
+.WED...SE wind 40 kt. Seas 5 ft.
+.THU...S wind 40 kt. Seas 13 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 3:28AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Cape Tolstoi to Cape Sarichef out to 15 NM
+Sent:         2026-09-20T03:28:00-08:00
+Effective:    2026-09-20T03:28:00-08:00
+Expires:      2026-09-20T16:00:00-08:00
+Collected:    2026-09-21T20:06:27.294899+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for Southwest Alaska+Bristol Bay+The
+Alaska Peninsula Waters and the Aleutian Islands up to 100 nm out.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NW wind 25 kt. Seas 3 ft. Isolated
+thunderstorms.
+.TONIGHT...NW wind 25 kt. Seas 3 ft.
+.MON...NW wind 25 kt. Seas 3 ft.
+.MON NIGHT...NW wind 20 kt. Seas 3 ft.
+.TUE...W wind 15 kt. Seas 3 ft.
+.WED...S wind 40 kt. Seas 10 ft.
+.THU...S wind 40 kt. Seas 14 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 3:28AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Nelson Lagoon to Unalga Pass from 15 to 70 NM
+Sent:         2026-09-20T03:28:00-08:00
+Effective:    2026-09-20T03:28:00-08:00
+Expires:      2026-09-20T16:00:00-08:00
+Collected:    2026-09-21T20:06:27.294492+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for Southwest Alaska+Bristol Bay+The
+Alaska Peninsula Waters and the Aleutian Islands up to 100 nm out.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NW wind 30 kt. Seas 10 ft. Rain showers. Isolated
+thunderstorms.
+.TONIGHT...NW wind 30 kt. Seas 10 ft.
+.MON...NW wind 25 kt. Seas 9 ft.
+.MON NIGHT...NW wind 20 kt. Seas 6 ft.
+.TUE...SW wind 20 kt. Seas 5 ft.
+.WED...SE wind 35 kt. Seas 12 ft.
+.THU...S wind 35 kt. Seas 20 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 3:28AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Port Heiden to Nelson Lagoon out to 15 NM
+Sent:         2026-09-20T03:28:00-08:00
+Effective:    2026-09-20T03:28:00-08:00
+Expires:      2026-09-20T16:00:00-08:00
+Collected:    2026-09-21T20:06:27.294090+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for Southwest Alaska+Bristol Bay+The
+Alaska Peninsula Waters and the Aleutian Islands up to 100 nm out.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NW wind 30 kt. Seas 10 ft. Widespread rain showers. Isolated
+thunderstorms.
+.TONIGHT...NW wind 30 kt. Seas 11 ft. Widespread rain showers.
+.MON...NW wind 25 kt. Seas 10 ft. Rain showers.
+.MON NIGHT...NW wind 20 kt. Seas 7 ft.
+.TUE...NW wind 15 kt. Seas 5 ft.
+.WED...SE wind 30 kt. Seas 3 ft.
+.THU...S wind 30 kt. Seas 7 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Gale Warning
+Headline:     Gale Warning issued September 20 at 3:28AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Moderate
+Urgency:      Expected
+Certainty:    Likely
+Area:         Castle Cape to Cape Tolstoi from 15 to 100 NM
+Sent:         2026-09-20T03:28:00-08:00
+Effective:    2026-09-20T03:28:00-08:00
+Expires:      2026-09-20T16:00:00-08:00
+Collected:    2026-09-21T20:06:27.293737+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for Southwest Alaska+Bristol Bay+The
+Alaska Peninsula Waters and the Aleutian Islands up to 100 nm out.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NW wind 35 kt. Seas 12 ft. Isolated
+thunderstorms.
+.TONIGHT...NW wind 35 kt. Seas 10 ft. Rain showers.
+.MON...NW wind 35 kt. Seas 10 ft.
+.MON NIGHT...NW wind 30 kt. Seas 9 ft.
+.TUE...NW wind 25 kt. Seas 7 ft.
+.WED...S wind 30 kt. Seas 8 ft.
+.THU...S wind 30 kt. Seas 14 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Gale Warning
+Headline:     Gale Warning issued September 20 at 3:28AM AKDT until September 21 at 5:00PM AKDT by NWS Anchorage AK
+Severity:     Moderate
+Urgency:      Expected
+Certainty:    Likely
+Area:         Sitkinak to Castle Cape from 15 to 100 NM
+Sent:         2026-09-20T03:28:00-08:00
+Effective:    2026-09-20T03:28:00-08:00
+Expires:      2026-09-20T16:00:00-08:00
+Collected:    2026-09-21T20:06:27.293356+00:00
+Sender:       NWS Anchorage AK
+
+Description:
+Coastal Waters Forecast for Southwest Alaska+Bristol Bay+The
+Alaska Peninsula Waters and the Aleutian Islands up to 100 nm out.
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent an average of the highest
+one-third of the combined wind wave and swell height.
+
+.TODAY...NW wind 35 kt. Seas 13 ft.
+.TONIGHT...W wind 30 kt. Seas 12 ft. Rain showers. Isolated
+thunderstorms in the evening.
+.MON...NW wind 35 kt. Seas 10 ft.
+.MON NIGHT...NW wind 30 kt. Seas 10 ft.
+.TUE...NW wind 30 kt. Seas 9 ft.
+.WED...SW wind 25 kt. Seas 6 ft.
+.THU...S wind 30 kt. Seas 15 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 3:55AM AKDT until September 21 at 5:00PM AKDT by NWS Juneau AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Yakutat Bay
+Sent:         2026-09-20T03:55:00-08:00
+Effective:    2026-09-20T03:55:00-08:00
+Expires:      2026-09-20T22:00:00-08:00
+Collected:    2026-09-21T20:06:27.293017+00:00
+Sender:       NWS Juneau AK
+
+Description:
+Coastal Waters Forecast for Yakutat Bay
+
+Wind forecasts reflect the predominant speed and direction
+expected. Sea forecasts represent the average of the highest
+one-third of the combined windwave and swell height.
+
+.TODAY...SE wind 25 kt. Seas 10 ft building to 17 ft. Patchy fog.
+Slight chance of thunderstorms early in the morning. Showers.
+Chance of thunderstorms.
+.TONIGHT...SE wind 25 kt. Seas 14 ft. SW swell in the evening.
+Patchy fog in the evening. Chance of thunderstorms in the
+evening. Showers. Slight chance of thunderstorms late.
+.MON...S wind 15 kt. Seas 10 ft. Slight chance of
+thunderstorms in the morning. Showers.
+.MON NIGHT...E wind 10 kt. Seas 8 ft.
+.TUE...NE wind 15 kt. Seas 7 ft.
+.WED...NE wind 15 kt. Seas 8 ft.
+.THU...NE wind 10 kt. Seas 4 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 3:56AM AKDT until September 21 at 5:00PM AKDT by NWS Juneau AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Cape Decision to Cape Edgecumbe out to 15 NM
+Sent:         2026-09-20T03:56:00-08:00
+Effective:    2026-09-20T03:56:00-08:00
+Expires:      2026-09-20T22:00:00-08:00
+Collected:    2026-09-21T20:06:27.292724+00:00
+Sender:       NWS Juneau AK
+
+Description:
+Southeast Alaska Coastal Waters from Dixon Entrance to
+Cape Suckling out 100 NM
+
+Wind forecasts reflect the predominant speed and direction
+expected. Seas forecasts represent the average of the highest
+one-third of the combined windwave and swell height.
+
+.TODAY...S wind 25 kt. Seas 12 ft building to 18 ft. Slight
+chance of thunderstorms. Showers.
+.TONIGHT...S wind 20 kt. Seas 15 ft. SW swell in the evening.
+Slight chance of thunderstorms. Showers late.
+.MON...S wind 10 kt. Seas 10 ft. Showers in the morning.
+Slight chance of thunderstorms.
+.MON NIGHT...SE wind 20 kt. Seas 8 ft. SW swell. Slight chance
+of thunderstorms.
+.TUE...SE wind 25 kt. Seas 12 ft.
+.WED...SE wind 20 kt. Seas 10 ft.
+.THU...E wind 15 kt. Seas 7 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
+Source:       NWS
+Event:        Small Craft Advisory
+Headline:     Small Craft Advisory issued September 20 at 3:56AM AKDT until September 21 at 5:00PM AKDT by NWS Juneau AK
+Severity:     Minor
+Urgency:      Expected
+Certainty:    Likely
+Area:         Dixon Entrance to Cape Decision out to 15 NM
+Sent:         2026-09-20T03:56:00-08:00
+Effective:    2026-09-20T03:56:00-08:00
+Expires:      2026-09-20T22:00:00-08:00
+Collected:    2026-09-21T20:06:27.292435+00:00
+Sender:       NWS Juneau AK
+
+Description:
+Southeast Alaska Coastal Waters from Dixon Entrance to
+Cape Suckling out 100 NM
+
+Wind forecasts reflect the predominant speed and direction
+expected. Seas forecasts represent the average of the highest
+one-third of the combined windwave and swell height.
+
+.TODAY...S wind 25 kt. Seas 14 ft. Patchy fog early in the
+morning. Slight chance of thunderstorms. Showers in the
+afternoon.
+.TONIGHT...S wind 20 kt. Seas 14 ft. Slight chance of
+thunderstorms. Showers late.
+.MON...S wind 10 kt. Seas 10 ft. Showers in the morning.
+Slight chance of thunderstorms. Showers in the afternoon.
+.MON NIGHT...S wind 20 kt. Seas 9 ft. Showers and slight
+chance of thunderstorms.
+.TUE...S wind 25 kt. Seas 11 ft.
+.WED...SE wind 20 kt. Seas 9 ft.
+.THU...SE wind 15 kt. Seas 8 ft.
+
+Source URL:   http://www.weather.gov
+======================================================================
