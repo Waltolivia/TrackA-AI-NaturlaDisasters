@@ -38,5 +38,5 @@ NON_DISASTER_KEYWORDS = [
     "amber alert", "silver alert", "missing child", "missing person",
     "local area emergency", "local area alert",
     "boil water", "civil emergency", "law enforcement",
-    "police", "crime", "active shooter", "local area emergency", "Small Craft Advisory"
+    "police", "crime", "active shooter", "local area emergency", "small craft advisory"
 ]
