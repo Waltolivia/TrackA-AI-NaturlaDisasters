@@ -1,6 +1,10 @@
-This is a AI made code, human edited. It is for a research project referring to Natural Disasters and a way to track updated and live data all over the nation. 
-
 # Emergency Alert Collector
+
+> **Legacy prototype:** Retained for project history only. Use
+> `../../disaster_monitor-v5/` for current collection and deployment.
+
+This is AI-generated, human-edited code for a natural-disaster research
+project. It collects updated public alert data across the United States.
 
 A small Python collector for:
 - National Weather Service (NWS) active weather alerts

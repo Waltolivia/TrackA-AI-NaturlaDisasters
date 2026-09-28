@@ -12,8 +12,10 @@ and the AI probe runner.
 | `disaster_monitor-v5/` | Current ground-truth collector, event matching, lifecycle, archives, and JSON queue |
 | `pipeline_worker/` | Queue claiming, deduplication, retries, crash recovery, and AI-runner invocation |
 | `ai_probe_runner/` | Question selection, provider API calls, resumable probe cycles, and response archives |
-| `disaster_monitor-v2/` | Older collector retained for reference and flat-outbox compatibility |
-| `emergency_alert_collector/` | Original collector retained for reference |
+| `legacy_collectors/` | Inactive earlier collectors retained for history and compatibility testing |
+
+Only the first three modules participate in the current pipeline. Do not start
+a collector under `legacy_collectors/` for normal operation.
 
 The modules communicate through versioned JSON. The worker does not import the
 ground-truth collector's database or matching code.
@@ -159,9 +161,8 @@ cp ai_probe_runner/config/targets.example.json \
   ai_probe_runner/config/targets.local.json
 ```
 
-For the first paid pilot, edit `targets.local.json` so only one provider has
-`"enabled": true`. Add a new trigger with a new `message_id`, then run at most
-one job:
+The example enables all three approved providers. A successful event therefore
+runs nine questions against three models, for 27 probes. Run one controlled job:
 
 ```bash
 uv run --project pipeline_worker pipeline-worker \
@@ -169,8 +170,11 @@ uv run --project pipeline_worker pipeline-worker \
   once --max-jobs 1
 ```
 
-Inspect the manifest and `probes.jsonl` before enabling the other providers.
-The worker only reports success when every expected probe completed.
+Expect `expected_probe_count` and `completed_probe_count` to both be 27, with
+`failed_probe_count` equal to zero. Inspect the manifest and `probes.jsonl` for
+all three providers. The worker reports success only when every expected probe
+completed. To troubleshoot one account, temporarily disable the other targets
+in the ignored local file; do not change the committed baseline.
 
 ## 5. Run the live ground-truth collector
 
@@ -289,7 +293,7 @@ To consume the older flat directory explicitly:
 ```bash
 uv run --project pipeline_worker pipeline-worker \
   --queue-layout flat \
-  --outbox disaster_monitor-v2/outbox \
+  --outbox legacy_collectors/disaster_monitor-v2/outbox \
   once
 ```
 
@@ -316,7 +320,7 @@ mixing different research conditions inside one cycle.
 
 Before leaving the pipeline unattended:
 
-1. Complete the mock test and one-provider pilot.
+1. Complete the mock test and a controlled all-provider pilot.
 2. Confirm the chosen models are available and billing limits are set.
 3. Put the repository and `pipeline_data/` on persistent storage.
 4. Back up `pipeline_data/worker.db`, AI results, and the collector database.

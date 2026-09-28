@@ -8,9 +8,9 @@
     "enabled": true
   },
   {
-    "target_id": "anthropic-sonnet-no-search",
+    "target_id": "anthropic-haiku-no-search",
     "provider": "anthropic",
-    "model": "claude-sonnet-5-5",
+    "model": "claude-haiku-4-5",
     "interface": "messages-api",
     "browsing": false,
     "enabled": true

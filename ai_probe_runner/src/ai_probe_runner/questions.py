@@ -53,7 +53,7 @@ def normalize_trigger(trigger: dict[str, Any]) -> dict[str, Any]:
     """Return the canonical trigger shape used by prompts and archived records.
 
     The function accepts the original AI-runner contract and the JSON emitted
-    by disaster_monitor-v2 or disaster_monitor-v5. Original collector fields
+    by the legacy v2 collector or disaster_monitor-v5. Original collector fields
     are kept; canonical aliases are added without modifying the caller's input.
     """
     if not isinstance(trigger, dict):

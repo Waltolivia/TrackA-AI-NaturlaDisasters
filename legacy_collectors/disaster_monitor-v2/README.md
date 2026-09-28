@@ -1,5 +1,8 @@
 # Disaster Monitor v0.2
 
+> **Legacy:** Retained for reproducibility and flat-outbox compatibility only.
+> Use `../../disaster_monitor-v5/` for the active pipeline.
+
 A Python polling service that collects natural-disaster records, keeps raw source messages, deduplicates repeated polls, groups related records into incidents, detects escalation, tracks incident lifecycle, and writes JSON jobs for a future AI Prompter.
 
 ## Sources and polling
