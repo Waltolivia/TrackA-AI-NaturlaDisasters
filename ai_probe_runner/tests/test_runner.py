@@ -13,18 +13,23 @@ from ai_probe_runner import cli
 def test_example_targets_are_three_provider_no_search_baseline() -> None:
     config_path = Path(__file__).parents[1] / "config" / "targets.example.json"
     targets = json.loads(config_path.read_text(encoding="utf-8"))
+    study_targets = json.loads(
+        (config_path.parent / "targets.study-v1.json").read_text(encoding="utf-8")
+    )
 
     assert {
         (target["provider"], target["model"], target["browsing"])
         for target in targets
         if target.get("enabled", True)
     } == {
-        ("openai", "gpt-5.6-luna", False),
-        ("anthropic", "claude-haiku-4-5", False),
+        ("openai", "gpt-5.4-nano-2026-03-17", False),
+        ("anthropic", "claude-sonnet-5-5", False),
         ("google", "gemini-3.5-flash-lite", False),
     }
     assert all(target.get("target_id") for target in targets)
     assert all(target.get("interface") for target in targets)
+    assert all(target.get("max_output_tokens") == 2048 for target in targets)
+    assert targets == study_targets
 
 
 def write_banks(bank_dir: Path) -> None:
@@ -252,6 +257,7 @@ def test_mock_cycle_archives_trigger_questions_and_responses(tmp_path: Path) -> 
                     "model": "mock-v1",
                     "interface": "local-mock",
                     "browsing": False,
+                    "max_output_tokens": 2048,
                     "enabled": True,
                 }
             ]
@@ -304,6 +310,7 @@ def test_resume_retries_only_failed_probes(
                     "model": "mock-v1",
                     "interface": "local-mock",
                     "browsing": False,
+                    "max_output_tokens": 2048,
                     "enabled": True,
                 }
             ]
@@ -323,7 +330,7 @@ def test_resume_retries_only_failed_probes(
             raise TimeoutError("temporary provider failure")
 
     class SuccessfulProvider:
-        def ask(self, *, prompt, model, browsing):
+        def ask(self, *, prompt, model, browsing, max_output_tokens):
             return ProviderResult(
                 text="Recovered",
                 response_id="response-1",
@@ -399,10 +406,33 @@ def test_target_config_requires_unique_ids_and_enabled_target(tmp_path: Path) ->
         "model": "mock-v1",
         "interface": "local-mock",
         "browsing": False,
+        "max_output_tokens": 2048,
         "enabled": True,
     }
     targets.write_text(json.dumps([target, target]), encoding="utf-8")
     with pytest.raises(ValueError, match="unique"):
+        load_targets(targets)
+
+
+def test_target_config_requires_positive_output_limit(tmp_path: Path) -> None:
+    targets = tmp_path / "targets.json"
+    targets.write_text(
+        json.dumps(
+            [
+                {
+                    "target_id": "mock",
+                    "provider": "mock",
+                    "model": "mock-v1",
+                    "interface": "local-mock",
+                    "browsing": False,
+                    "max_output_tokens": 0,
+                    "enabled": True,
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="positive integer"):
         load_targets(targets)
 
 

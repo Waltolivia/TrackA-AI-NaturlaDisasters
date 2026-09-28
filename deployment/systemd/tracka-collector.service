@@ -1,0 +1,17 @@
+[Unit]
+Description=Track A disaster monitor v5
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=tracka
+Group=tracka
+WorkingDirectory=/opt/tracka/disaster_monitor-v5
+EnvironmentFile=/etc/tracka/collector.env
+ExecStart=/opt/tracka/disaster_monitor-v5/.venv/bin/python -m disaster_monitor.main
+Restart=on-failure
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target

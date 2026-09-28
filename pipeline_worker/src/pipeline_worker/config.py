@@ -16,8 +16,8 @@ class WorkerConfig:
     ai_project: Path
     queue_layout: str = "v5"
     poll_seconds: float = 5.0
-    max_attempts: int = 3
-    retry_base_seconds: float = 30.0
+    max_attempts: int = 8
+    retry_base_seconds: float = 60.0
     lease_seconds: int = 7200
     job_timeout_seconds: int = 7200
     probe_delay_seconds: float = 0.0

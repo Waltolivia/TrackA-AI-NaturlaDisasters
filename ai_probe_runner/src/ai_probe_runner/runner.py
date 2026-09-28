@@ -21,6 +21,7 @@ REQUIRED_TARGET_FIELDS = {
     "model",
     "interface",
     "browsing",
+    "max_output_tokens",
     "enabled",
 }
 KNOWN_PROVIDERS = {"anthropic", "google", "mock", "openai"}
@@ -209,6 +210,7 @@ def run_cycle(
                     prompt=question["prompt"],
                     model=target["model"],
                     browsing=target.get("browsing", False),
+                    max_output_tokens=target["max_output_tokens"],
                 )
                 raw_name = f"{probe_id}.json"
                 _write_json(raw_dir / raw_name, result.raw)
@@ -282,6 +284,15 @@ def load_targets(path: Path) -> list[dict[str, Any]]:
             raise ValueError(f"Target {target['target_id']!r} browsing must be boolean")
         if not isinstance(target["enabled"], bool):
             raise ValueError(f"Target {target['target_id']!r} enabled must be boolean")
+        if (
+            not isinstance(target["max_output_tokens"], int)
+            or isinstance(target["max_output_tokens"], bool)
+            or target["max_output_tokens"] < 1
+        ):
+            raise ValueError(
+                f"Target {target['target_id']!r} max_output_tokens "
+                "must be a positive integer"
+            )
         ids.append(str(target["target_id"]))
         if target["enabled"]:
             enabled.append(target)

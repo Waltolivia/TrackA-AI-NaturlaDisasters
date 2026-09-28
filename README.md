@@ -1,7 +1,8 @@
 # Track A: AI Natural-Disaster Data Pipeline
 
-This repository collects official natural-disaster events and automatically
-probes configured AI models with a reproducible bank of disaster questions.
+This repository collects official alerts and supplemental public
+natural-disaster event metadata, then automatically probes configured AI models
+with a reproducible bank of disaster questions.
 The current integration uses Disaster Monitor v5, a durable pipeline worker,
 and the AI probe runner.
 
@@ -12,6 +13,7 @@ and the AI probe runner.
 | `disaster_monitor-v5/` | Current ground-truth collector, event matching, lifecycle, archives, and JSON queue |
 | `pipeline_worker/` | Queue claiming, deduplication, retries, crash recovery, and AI-runner invocation |
 | `ai_probe_runner/` | Question selection, provider API calls, resumable probe cycles, and response archives |
+| `deployment/` | Linux `systemd` templates and unattended-operation instructions |
 | `legacy_collectors/` | Inactive earlier collectors retained for history and compatibility testing |
 
 Only the first three modules participate in the current pipeline. Do not start
@@ -42,7 +44,7 @@ outbox/pending -> Pipeline Worker -> AI Probe Runner -> pipeline_data/results
    questions and calls every enabled target.
 6. A completely successful job moves to `outbox/completed/`.
 7. A failed job waits for exponential backoff and resumes only missing or
-   failed probes. After three attempts it moves to `outbox/failed/`.
+   failed probes. After eight attempts it moves to `outbox/failed/`.
 
 The worker probes these v5 actions:
 
@@ -154,19 +156,31 @@ GEMINI_API_KEY=...
 
 Never put keys in JSON, source code, Git, screenshots, or collected results.
 
-Create the ignored real target file:
+The frozen study target file is committed without secrets:
 
 ```bash
-cp ai_probe_runner/config/targets.example.json \
-  ai_probe_runner/config/targets.local.json
+python -m json.tool \
+  ai_probe_runner/config/targets.study-v1.json >/dev/null
 ```
 
-The example enables all three approved providers. A successful event therefore
-runs nine questions against three models, for 27 probes. Run one controlled job:
+It enables all three approved providers. A successful event runs nine questions
+against three models, for 27 probes. Use an ignored, isolated test queue so a
+previous mock run cannot suppress the fixture as a duplicate:
+
+```bash
+mkdir -p local_test/outbox/{pending,processing,completed,failed}
+cp pipeline_worker/examples/v5.flash-flood.json \
+  local_test/outbox/pending/provider-test.json
+```
+
+Run one controlled job:
 
 ```bash
 uv run --project pipeline_worker pipeline-worker \
-  --targets ai_probe_runner/config/targets.local.json \
+  --outbox local_test/outbox \
+  --state-db local_test/worker.db \
+  --output local_test/results \
+  --targets ai_probe_runner/config/targets.study-v1.json \
   once --max-jobs 1
 ```
 
@@ -174,7 +188,11 @@ Expect `expected_probe_count` and `completed_probe_count` to both be 27, with
 `failed_probe_count` equal to zero. Inspect the manifest and `probes.jsonl` for
 all three providers. The worker reports success only when every expected probe
 completed. To troubleshoot one account, temporarily disable the other targets
-in the ignored local file; do not change the committed baseline.
+in an ignored `targets.local.json`; do not change the committed study file.
+
+Google currently offers a free tier for the selected Flash-Lite model, so the
+initial test does not require Google billing. Free-tier data handling and quota
+differ from paid usage; confirm the team's research-data policy before launch.
 
 ## 5. Run the live ground-truth collector
 
@@ -209,7 +227,7 @@ Open a second terminal at the repository root:
 
 ```bash
 uv run --project pipeline_worker pipeline-worker \
-  --targets ai_probe_runner/config/targets.local.json \
+  --targets ai_probe_runner/config/targets.study-v1.json \
   --poll-seconds 5 \
   run
 ```
@@ -340,10 +358,12 @@ enable automatic startup after the real-provider pilot succeeds.
 - EONET sometimes provides coordinates instead of a human-readable place. The
   worker records coordinate-only jobs as `SKIPPED` until location enrichment is
   reviewed, preventing unrealistic location prompts.
+- NWS is the authoritative alert trigger. EONET is supplemental discovery
+  metadata and is not treated as authoritative spatial or temporal ground truth.
 - The pipeline currently probes flood, wildfire, tropical cyclone, tornado,
   and earthquake events.
 - Provider SDK errors are retained in research output. Temporary job failures
-  retry with exponential backoff, up to three attempts by default.
+  retry with exponential backoff, up to eight attempts by default.
 - v5 files are atomically written before they appear in `pending/`. A future
   hardening step could put outbox creation in the same SQLite transaction as
   event updates, but this is not required for the Wednesday integration run.
@@ -358,8 +378,12 @@ enable automatic startup after the real-provider pilot succeeds.
 - [ ] Collector and worker run together for at least one supervised hour.
 - [ ] `pipeline-worker status` has no unexplained `DEAD` jobs.
 - [ ] Result and SQLite backup locations are confirmed.
+- [ ] The team approves `STUDY_PROTOCOL.md` and the frozen study target file.
+- [ ] The clean merged commit is tagged `study-v1.0.0` and that tag is deployed.
 - [ ] The team records the Git commit, target configuration, and collection start time.
 
 For details specific to the worker or provider configuration, see
 [`pipeline_worker/README.md`](pipeline_worker/README.md) and
-[`ai_probe_runner/README.md`](ai_probe_runner/README.md).
+[`ai_probe_runner/README.md`](ai_probe_runner/README.md). The frozen research
+decisions are in [`STUDY_PROTOCOL.md`](STUDY_PROTOCOL.md), and unattended Linux
+setup is in [`deployment/README.md`](deployment/README.md).

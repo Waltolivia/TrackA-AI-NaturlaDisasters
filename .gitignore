@@ -1,8 +1,11 @@
 pipeline_data/
+local_test/
 /archive/
 pipeline_worker/.venv/
 ai_probe_runner/.env
 ai_probe_runner/config/targets.local.json
+deployment/systemd/providers.env
+deployment/systemd/collector.env
 legacy_collectors/disaster_monitor-v2/.venv/
 legacy_collectors/disaster_monitor-v2/data/
 legacy_collectors/disaster_monitor-v2/outbox/
