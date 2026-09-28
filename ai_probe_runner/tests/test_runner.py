@@ -20,7 +20,7 @@ def test_example_targets_are_three_provider_no_search_baseline() -> None:
         if target.get("enabled", True)
     } == {
         ("openai", "gpt-5.6-luna", False),
-        ("anthropic", "claude-sonnet-5-5", False),
+        ("anthropic", "claude-haiku-4-5", False),
         ("google", "gemini-3.5-flash-lite", False),
     }
     assert all(target.get("target_id") for target in targets)

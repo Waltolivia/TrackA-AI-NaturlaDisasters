@@ -144,13 +144,18 @@ provider:
 | Provider | Model ID | Experimental condition |
 | --- | --- | --- |
 | OpenAI | `gpt-5.6-luna` | No web search |
-| Anthropic | `claude-sonnet-5-5` | No web search |
+| Anthropic | `claude-haiku-4-5` | No web search |
 | Google | `gemini-3.5-flash-lite` | No web search |
 
 These models were selected to emphasize speed, cost, and broad API availability
 rather than maximum benchmark performance. They are inexpensive API models, but
 they are **not guaranteed to be identical** to the models, system prompts, or
 tools used in the providers' free consumer chat products.
+
+Anthropic currently lists Haiku 4.5's retirement as no sooner than October 15,
+2026. It is the cost-focused baseline requested by the team, but the team must
+check its lifecycle before collection and document any successor as a new
+experimental condition rather than silently changing the model mid-study.
 
 The initial baseline deliberately disables browsing. Browsing changes the
 information available to a model and may add tool-use charges, so search-enabled

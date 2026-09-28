@@ -27,18 +27,29 @@ disabled:
 | Target ID | Provider | Model ID | Interface |
 | --- | --- | --- | --- |
 | `openai-luna-no-search` | OpenAI | `gpt-5.6-luna` | Responses API |
-| `anthropic-sonnet-no-search` | Anthropic | `claude-sonnet-5-5` | Messages API |
+| `anthropic-haiku-no-search` | Anthropic | `claude-haiku-4-5` | Messages API |
 | `google-flash-lite-no-search` | Google | `gemini-3.5-flash-lite` | Interactions API |
 
 This is a low-cost API comparison, not an exact reproduction of free ChatGPT,
 Claude, or Gemini. Consumer products may use different routing, system prompts,
 tools, safety layers, personalization, and model versions.
 
-Anthropic's less expensive Haiku 4.5 model was intentionally not selected for
-the baseline because its documented lifecycle may end in October 2026. A model
-that may disappear during collection is a poor default for a longitudinal
-study. If the team deliberately studies Haiku before retirement, use a separate
-target file and label the time-bounded condition clearly.
+Haiku 4.5 is the team's cost-focused Anthropic condition. Anthropic currently
+lists its retirement as no sooner than October 15, 2026. Check the official
+model lifecycle before collection. If a successor is required, give it a new
+`target_id`, record the transition date, and preserve the old configuration so
+results from different models are never treated as one condition.
+
+## Gemini free tier
+
+As reviewed on 2026-09-28, Google lists a free tier for
+`gemini-3.5-flash-lite`, so billing is not required for the initial integration
+test. Free-tier prompts and responses may be used to improve Google's products;
+paid-tier data is documented differently. Use only approved public disaster
+information, confirm the project's research-data policy, and review the
+[official pricing page](https://ai.google.dev/gemini-api/docs/pricing) before
+unattended collection. Add billing only if the team needs higher quota or the
+paid-tier data terms.
 
 ## Target fields
 

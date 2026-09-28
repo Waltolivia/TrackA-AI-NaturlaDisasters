@@ -13,32 +13,32 @@ def alert(source_id='a1',severity='Severe',headline='Tornado Warning',references
 
 def test_duplicate_and_reference_escalation():
     with tempfile.TemporaryDirectory() as d:
-        db=Database(str(Path(d)/'x.db'));p=JsonPrompter(Path(d)/'out')
-        assert process(db,p,alert())=='NEW_EVENT'
-        assert process(db,p,alert())=='duplicate'
-        assert process(db,p,alert('a2','Extreme','Confirmed tornado',['a1']))=='SEVERITY_CHANGED'
+        root=Path(d);db=Database(str(root/'x.db'));p=JsonPrompter(root/'out')
+        assert process(db,p,alert(),archive_path=root/'archive')=='NEW_EVENT'
+        assert process(db,p,alert(),archive_path=root/'archive')=='duplicate'
+        assert process(db,p,alert('a2','Extreme','Confirmed tornado',['a1']),archive_path=root/'archive')=='SEVERITY_CHANGED'
         with db.connect() as c: assert c.execute('SELECT count(*) n FROM events').fetchone()['n']==1
         assert len(list((Path(d)/'out'/'pending').glob('*.json')))==2
 
 def test_ambiguous_match_goes_to_review_queue():
     with tempfile.TemporaryDirectory() as d:
-        db=Database(str(Path(d)/'x.db'));p=JsonPrompter(Path(d)/'out')
-        process(db,p,alert(area='Utah County, Utah'))
-        process(db,p,alert('a2',area='Utah County; Salt Lake County, Utah'))
+        root=Path(d);db=Database(str(root/'x.db'));p=JsonPrompter(root/'out')
+        process(db,p,alert(area='Utah County, Utah'),archive_path=root/'archive')
+        process(db,p,alert('a2',area='Utah County; Salt Lake County, Utah'),archive_path=root/'archive')
         with db.connect() as c:
             # Depending on textual overlap this is either a high-confidence join or review; never data loss.
             assert c.execute('SELECT count(*) n FROM alerts').fetchone()['n']==2
 
 def test_end_then_collection_complete_once():
     with tempfile.TemporaryDirectory() as d:
-        db=Database(str(Path(d)/'x.db'));p=JsonPrompter(Path(d)/'out')
-        process(db,p,alert(expires='2026-09-28T13:00:00Z'))
+        root=Path(d);db=Database(str(root/'x.db'));p=JsonPrompter(root/'out')
+        process(db,p,alert(expires='2026-09-28T13:00:00Z'),archive_path=root/'archive')
         t=datetime(2026,9,28,14,0,tzinfo=timezone.utc)
-        assert evaluate(db,p,t,end_grace_minutes=30,completion_grace_hours=24)[0][1]=='EVENT_ENDED'
-        assert evaluate(db,p,t,end_grace_minutes=30,completion_grace_hours=24)==[]
+        assert evaluate(db,p,t,end_grace_minutes=30,completion_grace_hours=24,archive_path=root/'archive')[0][1]=='EVENT_ENDED'
+        assert evaluate(db,p,t,end_grace_minutes=30,completion_grace_hours=24,archive_path=root/'archive')==[]
         later=t+timedelta(hours=25)
-        assert evaluate(db,p,later,end_grace_minutes=30,completion_grace_hours=24)[0][1]=='COLLECTION_COMPLETE'
-        assert evaluate(db,p,later,end_grace_minutes=30,completion_grace_hours=24)==[]
+        assert evaluate(db,p,later,end_grace_minutes=30,completion_grace_hours=24,archive_path=root/'archive')[0][1]=='COLLECTION_COMPLETE'
+        assert evaluate(db,p,later,end_grace_minutes=30,completion_grace_hours=24,archive_path=root/'archive')==[]
         payloads=[json.loads(x.read_text()) for x in (Path(d)/'out'/'pending').glob('*.json')]
         triggers=[x['action'] for x in payloads]
         assert triggers.count('EVENT_ENDED')==1 and triggers.count('COLLECTION_COMPLETE')==0

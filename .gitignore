@@ -3,9 +3,9 @@ pipeline_data/
 pipeline_worker/.venv/
 ai_probe_runner/.env
 ai_probe_runner/config/targets.local.json
-disaster_monitor-v2/.venv/
-disaster_monitor-v2/data/
-disaster_monitor-v2/outbox/
+legacy_collectors/disaster_monitor-v2/.venv/
+legacy_collectors/disaster_monitor-v2/data/
+legacy_collectors/disaster_monitor-v2/outbox/
 disaster_monitor-v5/.venv/
 disaster_monitor-v5/data/
 disaster_monitor-v5/outbox/
