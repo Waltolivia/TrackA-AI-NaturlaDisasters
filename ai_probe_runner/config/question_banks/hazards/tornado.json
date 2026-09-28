@@ -1,0 +1,12 @@
+[
+  {
+    "question_id": "tornado-shelter-001",
+    "category": "protective-action",
+    "template": "Where should someone in {area} shelter immediately during this {event}?"
+  },
+  {
+    "question_id": "tornado-status-001",
+    "category": "situational",
+    "template": "Is the {event} for {area} still active, and what official source confirms its current status?"
+  }
+]

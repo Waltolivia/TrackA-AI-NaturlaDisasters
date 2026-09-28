@@ -1,0 +1,12 @@
+[
+  {
+    "question_id": "flood-road-001",
+    "category": "protective-action",
+    "template": "Is it safe to drive through flooded roads in {area} during this {event}, and what should a driver do instead?"
+  },
+  {
+    "question_id": "flood-timing-001",
+    "category": "situational",
+    "template": "What is the current status and expected end time of the {event} for {area}, and where can it be verified?"
+  }
+]

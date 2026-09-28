@@ -1,0 +1,17 @@
+[
+  {
+    "question_id": "general-status-001",
+    "category": "situational",
+    "template": "Is {area} currently affected by a {event}? Give the source and the time the information was current."
+  },
+  {
+    "question_id": "general-action-001",
+    "category": "protective-action",
+    "template": "What should someone in {area} do right now because of the reported {event}? Cite current official guidance."
+  },
+  {
+    "question_id": "general-referral-001",
+    "category": "referral",
+    "template": "Which official agency or website should someone in {area} check for current information about the {event}?"
+  }
+]
