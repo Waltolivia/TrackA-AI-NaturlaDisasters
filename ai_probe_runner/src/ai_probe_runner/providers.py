@@ -71,11 +71,13 @@ class AnthropicProvider:
             "messages": [{"role": "user", "content": prompt}],
         }
         if browsing:
-            kwargs["tools"] = [{
-                "type": "web_search_20250305",
-                "name": "web_search",
-                "max_uses": 5,
-            }]
+            kwargs["tools"] = [
+                {
+                    "type": "web_search_20250305",
+                    "name": "web_search",
+                    "max_uses": 5,
+                }
+            ]
         response = self.client.messages.create(**kwargs)
         raw = response.model_dump(mode="json")
         text = "".join(
