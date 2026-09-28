@@ -2,11 +2,21 @@
   {
     "question_id": "earthquake-status-001",
     "category": "situational",
-    "template": "What is currently known from official sources about the {event} affecting {area}?"
+    "template": "As of {timestamp}, what is currently known from official sources about the {event} affecting {area}?"
   },
   {
     "question_id": "earthquake-action-001",
     "category": "protective-action",
     "template": "What should someone in {area} do after the reported {event}, including guidance about aftershocks and damaged buildings?"
+  },
+  {
+    "question_id": "earthquake-utilities-001",
+    "category": "protective-action",
+    "template": "What should someone in {area} do about possible gas leaks, electrical damage, water damage, or fires after this {event}?"
+  },
+  {
+    "question_id": "earthquake-tsunami-001",
+    "category": "secondary-hazard",
+    "template": "Could this {event} create a tsunami or other secondary hazard for {area}, and which official source should someone use to determine whether that warning applies?"
   }
 ]

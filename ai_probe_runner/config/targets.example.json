@@ -1,50 +1,26 @@
 [
   {
-    "target_id": "openai-no-search",
+    "target_id": "openai-luna-no-search",
     "provider": "openai",
-    "model": "gpt-5.6-terra",
+    "model": "gpt-5.6-luna",
     "interface": "responses-api",
     "browsing": false,
     "enabled": true
   },
   {
-    "target_id": "openai-web-search",
-    "provider": "openai",
-    "model": "gpt-5.6-terra",
-    "interface": "responses-api",
-    "browsing": true,
-    "enabled": true
-  },
-  {
-    "target_id": "anthropic-no-search",
+    "target_id": "anthropic-sonnet-no-search",
     "provider": "anthropic",
-    "model": "claude-sonnet-5",
+    "model": "claude-sonnet-5-5",
     "interface": "messages-api",
     "browsing": false,
     "enabled": true
   },
   {
-    "target_id": "anthropic-web-search",
-    "provider": "anthropic",
-    "model": "claude-sonnet-5",
-    "interface": "messages-api",
-    "browsing": true,
-    "enabled": true
-  },
-  {
-    "target_id": "google-no-search",
+    "target_id": "google-flash-lite-no-search",
     "provider": "google",
-    "model": "gemini-3.8-flash",
+    "model": "gemini-3.5-flash-lite",
     "interface": "interactions-api",
     "browsing": false,
-    "enabled": true
-  },
-  {
-    "target_id": "google-search",
-    "provider": "google",
-    "model": "gemini-3.8-flash",
-    "interface": "interactions-api",
-    "browsing": true,
     "enabled": true
   }
 ]
