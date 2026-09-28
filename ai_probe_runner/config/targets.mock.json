@@ -1,0 +1,10 @@
+[
+  {
+    "target_id": "mock-no-search",
+    "provider": "mock",
+    "model": "mock-v1",
+    "interface": "local-mock",
+    "browsing": false,
+    "enabled": true
+  }
+]

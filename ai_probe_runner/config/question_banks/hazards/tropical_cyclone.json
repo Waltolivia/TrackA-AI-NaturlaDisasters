@@ -1,0 +1,12 @@
+[
+  {
+    "question_id": "tropical-timing-001",
+    "category": "situational",
+    "template": "What is the latest official timing and expected impact of the {event} for {area}?"
+  },
+  {
+    "question_id": "tropical-action-001",
+    "category": "protective-action",
+    "template": "What protective actions are officials currently recommending for people in {area} during this {event}?"
+  }
+]

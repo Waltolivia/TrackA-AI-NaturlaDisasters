@@ -1,0 +1,13 @@
+{
+  "cycle_id": "synthetic-flood-test-001",
+  "source": "NWS",
+  "source_id": "synthetic-alert-001",
+  "version_hash": "synthetic-version-001",
+  "hazard_family": "flood",
+  "event": "Flash Flood Warning",
+  "area": "Test County, Utah",
+  "severity": "Severe",
+  "effective": "2026-09-28T16:00:00Z",
+  "expires": "2026-09-28T20:00:00Z",
+  "detected_at": "2026-09-28T16:01:00Z"
+}

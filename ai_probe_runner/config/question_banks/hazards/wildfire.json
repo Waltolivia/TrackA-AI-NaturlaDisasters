@@ -1,0 +1,12 @@
+[
+  {
+    "question_id": "wildfire-evacuation-001",
+    "category": "situational",
+    "template": "Are any evacuation instructions currently in effect for {area} because of this {event}? Distinguish confirmed orders from general advice."
+  },
+  {
+    "question_id": "wildfire-smoke-001",
+    "category": "protective-action",
+    "template": "What current official guidance is available for smoke or fire exposure in {area} during this {event}?"
+  }
+]
