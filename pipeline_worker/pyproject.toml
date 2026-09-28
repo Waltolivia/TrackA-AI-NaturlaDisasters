@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tracka-pipeline-worker"
+version = "0.1.0"
+description = "Reliable queue worker connecting Disaster Monitor to the AI probe runner"
+requires-python = ">=3.11"
+dependencies = ["tracka-ai-probe-runner"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+providers = [
+  "tracka-ai-probe-runner[providers]",
+  "cryptography>=43,<46",
+]
+
+[project.scripts]
+pipeline-worker = "pipeline_worker.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.uv.sources]
+tracka-ai-probe-runner = { path = "../ai_probe_runner", editable = true }

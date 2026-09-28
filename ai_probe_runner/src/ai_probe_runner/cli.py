@@ -38,9 +38,17 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--output", type=Path, default=Path("data"))
     result.add_argument("--delay-seconds", type=float, default=0.0)
     result.add_argument(
+        "--resume",
+        action="store_true",
+        help="Resume an existing cycle and skip probes that already succeeded",
+    )
+    result.add_argument(
         "--fail-on-probe-error",
         action="store_true",
-        help="Exit with status 1 when any provider probe fails (recommended for automation)",
+        help=(
+            "Exit with status 1 when any provider probe fails "
+            "(recommended for automation)"
+        ),
     )
     return result
 
@@ -52,9 +60,7 @@ def main() -> None:
         trigger = load_trigger(args.trigger)
     else:
         if not args.event or not args.area:
-            raise SystemExit(
-                "--event and --area are required with --hazard-family"
-            )
+            raise SystemExit("--event and --area are required with --hazard-family")
         trigger = _manual_trigger(args)
 
     result = run_cycle(
@@ -64,6 +70,7 @@ def main() -> None:
         output_dir=args.output,
         cycle_id=args.cycle_id,
         delay_seconds=args.delay_seconds,
+        resume=args.resume,
     )
     print(json.dumps(result, indent=2))
     if args.fail_on_probe_error and result["failed_probe_count"]:

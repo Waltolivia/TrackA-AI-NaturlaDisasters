@@ -842,15 +842,12 @@ wheels = [
 [[package]]
 name = "tracka-ai-probe-runner"
 version = "0.1.0"
-source = { editable = "." }
+source = { editable = "../ai_probe_runner" }
 dependencies = [
     { name = "python-dotenv" },
 ]
 
 [package.optional-dependencies]
-dev = [
-    { name = "pytest" },
-]
 providers = [
     { name = "anthropic" },
     { name = "cryptography" },
@@ -868,6 +865,32 @@ requires-dist = [
     { name = "python-dotenv", specifier = ">=1.0,<2" },
 ]
 provides-extras = ["providers", "dev"]
+
+[[package]]
+name = "tracka-pipeline-worker"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "tracka-ai-probe-runner" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "pytest" },
+]
+providers = [
+    { name = "cryptography" },
+    { name = "tracka-ai-probe-runner", extra = ["providers"] },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "cryptography", marker = "extra == 'providers'", specifier = ">=43,<46" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8,<10" },
+    { name = "tracka-ai-probe-runner", editable = "../ai_probe_runner" },
+    { name = "tracka-ai-probe-runner", extras = ["providers"], marker = "extra == 'providers'", editable = "../ai_probe_runner" },
+]
+provides-extras = ["dev", "providers"]
 
 [[package]]
 name = "typing-extensions"

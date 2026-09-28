@@ -3,9 +3,10 @@ import sys
 from pathlib import Path
 
 import pytest
-
+from ai_probe_runner.providers import ProviderResult
 from ai_probe_runner.questions import build_questions, normalize_trigger
 from ai_probe_runner.runner import load_targets, run_cycle
+
 from ai_probe_runner import cli
 
 
@@ -28,16 +29,28 @@ def test_example_targets_are_three_provider_no_search_baseline() -> None:
 
 def write_banks(bank_dir: Path) -> None:
     (bank_dir / "hazards").mkdir(parents=True)
-    (bank_dir / "general.json").write_text(json.dumps([{
-        "question_id": "general",
-        "category": "situational",
-        "template": "Is {area} affected by {event}?",
-    }]))
-    (bank_dir / "hazards" / "flood.json").write_text(json.dumps([{
-        "question_id": "flood",
-        "category": "protective-action",
-        "template": "What should people in {area} do?",
-    }]))
+    (bank_dir / "general.json").write_text(
+        json.dumps(
+            [
+                {
+                    "question_id": "general",
+                    "category": "situational",
+                    "template": "Is {area} affected by {event}?",
+                }
+            ]
+        )
+    )
+    (bank_dir / "hazards" / "flood.json").write_text(
+        json.dumps(
+            [
+                {
+                    "question_id": "flood",
+                    "category": "protective-action",
+                    "template": "What should people in {area} do?",
+                }
+            ]
+        )
+    )
 
 
 def test_trigger_selects_general_and_hazard_banks(tmp_path: Path) -> None:
@@ -81,21 +94,23 @@ def test_v2_outbox_trigger_is_normalized_for_ai_questions() -> None:
 
 
 def test_v2_null_aliases_are_filled_from_collector_fields() -> None:
-    normalized = normalize_trigger({
-        "schema_version": 2,
-        "trigger": "NEW_EVENT",
-        "event_id": "event-00000001",
-        "event_type": "Flash Flood Warning",
-        "location": "Test County, Utah",
-        "source": "NWS",
-        "source_alert_id": "alert-1",
-        "sent_at": "2026-09-28T12:00:00Z",
-        "source_id": None,
-        "event": None,
-        "area": None,
-        "timestamp": None,
-        "hazard_family": None,
-    })
+    normalized = normalize_trigger(
+        {
+            "schema_version": 2,
+            "trigger": "NEW_EVENT",
+            "event_id": "event-00000001",
+            "event_type": "Flash Flood Warning",
+            "location": "Test County, Utah",
+            "source": "NWS",
+            "source_alert_id": "alert-1",
+            "sent_at": "2026-09-28T12:00:00Z",
+            "source_id": None,
+            "event": None,
+            "area": None,
+            "timestamp": None,
+            "hazard_family": None,
+        }
+    )
 
     assert normalized["source_id"] == "alert-1"
     assert normalized["event"] == "Flash Flood Warning"
@@ -105,14 +120,16 @@ def test_v2_null_aliases_are_filled_from_collector_fields() -> None:
 
 
 def test_minimal_v2_handoff_has_safe_provenance_fallbacks() -> None:
-    normalized = normalize_trigger({
-        "schema_version": 2,
-        "trigger": "NEW_EVENT",
-        "event_id": "event-00000001",
-        "event_type": "Flash Flood Warning",
-        "location": "Test County, Utah",
-        "generated_at": "2026-09-28T12:01:00Z",
-    })
+    normalized = normalize_trigger(
+        {
+            "schema_version": 2,
+            "trigger": "NEW_EVENT",
+            "event_id": "event-00000001",
+            "event_type": "Flash Flood Warning",
+            "location": "Test County, Utah",
+            "generated_at": "2026-09-28T12:01:00Z",
+        }
+    )
 
     assert normalized["source"] == "disaster-monitor-v2"
     assert normalized["source_id"] == "event-00000001"
@@ -132,6 +149,54 @@ def test_v2_lifecycle_trigger_does_not_start_ai_probes() -> None:
         normalize_trigger(trigger)
 
 
+def test_v5_queue_message_is_normalized_for_ai_questions() -> None:
+    normalized = normalize_trigger(
+        {
+            "schema_version": 3,
+            "message_id": "MSG-abc123",
+            "action": "STATUS_CHANGED",
+            "event_id": "EVT-00000001",
+            "disaster": {
+                "type": "tornado",
+                "name": None,
+                "location": "Utah County, Utah",
+            },
+            "severity": "Severe",
+            "status": "WARNING",
+            "event_lifecycle": "ACTIVE",
+            "source": "NWS",
+            "source_alert_id": "alert-2",
+            "sent_at": "2026-09-28T12:00:00Z",
+            "generated_at": "2026-09-28T12:01:00Z",
+            "headline": "Tornado Warning for Utah County",
+        }
+    )
+
+    assert normalized["trigger"] == "STATUS_CHANGED"
+    assert normalized["hazard_family"] == "tornado"
+    assert normalized["event"] == "tornado"
+    assert normalized["area"] == "Utah County, Utah"
+    assert normalized["source_id"] == "alert-2"
+    assert normalized["timestamp"] == "2026-09-28T12:00:00Z"
+
+
+def test_v5_ended_message_does_not_start_ai_probes() -> None:
+    with pytest.raises(ValueError, match="only run"):
+        normalize_trigger(
+            {
+                "schema_version": 3,
+                "message_id": "MSG-ended",
+                "action": "EVENT_ENDED",
+                "event_id": "EVT-00000001",
+                "disaster": {
+                    "type": "tornado",
+                    "name": None,
+                    "location": "Utah County, Utah",
+                },
+            }
+        )
+
+
 @pytest.mark.parametrize(
     ("event_type", "family"),
     [
@@ -146,15 +211,17 @@ def test_v2_lifecycle_trigger_does_not_start_ai_probes() -> None:
     ],
 )
 def test_v2_event_terms_select_expected_bank(event_type: str, family: str) -> None:
-    normalized = normalize_trigger({
-        "schema_version": 2,
-        "trigger": "NEW_EVENT",
-        "event_id": "event-1",
-        "event_type": event_type,
-        "location": "Test Area",
-        "source": "test",
-        "source_alert_id": "alert-1",
-    })
+    normalized = normalize_trigger(
+        {
+            "schema_version": 2,
+            "trigger": "NEW_EVENT",
+            "event_id": "event-1",
+            "event_type": event_type,
+            "location": "Test Area",
+            "source": "test",
+            "source_alert_id": "alert-1",
+        }
+    )
     assert normalized["hazard_family"] == family
 
 
@@ -176,14 +243,20 @@ def test_mock_cycle_archives_trigger_questions_and_responses(tmp_path: Path) -> 
     bank_dir = tmp_path / "banks"
     write_banks(bank_dir)
     targets = tmp_path / "targets.json"
-    targets.write_text(json.dumps([{
-        "target_id": "mock",
-        "provider": "mock",
-        "model": "mock-v1",
-        "interface": "local-mock",
-        "browsing": False,
-        "enabled": True,
-    }]))
+    targets.write_text(
+        json.dumps(
+            [
+                {
+                    "target_id": "mock",
+                    "provider": "mock",
+                    "model": "mock-v1",
+                    "interface": "local-mock",
+                    "browsing": False,
+                    "enabled": True,
+                }
+            ]
+        )
+    )
     trigger = {
         "cycle_id": "shared-cycle",
         "source": "NWS",
@@ -214,6 +287,94 @@ def test_mock_cycle_archives_trigger_questions_and_responses(tmp_path: Path) -> 
     assert (cycle_dir / "trigger.json").is_file()
     assert (cycle_dir / "questions.json").is_file()
     assert all(record["status"] == "success" for record in records)
+
+
+def test_resume_retries_only_failed_probes(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    bank_dir = tmp_path / "banks"
+    write_banks(bank_dir)
+    targets = tmp_path / "targets.json"
+    targets.write_text(
+        json.dumps(
+            [
+                {
+                    "target_id": "mock",
+                    "provider": "mock",
+                    "model": "mock-v1",
+                    "interface": "local-mock",
+                    "browsing": False,
+                    "enabled": True,
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    trigger = {
+        "source": "NWS",
+        "source_id": "alert-1",
+        "hazard_family": "flood",
+        "event": "Flash Flood Warning",
+        "area": "Test County",
+    }
+
+    class FailingProvider:
+        def ask(self, **kwargs):
+            raise TimeoutError("temporary provider failure")
+
+    class SuccessfulProvider:
+        def ask(self, *, prompt, model, browsing):
+            return ProviderResult(
+                text="Recovered",
+                response_id="response-1",
+                resolved_model=model,
+                citations=[],
+                usage=None,
+                raw={"output": "Recovered"},
+            )
+
+    monkeypatch.setattr(
+        "ai_probe_runner.runner.make_provider", lambda name: FailingProvider()
+    )
+    first = run_cycle(
+        trigger=trigger,
+        targets_path=targets,
+        bank_dir=bank_dir,
+        output_dir=tmp_path / "data",
+        cycle_id="resume-cycle",
+    )
+    assert first["completed_probe_count"] == 0
+    assert first["failed_probe_count"] == 2
+
+    monkeypatch.setattr(
+        "ai_probe_runner.runner.make_provider", lambda name: SuccessfulProvider()
+    )
+    second = run_cycle(
+        trigger=trigger,
+        targets_path=targets,
+        bank_dir=bank_dir,
+        output_dir=tmp_path / "data",
+        cycle_id="resume-cycle",
+        resume=True,
+    )
+    records_path = Path(second["cycle_dir"]) / "probes.jsonl"
+    records = [json.loads(line) for line in records_path.read_text().splitlines()]
+    assert second["completed_probe_count"] == 2
+    assert second["failed_probe_count"] == 0
+    assert second["run_attempt_count"] == 2
+    assert len(records) == 4
+    assert {record["attempt"] for record in records[-2:]} == {2}
+
+    third = run_cycle(
+        trigger=trigger,
+        targets_path=targets,
+        bank_dir=bank_dir,
+        output_dir=tmp_path / "data",
+        cycle_id="resume-cycle",
+        resume=True,
+    )
+    assert third["completed_probe_count"] == 2
+    assert len(records_path.read_text().splitlines()) == 4
 
 
 def test_unknown_hazard_requires_a_bank(tmp_path: Path) -> None:

@@ -12,7 +12,12 @@ SUPPORTED_HAZARD_FAMILIES = {
     "tropical_cyclone",
     "wildfire",
 }
-PROBE_TRIGGER_TYPES = {"NEW_EVENT", "ESCALATION"}
+PROBE_TRIGGER_TYPES = {
+    "NEW_EVENT",
+    "ESCALATION",
+    "STATUS_CHANGED",
+    "SEVERITY_CHANGED",
+}
 
 HAZARD_TERMS = {
     "earthquake": ("earthquake", "earthquakes"),
@@ -47,17 +52,66 @@ def load_trigger(path: Path) -> dict[str, Any]:
 def normalize_trigger(trigger: dict[str, Any]) -> dict[str, Any]:
     """Return the canonical trigger shape used by prompts and archived records.
 
-    The function accepts both the original AI-runner contract and the JSON
-    currently emitted by disaster_monitor-v2. All original v2 fields are kept;
-    canonical aliases are added without modifying the caller's dictionary.
+    The function accepts the original AI-runner contract and the JSON emitted
+    by disaster_monitor-v2 or disaster_monitor-v5. Original collector fields
+    are kept; canonical aliases are added without modifying the caller's input.
     """
     if not isinstance(trigger, dict):
         raise ValueError("Trigger JSON must be one object")
 
     normalized = dict(trigger)
+    disaster = normalized.get("disaster")
+    is_v3 = (
+        normalized.get("schema_version") == 3
+        and isinstance(disaster, dict)
+        and "message_id" in normalized
+        and "action" in normalized
+    )
     is_v2 = all(key in normalized for key in ("event_id", "event_type", "location"))
 
-    if is_v2:
+    if is_v3:
+        trigger_type = normalized.get("action")
+        if trigger_type not in PROBE_TRIGGER_TYPES:
+            allowed = ", ".join(sorted(PROBE_TRIGGER_TYPES))
+            raise ValueError(
+                "AI probes only run for disaster-monitor actions "
+                f"{allowed}; received {trigger_type!r}"
+            )
+
+        event_type = disaster.get("type")
+        location = disaster.get("location")
+        normalized["trigger"] = trigger_type
+        normalized["event_type"] = event_type
+        normalized["location"] = location
+        normalized["source"] = normalized.get("source") or "disaster-monitor-v5"
+        normalized["source_id"] = (
+            normalized.get("source_id")
+            or normalized.get("source_alert_id")
+            or normalized.get("message_id")
+            or normalized.get("event_id")
+        )
+        normalized["event"] = (
+            normalized.get("event")
+            or disaster.get("name")
+            or event_type
+            or normalized.get("headline")
+        )
+        normalized["area"] = normalized.get("area") or location
+        normalized["timestamp"] = (
+            normalized.get("timestamp")
+            or normalized.get("sent_at")
+            or normalized.get("generated_at")
+        )
+        normalized["detected_at"] = normalized.get("detected_at") or normalized.get(
+            "generated_at"
+        )
+        normalized["hazard_family"] = normalized.get(
+            "hazard_family"
+        ) or hazard_family_for(
+            str(event_type or ""),
+            str(normalized.get("headline") or disaster.get("name") or ""),
+        )
+    elif is_v2:
         trigger_type = normalized.get("trigger")
         if trigger_type not in PROBE_TRIGGER_TYPES:
             allowed = ", ".join(sorted(PROBE_TRIGGER_TYPES))
@@ -69,18 +123,18 @@ def normalize_trigger(trigger: dict[str, Any]) -> dict[str, Any]:
         if not normalized.get("source"):
             normalized["source"] = "disaster-monitor-v2"
         if not normalized.get("source_id"):
-            normalized["source_id"] = (
-                normalized.get("source_alert_id") or normalized.get("event_id")
-            )
+            normalized["source_id"] = normalized.get(
+                "source_alert_id"
+            ) or normalized.get("event_id")
         if not normalized.get("event"):
-            normalized["event"] = (
-                normalized.get("event_type") or normalized.get("headline")
+            normalized["event"] = normalized.get("event_type") or normalized.get(
+                "headline"
             )
         if not normalized.get("area"):
             normalized["area"] = normalized.get("location")
         if not normalized.get("timestamp"):
-            normalized["timestamp"] = (
-                normalized.get("sent_at") or normalized.get("generated_at")
+            normalized["timestamp"] = normalized.get("sent_at") or normalized.get(
+                "generated_at"
             )
         if not normalized.get("detected_at"):
             normalized["detected_at"] = normalized.get("generated_at")
@@ -144,10 +198,12 @@ def build_questions(
     if missing_banks:
         raise ValueError(f"Question bank not found: {', '.join(missing_banks)}")
 
-    values = StrictValues({
-        key: "Unknown" if value is None else str(value)
-        for key, value in trigger.items()
-    })
+    values = StrictValues(
+        {
+            key: "Unknown" if value is None else str(value)
+            for key, value in trigger.items()
+        }
+    )
     questions: list[dict[str, Any]] = []
     for bank_path in bank_paths:
         bank = json.loads(bank_path.read_text(encoding="utf-8"))

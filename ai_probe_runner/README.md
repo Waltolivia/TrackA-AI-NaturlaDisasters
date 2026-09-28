@@ -4,9 +4,9 @@ This folder contains the AI-facing half of the Track A natural-disaster data
 collection project. It asks a versioned question bank of configured AI APIs and
 archives timestamped responses for later comparison with official ground truth.
 
-It is intentionally self-contained. It does **not** import from or modify either
-ground-truth collector. Its integration boundary is one JSON object already
-written by `disaster_monitor-v2`.
+It is intentionally self-contained. It does **not** import from or modify a
+ground-truth collector. Its preferred integration boundary is a schema 3 JSON
+message written by `disaster_monitor-v5`; schema 2 messages remain supported.
 
 ## What it does
 
@@ -185,23 +185,25 @@ request fails. Use it for scripts and future automation. Without the flag,
 provider failures are still saved in `probes.jsonl`, but the CLI completes so a
 researcher can inspect partial results.
 
-## Trigger contract from disaster_monitor-v2
+## Trigger contract from Disaster Monitor
 
-The AI runner now accepts the JSON written by
-`disaster_monitor-v2/disaster_monitor/services/prompter.py` directly. The example
-at `examples/trigger.flash-flood.json` matches that format:
+The preferred input is the schema 3 queue message written by
+`disaster_monitor-v5/disaster_monitor/services/prompter.py`:
 
 ```json
 {
-  "schema_version": 2,
-  "trigger": "NEW_EVENT",
-  "event_id": "event-00000001",
-  "event_type": "flash flood",
-  "event_status": "ACTIVE",
-  "location": "Garfield County, Colorado",
+  "schema_version": 3,
+  "message_id": "MSG-unique-id",
+  "action": "NEW_EVENT",
+  "event_id": "EVT-00000001",
+  "disaster": {
+    "type": "flash flood",
+    "name": null,
+    "location": "Garfield County, Colorado"
+  },
   "severity": "Severe",
-  "urgency": "Immediate",
-  "certainty": "Likely",
+  "status": "WARNING",
+  "event_lifecycle": "ACTIVE",
   "headline": "Flash Flood Warning for Garfield County",
   "source": "NWS",
   "source_alert_id": "official-alert-id",
@@ -211,37 +213,23 @@ at `examples/trigger.flash-flood.json` matches that format:
 ```
 
 The adapter adds the canonical names used by the question templates while
-preserving every original v2 field:
+preserving every original collector field:
 
-| disaster_monitor-v2 | AI runner name | Purpose |
+| Disaster Monitor | AI runner name | Purpose |
 | --- | --- | --- |
 | `event_id` | retained as `event_id` | Stable grouped incident ID |
-| `event_type` | `hazard_family` | Selects a hazard question bank |
-| `event_type` | `event` | Canonical event type placed in prompts |
-| `location` | `area` | Human-readable affected area placed in prompts |
+| `message_id` | retained as `message_id` | Stable worker job and cycle ID |
+| `action` | `trigger` | Identifies the meaningful live change |
+| `disaster.type` | `hazard_family` | Selects a hazard question bank |
+| `disaster.name` or `.type` | `event` | Event placed in prompts |
+| `disaster.location` | `area` | Human-readable area placed in prompts |
 | `source_alert_id` | `source_id` | Links results to the source alert |
 | `sent_at`, then `generated_at` | `timestamp` | Gives prompts a clear reference time |
 
-For the future worker, the minimum accepted v2-shaped handoff is:
-
-```json
-{
-  "schema_version": 2,
-  "trigger": "NEW_EVENT",
-  "event_id": "event-00000001",
-  "event_type": "Flash Flood Warning",
-  "location": "Garfield County, Colorado",
-  "generated_at": "2026-09-28T16:01:00Z"
-}
-```
-
-The full object already emitted by v2 is preferred because it retains the
-official source, alert ID, source timestamp, severity, urgency, certainty, and
-headline. The smaller form is documented to make the integration boundary
-clear, not as a reason to discard available ground-truth fields.
-
-Only `NEW_EVENT` and `ESCALATION` start AI probes. `EVENT_ENDED` and
-`COLLECTION_COMPLETE` are lifecycle records and are rejected intentionally.
+Schema 3 `NEW_EVENT`, `STATUS_CHANGED`, and `SEVERITY_CHANGED` actions can start
+AI probes. Schema 2 `NEW_EVENT` and `ESCALATION` remain supported. Lifecycle
+messages such as `EVENT_ENDED` and `COLLECTION_COMPLETE` are rejected
+intentionally.
 
 The AI module currently has question banks for:
 
@@ -251,7 +239,7 @@ The AI module currently has question banks for:
 - `tornado`
 - `earthquake`
 
-The adapter recognizes these v2 terms:
+The adapter recognizes these event-type terms:
 
 | Question bank | Recognized `event_type` or headline terms |
 | --- | --- |
@@ -261,52 +249,28 @@ The adapter recognizes these v2 terms:
 | `tornado` | `tornado`, `tornadoes` |
 | `earthquake` | `earthquake`, `earthquakes` |
 
-Other natural-disaster types currently collected by v2, such as volcanoes,
+Other natural-disaster types collected by Disaster Monitor, such as volcanoes,
 landslides, blizzards, and severe thunderstorms, fail with an explicit
 unsupported-type error. Add and review a matching hazard bank before enabling
 one of those categories; never silently route it to a generic or incorrect bank.
 
-### Test one real v2 outbox file today
+### Test one claimed queue file directly
 
 First use the mock target so no API credits are consumed:
 
 ```bash
 cd ai_probe_runner
 uv run ai-probe-runner \
-  --trigger ../disaster_monitor-v2/outbox/REPLACE_WITH_FILE.json \
+  --trigger ../disaster_monitor-v5/outbox/processing/REPLACE_WITH_FILE.json \
   --targets config/targets.mock.json \
+  --cycle-id manual-direct-test \
+  --resume \
   --fail-on-probe-error
 ```
 
-Choose an outbox file whose `trigger` is `NEW_EVENT` or `ESCALATION` and whose
-event type maps to a supported bank. Then inspect the generated `trigger.json`
-and `questions.json`. Once those look correct, repeat with
-`config/targets.local.json` to call the real providers.
-
-## How the future wiring works
-
-The JSON file itself does not launch this program. Later, a small queue/worker
-should:
-
-1. Notice a new JSON file in the v2 outbox.
-2. Ignore lifecycle triggers and unsupported hazard types.
-3. Claim one `NEW_EVENT` or `ESCALATION` file so two workers cannot run it twice.
-4. Invoke the AI runner with that exact file.
-5. Mark the job completed only when the process exits successfully.
-6. Retain or retry failed jobs without deleting their error records.
-
-Conceptually, the worker will run:
-
-```bash
-uv run ai-probe-runner \
-  --trigger /path/to/claimed-trigger.json \
-  --targets config/targets.local.json \
-  --fail-on-probe-error
-```
-
-That queue and worker are deliberately not part of this PR, because adding them
-would require changing the ground-truth collector. Keeping the boundary at JSON
-makes both sides independently testable now.
+For normal integrated operation, use the root `pipeline_worker` instead of
+manually selecting files. It claims messages, selects stable cycle IDs, passes
+`--resume`, verifies complete manifests, and acknowledges the v5 queue.
 
 ## Question banks
 
@@ -319,8 +283,8 @@ tropical cyclones, tornadoes, or earthquakes.
 Templates can use any normalized trigger field. The intended common placeholders
 are:
 
-- `{event}`: the v2 canonical event type, such as `flash flood`.
-- `{area}`: the v2 location, such as `Test County, Utah`.
+- `{event}`: the normalized event type or name, such as `flash flood`.
+- `{area}`: the normalized collector location, such as `Test County, Utah`.
 - `{timestamp}`: `sent_at`, falling back to `generated_at`.
 - `{severity}`, `{urgency}`, and `{certainty}`: source classifications when present.
 - `{source}` and `{source_id}`: provenance fields; use carefully because including
@@ -347,39 +311,40 @@ research-protocol changes that should be committed and documented.
 Each cycle contains:
 
 - `manifest.json`: cycle timing, counts, hashes, runtime, and Git commit.
-- `trigger.raw.json`: exact object received from the v2 outbox or manual caller.
+- `trigger.raw.json`: exact object received from the collector or manual caller.
 - `trigger.json`: normalized trigger used to select and render questions.
 - `questions.json`: exact rendered prompts.
 - `probes.jsonl`: one normalized record for every question/target attempt.
 - `raw/*.json`: complete successful provider responses.
 
-Errors are retained as data instead of being silently discarded. The runner
-never overwrites an existing cycle directory, so use a new `cycle_id` for a
-deliberate rerun.
+Errors are retained as data instead of being silently discarded. Pass `--resume`
+with the same cycle ID to retry only failed or missing question/target pairs.
+Resume is rejected if the trigger, target file, question banks, or expected
+probe count changed. Without `--resume`, existing cycles are never overwritten.
 
 ## Known boundary before wiring
 
-NWS supplies a human-readable `areaDesc`, so its v2 `location` works well in AI
+NWS supplies a human-readable `areaDesc`, so its location works well in AI
 prompts. The current NASA EONET adapter uses a string such as
 `coordinates=[longitude, latitude]`. The AI runner preserves and can render that
 value, but a future ground-truth change should add a human-readable place name or
 reverse-geocoded region if EONET events are included in the study. Do not ask an
 AI model to invent a place name from incomplete coordinates during normalization.
 
-The runner does not yet claim outbox files, deduplicate completed jobs, retry API
-requests, upload results to durable storage, or run on a schedule. Those belong
-in the wiring/worker layer. The AI module is now responsible only for validating
-one claimed trigger, rendering prompts, calling configured providers, and
-archiving one reproducible cycle.
+The runner intentionally does not claim queue files or schedule collection.
+Those responsibilities belong to the root `pipeline_worker`. Durable off-host
+upload remains a deployment responsibility.
 
 ## Common problems
 
 - `uv: command not found`: install uv above, reopen the terminal, and retry.
 - Missing API key: copy `.env.example` to `.env` and fill only the local file.
 - Unsupported event type: add a reviewed hazard bank and mapping before probing.
-- `EVENT_ENDED` rejected: select a `NEW_EVENT` or `ESCALATION` outbox file.
+- `EVENT_ENDED` rejected: select a supported live-change message or use the
+  worker, which records and acknowledges lifecycle messages automatically.
 - Existing cycle directory: choose a new explicit manual `cycle_id`; the runner
-  refuses to overwrite collected data.
+  refuses to overwrite collected data unless `--resume` is supplied with
+  identical research inputs.
 - Some probes failed but the command continued: inspect `probes.jsonl`, or run
   with `--fail-on-probe-error` for a nonzero automation exit status.
 
@@ -394,5 +359,5 @@ archiving one reproducible cycle.
 7. Run all three baseline targets and verify the expected/completed/failed counts.
 8. Record and resolve any model, billing, quota, or interface errors.
 9. Preserve the exact target file, question banks, Git commit, and collection date.
-10. Pass a real supported v2 outbox file through the mock target.
-11. Only after the manual pilot, design the durable trigger queue and 24/7 worker.
+10. Pass a real supported v5 queue file through the mock target.
+11. Run the root worker end-to-end and verify queue acknowledgement.

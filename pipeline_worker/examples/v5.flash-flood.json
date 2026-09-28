@@ -1,0 +1,23 @@
+{
+  "schema_version": 3,
+  "message_id": "MSG-synthetic-flood-test-001",
+  "action": "NEW_EVENT",
+  "event_id": "EVT-00000001",
+  "disaster": {
+    "type": "flash flood",
+    "name": null,
+    "location": "Test County, Utah"
+  },
+  "severity": "Severe",
+  "status": "WARNING",
+  "event_lifecycle": "ACTIVE",
+  "source": "NWS",
+  "source_alert_id": "synthetic-alert-001",
+  "sent_at": "2026-09-28T16:00:00Z",
+  "generated_at": "2026-09-28T16:01:00Z",
+  "headline": "Flash Flood Warning for Test County",
+  "details": {
+    "match_confidence": 0.0,
+    "match_reason": "synthetic_worker_test"
+  }
+}
