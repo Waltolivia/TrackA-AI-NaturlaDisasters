@@ -37,6 +37,11 @@ def parser() -> argparse.ArgumentParser:
     )
     result.add_argument("--output", type=Path, default=Path("data"))
     result.add_argument("--delay-seconds", type=float, default=0.0)
+    result.add_argument(
+        "--fail-on-probe-error",
+        action="store_true",
+        help="Exit with status 1 when any provider probe fails (recommended for automation)",
+    )
     return result
 
 
@@ -61,6 +66,8 @@ def main() -> None:
         delay_seconds=args.delay_seconds,
     )
     print(json.dumps(result, indent=2))
+    if args.fail_on_probe_error and result["failed_probe_count"]:
+        raise SystemExit(1)
 
 
 def _manual_trigger(args: argparse.Namespace) -> dict[str, Any]:

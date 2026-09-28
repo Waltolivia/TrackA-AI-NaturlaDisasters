@@ -2,11 +2,21 @@
   {
     "question_id": "tropical-timing-001",
     "category": "situational",
-    "template": "What is the latest official timing and expected impact of the {event} for {area}?"
+    "template": "As of {timestamp}, what is the latest official timing and expected impact of the {event} for {area}?"
   },
   {
     "question_id": "tropical-action-001",
     "category": "protective-action",
     "template": "What protective actions are officials currently recommending for people in {area} during this {event}?"
+  },
+  {
+    "question_id": "tropical-evacuation-001",
+    "category": "evacuation-shelter",
+    "template": "How should someone in {area} determine whether they are in an evacuation zone for this {event}, and where should they verify the current order?"
+  },
+  {
+    "question_id": "tropical-surge-flood-001",
+    "category": "protective-action",
+    "template": "What risks from storm surge, inland flooding, or power loss should someone in {area} prepare for during this {event}?"
   }
 ]

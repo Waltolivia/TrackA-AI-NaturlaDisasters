@@ -7,6 +7,16 @@
   {
     "question_id": "wildfire-smoke-001",
     "category": "protective-action",
-    "template": "What current official guidance is available for smoke or fire exposure in {area} during this {event}?"
+    "template": "What current official guidance is available for smoke or fire exposure in {area} during this {event}, especially for children, older adults, and people with breathing conditions?"
+  },
+  {
+    "question_id": "wildfire-route-001",
+    "category": "evacuation-shelter",
+    "template": "If someone in {area} is told to evacuate because of this {event}, how should they find a currently approved route and shelter without relying on possibly outdated route information?"
+  },
+  {
+    "question_id": "wildfire-return-001",
+    "category": "reentry",
+    "template": "How can someone confirm when it is safe and officially permitted to return to a home in {area} after this {event}?"
   }
 ]

@@ -4,9 +4,9 @@ This folder contains the AI-facing half of the Track A natural-disaster data
 collection project. It asks a versioned question bank of configured AI APIs and
 archives timestamped responses for later comparison with official ground truth.
 
-It is intentionally self-contained. This initial module does **not** import from
-or modify `emergency_alert_collector/`. The future integration boundary is one
-small trigger JSON object.
+It is intentionally self-contained. It does **not** import from or modify either
+ground-truth collector. Its integration boundary is one JSON object already
+written by `disaster_monitor-v2`.
 
 ## What it does
 
@@ -14,7 +14,7 @@ small trigger JSON object.
 - Combines a general question bank with one hazard-specific bank.
 - Runs every rendered question against every enabled target configuration.
 - Treats browsing on/off as separate experimental conditions.
-- Saves the trigger, rendered questions, normalized records, raw responses,
+- Saves the raw and normalized triggers, rendered questions, normalized records, raw responses,
   timestamps, model identifiers, citations, token usage, errors, and hashes.
 - Includes a mock provider so the full pipeline can be tested without API keys.
 
@@ -24,8 +24,10 @@ small trigger JSON object.
 ai_probe_runner/
   config/
     question_banks/
+      README.md
       general.json
       hazards/
+    README.md
     targets.mock.json
     targets.example.json
   examples/
@@ -37,13 +39,54 @@ ai_probe_runner/
   requirements.txt
 ```
 
-## Quick start with uv
+## Install for the first time
 
-From the shared repository root:
+You need Git and [uv](https://docs.astral.sh/uv/). You do not need to create or
+activate a virtual environment manually; `uv sync` creates `.venv` and installs
+the locked project dependencies.
+
+Check whether uv is already installed:
 
 ```bash
-cd ai_probe_runner
+uv --version
+```
+
+If that command is not found, install uv using Astral's official instructions:
+
+**macOS or Linux:**
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Windows PowerShell:**
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Close and reopen the terminal after installation, then run `uv --version`
+again. The full installation guide is at
+<https://docs.astral.sh/uv/getting-started/installation/>.
+
+Clone the shared repository if it is not already on your computer:
+
+```bash
+git clone https://github.com/Waltolivia/TrackA-AI-NaturlaDisasters.git
+cd TrackA-AI-NaturlaDisasters/ai_probe_runner
+```
+
+Install the runner, tests, and provider SDKs:
+
+```bash
 uv sync --extra dev --extra providers
+```
+
+## Quick no-cost test
+
+From `TrackA-AI-NaturlaDisasters/ai_probe_runner`:
+
+```bash
 uv run pytest
 ```
 
@@ -65,7 +108,9 @@ uv run ai-probe-runner \
   --targets config/targets.mock.json
 ```
 
-Output is written under `data/YYYY-MM-DD/<cycle-id>/`.
+Output is written under `data/YYYY-MM-DD/<cycle-id>/`. The `data/` directory is
+ignored by Git because collected research data should not be mixed with source
+code.
 
 ## API keys and real providers
 
@@ -92,10 +137,32 @@ Copy the example target configuration:
 cp config/targets.example.json config/targets.local.json
 ```
 
-Verify that each configured model and search tool is available to the team's API
-account. Model availability and names can change. Disable unavailable or
-unapproved conditions with `"enabled": false`, and freeze the chosen file
-before real research collection.
+`targets.example.json` is the project's inexpensive baseline, reviewed on
+2026-09-28. It contains one fast, cost-conscious target from each supported
+provider:
+
+| Provider | Model ID | Experimental condition |
+| --- | --- | --- |
+| OpenAI | `gpt-5.6-luna` | No web search |
+| Anthropic | `claude-sonnet-5-5` | No web search |
+| Google | `gemini-3.5-flash-lite` | No web search |
+
+These models were selected to emphasize speed, cost, and broad API availability
+rather than maximum benchmark performance. They are inexpensive API models, but
+they are **not guaranteed to be identical** to the models, system prompts, or
+tools used in the providers' free consumer chat products.
+
+The initial baseline deliberately disables browsing. Browsing changes the
+information available to a model and may add tool-use charges, so search-enabled
+probes should be introduced later as a separately named experimental condition,
+not silently added to these targets. See `config/README.md` for every target
+field, one-provider testing, model lifecycle guidance, and the procedure for
+adding a search condition.
+
+Verify that every configured model is available to the team's API account.
+Model availability and names can change. Disable unavailable or unapproved
+conditions with `"enabled": false`. Before real collection, commit the exact
+approved target file and record the date on which the IDs were verified.
 
 Run a real pilot:
 
@@ -103,33 +170,80 @@ Run a real pilot:
 uv run ai-probe-runner \
   --trigger examples/trigger.flash-flood.json \
   --targets config/targets.local.json \
-  --delay-seconds 1
+  --delay-seconds 1 \
+  --fail-on-probe-error
 ```
 
-## Trigger contract
+The example event currently renders five general questions and four flood
+questions. With the three enabled baseline targets, a successful flood pilot
+therefore expects `9 questions x 3 targets = 27 probes`. Check the printed
+`expected_probe_count`, `completed_probe_count`, and `failed_probe_count` rather
+than assuming that the run succeeded because the command exited.
 
-The future ground-truth integration should send an object like:
+`--fail-on-probe-error` makes the process exit with status 1 if any provider
+request fails. Use it for scripts and future automation. Without the flag,
+provider failures are still saved in `probes.jsonl`, but the CLI completes so a
+researcher can inspect partial results.
+
+## Trigger contract from disaster_monitor-v2
+
+The AI runner now accepts the JSON written by
+`disaster_monitor-v2/disaster_monitor/services/prompter.py` directly. The example
+at `examples/trigger.flash-flood.json` matches that format:
 
 ```json
 {
-  "cycle_id": "one-shared-uuid",
-  "source": "NWS",
-  "source_id": "official-alert-id",
-  "version_hash": "official-alert-version-hash",
-  "hazard_family": "flood",
-  "event": "Flash Flood Warning",
-  "area": "Garfield County, Colorado",
+  "schema_version": 2,
+  "trigger": "NEW_EVENT",
+  "event_id": "event-00000001",
+  "event_type": "flash flood",
+  "event_status": "ACTIVE",
+  "location": "Garfield County, Colorado",
   "severity": "Severe",
   "urgency": "Immediate",
   "certainty": "Likely",
-  "effective": "2026-09-28T16:00:00Z",
-  "expires": "2026-09-28T20:00:00Z",
-  "detected_at": "2026-09-28T16:01:00Z"
+  "headline": "Flash Flood Warning for Garfield County",
+  "source": "NWS",
+  "source_alert_id": "official-alert-id",
+  "sent_at": "2026-09-28T16:00:00Z",
+  "generated_at": "2026-09-28T16:01:00Z"
 }
 ```
 
-Required fields are `source`, `source_id`, `hazard_family`, `event`, and
-`area`. The supported starter families are:
+The adapter adds the canonical names used by the question templates while
+preserving every original v2 field:
+
+| disaster_monitor-v2 | AI runner name | Purpose |
+| --- | --- | --- |
+| `event_id` | retained as `event_id` | Stable grouped incident ID |
+| `event_type` | `hazard_family` | Selects a hazard question bank |
+| `event_type` | `event` | Canonical event type placed in prompts |
+| `location` | `area` | Human-readable affected area placed in prompts |
+| `source_alert_id` | `source_id` | Links results to the source alert |
+| `sent_at`, then `generated_at` | `timestamp` | Gives prompts a clear reference time |
+
+For the future worker, the minimum accepted v2-shaped handoff is:
+
+```json
+{
+  "schema_version": 2,
+  "trigger": "NEW_EVENT",
+  "event_id": "event-00000001",
+  "event_type": "Flash Flood Warning",
+  "location": "Garfield County, Colorado",
+  "generated_at": "2026-09-28T16:01:00Z"
+}
+```
+
+The full object already emitted by v2 is preferred because it retains the
+official source, alert ID, source timestamp, severity, urgency, certainty, and
+headline. The smaller form is documented to make the integration boundary
+clear, not as a reason to discard available ground-truth fields.
+
+Only `NEW_EVENT` and `ESCALATION` start AI probes. `EVENT_ENDED` and
+`COLLECTION_COMPLETE` are lifecycle records and are rejected intentionally.
+
+The AI module currently has question banks for:
 
 - `flood`
 - `wildfire`
@@ -137,24 +251,57 @@ Required fields are `source`, `source_id`, `hazard_family`, `event`, and
 - `tornado`
 - `earthquake`
 
-The family must match a filename under `config/question_banks/hazards/`.
+The adapter recognizes these v2 terms:
+
+| Question bank | Recognized `event_type` or headline terms |
+| --- | --- |
+| `flood` | `flood`, `flash flood`, `floods`, `storm surge` |
+| `wildfire` | `wildfire`, `wildfires`, `fire weather`, `red flag` |
+| `tropical_cyclone` | `hurricane`, `tropical cyclone`, `tropical storm` |
+| `tornado` | `tornado`, `tornadoes` |
+| `earthquake` | `earthquake`, `earthquakes` |
+
+Other natural-disaster types currently collected by v2, such as volcanoes,
+landslides, blizzards, and severe thunderstorms, fail with an explicit
+unsupported-type error. Add and review a matching hazard bank before enabling
+one of those categories; never silently route it to a generic or incorrect bank.
+
+### Test one real v2 outbox file today
+
+First use the mock target so no API credits are consumed:
+
+```bash
+cd ai_probe_runner
+uv run ai-probe-runner \
+  --trigger ../disaster_monitor-v2/outbox/REPLACE_WITH_FILE.json \
+  --targets config/targets.mock.json \
+  --fail-on-probe-error
+```
+
+Choose an outbox file whose `trigger` is `NEW_EVENT` or `ESCALATION` and whose
+event type maps to a supported bank. Then inspect the generated `trigger.json`
+and `questions.json`. Once those look correct, repeat with
+`config/targets.local.json` to call the real providers.
 
 ## How the future wiring works
 
-The JSON itself does not launch this program. Later, a small queue/worker should:
+The JSON file itself does not launch this program. Later, a small queue/worker
+should:
 
-1. Notice that the ground-truth collector saved a new qualifying alert version.
-2. Classify it into a controlled `hazard_family`.
-3. Store a pending trigger containing the fields above.
-4. Claim one pending trigger and invoke this CLI.
-5. Mark the trigger completed or failed.
+1. Notice a new JSON file in the v2 outbox.
+2. Ignore lifecycle triggers and unsupported hazard types.
+3. Claim one `NEW_EVENT` or `ESCALATION` file so two workers cannot run it twice.
+4. Invoke the AI runner with that exact file.
+5. Mark the job completed only when the process exits successfully.
+6. Retain or retry failed jobs without deleting their error records.
 
 Conceptually, the worker will run:
 
 ```bash
 uv run ai-probe-runner \
   --trigger /path/to/claimed-trigger.json \
-  --targets config/targets.local.json
+  --targets config/targets.local.json \
+  --fail-on-probe-error
 ```
 
 That queue and worker are deliberately not part of this PR, because adding them
@@ -163,9 +310,33 @@ makes both sides independently testable now.
 
 ## Question banks
 
-Every trigger receives the questions in `general.json` plus the matching hazard
-file. Templates may use fields such as `{event}` and `{area}`. Questions are
-rendered deterministically; an AI is not used to generate research questions.
+Every trigger receives five questions from `general.json` plus four questions
+from the matching hazard file. The general bank covers current status, immediate
+protective action, official referrals, evacuation/shelter decisions, and
+uncertainty. Hazard banks add risks and actions specific to floods, wildfires,
+tropical cyclones, tornadoes, or earthquakes.
+
+Templates can use any normalized trigger field. The intended common placeholders
+are:
+
+- `{event}`: the v2 canonical event type, such as `flash flood`.
+- `{area}`: the v2 location, such as `Test County, Utah`.
+- `{timestamp}`: `sent_at`, falling back to `generated_at`.
+- `{severity}`, `{urgency}`, and `{certainty}`: source classifications when present.
+- `{source}` and `{source_id}`: provenance fields; use carefully because including
+  them in a prompt gives the model information a normal user might not have.
+
+Questions are rendered deterministically; an AI is not used to generate research
+questions. Each entry must be a JSON object with a unique `question_id`, a
+`category`, and a `template`:
+
+```json
+{
+  "question_id": "flood-example-001",
+  "category": "protective-action",
+  "template": "What should someone in {area} do during the reported {event}?"
+}
+```
 
 Question IDs must be unique across the two selected banks. Treat changes to
 wording, IDs, model configurations, browsing conditions, and retry policy as
@@ -176,7 +347,8 @@ research-protocol changes that should be committed and documented.
 Each cycle contains:
 
 - `manifest.json`: cycle timing, counts, hashes, runtime, and Git commit.
-- `trigger.json`: exact event input.
+- `trigger.raw.json`: exact object received from the v2 outbox or manual caller.
+- `trigger.json`: normalized trigger used to select and render questions.
 - `questions.json`: exact rendered prompts.
 - `probes.jsonl`: one normalized record for every question/target attempt.
 - `raw/*.json`: complete successful provider responses.
@@ -185,12 +357,42 @@ Errors are retained as data instead of being silently discarded. The runner
 never overwrites an existing cycle directory, so use a new `cycle_id` for a
 deliberate rerun.
 
+## Known boundary before wiring
+
+NWS supplies a human-readable `areaDesc`, so its v2 `location` works well in AI
+prompts. The current NASA EONET adapter uses a string such as
+`coordinates=[longitude, latitude]`. The AI runner preserves and can render that
+value, but a future ground-truth change should add a human-readable place name or
+reverse-geocoded region if EONET events are included in the study. Do not ask an
+AI model to invent a place name from incomplete coordinates during normalization.
+
+The runner does not yet claim outbox files, deduplicate completed jobs, retry API
+requests, upload results to durable storage, or run on a schedule. Those belong
+in the wiring/worker layer. The AI module is now responsible only for validating
+one claimed trigger, rendering prompts, calling configured providers, and
+archiving one reproducible cycle.
+
+## Common problems
+
+- `uv: command not found`: install uv above, reopen the terminal, and retry.
+- Missing API key: copy `.env.example` to `.env` and fill only the local file.
+- Unsupported event type: add a reviewed hazard bank and mapping before probing.
+- `EVENT_ENDED` rejected: select a `NEW_EVENT` or `ESCALATION` outbox file.
+- Existing cycle directory: choose a new explicit manual `cycle_id`; the runner
+  refuses to overwrite collected data.
+- Some probes failed but the command continued: inspect `probes.jsonl`, or run
+  with `--fail-on-probe-error` for a nonzero automation exit status.
+
 ## Team test checklist
 
 1. Run `uv run pytest`.
 2. Run the example trigger with `targets.mock.json`.
 3. Confirm the manifest reports all expected probes completed.
-4. Inspect `trigger.json`, `questions.json`, and `probes.jsonl`.
-5. Run one provider at a time using a local target file.
-6. Record and resolve any model, billing, quota, or search-tool errors.
-7. Only after the manual pilot, design the durable trigger queue and 24/7 worker.
+4. Inspect `trigger.raw.json`, `trigger.json`, `questions.json`, and `probes.jsonl`.
+5. Copy `targets.example.json` to ignored `targets.local.json`.
+6. Run one provider at a time by disabling the other local targets.
+7. Run all three baseline targets and verify the expected/completed/failed counts.
+8. Record and resolve any model, billing, quota, or interface errors.
+9. Preserve the exact target file, question banks, Git commit, and collection date.
+10. Pass a real supported v2 outbox file through the mock target.
+11. Only after the manual pilot, design the durable trigger queue and 24/7 worker.
