@@ -1,0 +1,99 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000059    Type: coastal flood    Phase: ADVISORY    Lifecycle: ACTIVE    Highest Severity: Minor
+Started: 2026-09-29T18:12:27.790856+00:00    Last Seen: 2026-09-29T18:12:27.790856+00:00    Ended: N/A
+Primary Location: San Diego County Coastal Areas; Orange County Coastal
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T01:59:00-07:00    NWS    Coastal Flood Advisory    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Coastal Flood Advisory issued September 29 at 1:59AM PDT until September 30 at 5:00PM PDT by NWS San Diego CA
+Expires: 2026-09-29T14:30:00-07:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+San Diego County Coastal Areas; Orange County Coastal
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Minor coastal flooding expected due to the combination
+of high tides and elevated surf.
+
+* WHERE...San Diego County Coastal Areas and Orange County
+Coastal Areas.
+
+* WHEN...Until 5 PM PDT Wednesday.
+
+* IMPACTS...Minor coastal flooding and minor coastal erosion
+expected during high tides. Additionally, elevated surf will
+lead to strong rip currents.
+
+* ADDITIONAL DETAILS...Elevated surf of 2-4 feet with local sets
+to 5 feet on south-facing beaches. Morning high tides are
+expected to peak between 6.8 and 7.1 feet during the late
+mornings between 10 AM and noon through Wednesday. These tide
+predictions have been corrected to reflect current trends in
+observed tide observations.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+If travel is required, allow extra time as some roads may be
+closed. Do not drive around barricades or through water of
+unknown depth. Take the necessary actions to protect flood-prone
+property.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "CFWSGX"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "COASTAL FLOOD ADVISORY REMAINS IN EFFECT UNTIL 5 PM PDT WEDNESDAY"
+  ],
+  "VTEC": [
+    "/O.CON.KSGX.CF.Y.0005.000000T0000Z-261001T0000Z/"
+  ],
+  "WMOidentifier": [
+    "WHUS46 KSGX 290859"
+  ],
+  "eventEndingTime": [
+    "2026-09-30T17:00:00-07:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.d90f4aa0aa4b3b9023e0bd7920f4c4e82154dad1.001.1,2026-09-
+28T11:44:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.e6ad2fbd8b9ad192e45a2a15e92dc8fb47bfdb49.001.2,2026-09-
+28T04:50:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.d3c5ada5c20f0e12e38adf70e941727467f4c451.001.1,2026-09-
+28T01:34:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.0f94ddff77bbd0b08f7db6d083523c3c9326b38d.001.1,2026-09-
+27T20:03:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.489d7f9590676e7d551b6e030effaac335d3a80b.001.1,2026-09-
+27T12:02:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.075e6b13131c6917821ba95dba4654944f3a3bab.001.1,2026-09-
+27T04:52:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.f6147ed0e73c7fa4f61a4bfdc422b4b53fa366ac.001.1,2026-09-
+26T21:57:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.3a9470375903a7d2e68c63ef81b619fecfbb7c39.001.1,2026-09-
+26T14:08:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.d9ccb0711a9d9ceb41a36dff936af0f4eb81c625.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

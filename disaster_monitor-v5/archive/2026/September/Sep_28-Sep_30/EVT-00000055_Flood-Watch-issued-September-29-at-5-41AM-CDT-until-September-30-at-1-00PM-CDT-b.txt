@@ -1,0 +1,99 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000055    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.608632+00:00    Last Seen: 2026-09-29T18:12:27.608632+00:00    Ended: N/A
+Primary Location: Cimarron; Texas; Dallam; Sherman; Hansford; Hartley; Moore; Hutchinson; Oldham; Potter; Carson; Deaf Smith; Randall; Armstrong; Palo Duro Canyon
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T05:41:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 5:41AM CDT until September 30 at 1:00PM CDT by NWS Amarillo TX
+Expires: 2026-09-29T14:00:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Cimarron; Texas; Dallam; Sherman; Hansford; Hartley; Moore; Hutchinson; Oldham; Potter; Carson; Deaf Smith;
+Randall; Armstrong; Palo Duro Canyon
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...Portions of the Panhandle of Oklahoma, including the
+following areas, Cimarron and Texas and the Panhandle of Texas,
+including the following areas, Armstrong, Carson, Dallam, Deaf
+Smith, Hansford, Hartley, Hutchinson, Moore, Oldham, Palo Duro
+Canyon, Potter, Randall and Sherman.
+
+* WHEN...Through Wednesday afternoon.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Area creeks and streams are running high and could flood with more
+heavy rain.
+
+* ADDITIONAL DETAILS...
+- A slow moving weather system that has ingested Hurricane Polo's
+moisture bringing heavy rainfall to the panhandles. This has the
+potential to be a high end rain event for portions of the
+panhandles. There is a moderate chance for flash flooding mainly
+in the western half of the panhandles.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAAMA"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT THROUGH WEDNESDAY AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.CON.KAMA.FA.A.0003.260929T1200Z-260930T1800Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS64 KAMA 291041"
+  ],
+  "eventEndingTime": [
+    "2026-09-30T13:00:00-05:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.2aa22bf408594a9d83cb269306dc43d0e12adca9.001.1,2026-09-
+28T20:48:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.fa55205813c6e18b0feb7fa5e69d613ef88dfef0.001.1,2026-09-
+28T13:43:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.9fa75c6e6abaf0020d1644993fc662f3401e166d.001.1,2026-09-
+28T06:45:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.ffd0f585a0df994b9effca7c7b771e3ac2fc8874.001.1,2026-09-
+28T00:27:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.0a9c13a10a94b7a9abbdb9ca65bfb5b08b0143a6.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

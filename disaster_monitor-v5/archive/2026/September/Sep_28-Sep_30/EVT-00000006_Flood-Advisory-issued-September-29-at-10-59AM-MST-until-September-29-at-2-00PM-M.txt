@@ -1,0 +1,88 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000006    Type: flood    Phase: ADVISORY    Lifecycle: ACTIVE    Highest Severity: Minor
+Started: 2026-09-29T18:12:26.003658+00:00    Last Seen: 2026-09-29T18:12:26.003658+00:00    Ended: N/A
+Primary Location: Greenlee, AZ
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T10:59:00-07:00    NWS    Flood Advisory    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Advisory issued September 29 at 10:59AM MST until September 29 at 2:00PM MST by NWS Tucson AZ
+Expires: 2026-09-29T14:00:00-07:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Greenlee, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall is expected.
+
+* WHERE...Northeastern Greenlee County in southeastern Arizona...
+
+* WHEN...Until 200 PM MST.
+
+* IMPACTS...Some low-water crossings may become impassable. River or
+stream flows are elevated.
+
+* ADDITIONAL DETAILS...
+- At 1056 AM MST, Doppler radar indicated heavy rain due to
+thunderstorms. Minor flooding is ongoing or expected to begin
+shortly in the advisory area.
+- Blue River near Clifton is the most likely place to experience
+minor flooding. Significant rises have been noted on the Blue
+River up to 7 feet. At 12 feet, dispersed recreation sites and
+Juan Miller Road low water crossings are affected.
+- Some locations that will experience flooding include...
+Blue.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+Be aware of your surroundings and do not drive on flooded roads.
+
+Flooding is occurring or is imminent. It is important to know where
+you are relative to streams, rivers, or creeks which can become
+killers in heavy rains. Campers and hikers should avoid streams or
+creeks.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLSTWC"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "FLOOD ADVISORY IN EFFECT UNTIL 2 PM MST THIS AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.NEW.KTWC.FA.Y.0193.260929T1759Z-260929T2100Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS85 KTWC 291759"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T14:00:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.f8c56688d2e334d0ff21299c1fd71000e5c3e8b4.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

@@ -1,0 +1,99 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000054    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.552833+00:00    Last Seen: 2026-09-29T18:12:27.552833+00:00    Ended: N/A
+Primary Location: Aguila Valley; Northwest Valley; Tonopah Desert; Gila Bend; Buckeye/Avondale; Cave Creek/New River; Deer Valley; Central Phoenix; North Phoenix/Glendale; New River Mesa; Scottsdale/Paradise Valley; Rio Verde/Salt River; East Valley; Fountain Hills/East Mesa; South Mountain/Ahwatukee; Southeast Valley/Queen Creek; Superior; Northwest Pinal County; West Pinal County; Apache Junction/Gold Canyon; Tonto Basin; Mazatzal Mountains; Pinal/Superstition Mountains; Sonoran Desert Natl Monument; San Carlos; Dripping Springs; Globe/Miami; Southeast Gila County
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T03:46:00-07:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 3:46AM MST until September 29 at 9:00PM MST by NWS Phoenix AZ
+Expires: 2026-09-29T11:00:00-07:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Aguila Valley; Northwest Valley; Tonopah Desert; Gila Bend; Buckeye/Avondale; Cave Creek/New River; Deer Valley;
+Central Phoenix; North Phoenix/Glendale; New River Mesa; Scottsdale/Paradise Valley; Rio Verde/Salt River; East
+Valley; Fountain Hills/East Mesa; South Mountain/Ahwatukee; Southeast Valley/Queen Creek; Superior; Northwest
+Pinal County; West Pinal County; Apache Junction/Gold Canyon; Tonto Basin; Mazatzal Mountains;
+Pinal/Superstition Mountains; Sonoran Desert Natl Monument; San Carlos; Dripping Springs; Globe/Miami; Southeast
+Gila County
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...South central Arizona, including the following areas,
+Maricopa, northern Pinal, and southern Gila counties including the
+Phoenix metropolitan area.
+
+* WHEN...Through this evening.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+
+* ADDITIONAL DETAILS...
+- A strong weather system moving through the region will bring
+widespread showers and scattered thunderstorms this morning
+before tapering off during the afternoon hours. Moderate to heavy
+rainfall with localized rainfall rates of up to one inch per hour
+will be possible this morning. Additional rainfall amounts of one
+to two inches are possible, particularly over higher terrain
+areas east of Phoenix.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAPSR"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT THROUGH THIS EVENING"
+  ],
+  "VTEC": [
+    "/O.CON.KPSR.FA.A.0008.000000T0000Z-260930T0400Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS65 KPSR 291046"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T21:00:00-07:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.fcb3f55d86282029bf6a874c7a9f497c4e459e0e.002.1,2026-09-
+28T00:23:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.f715693282ed3a0b0fdf747cd0d5b74a4dd3f141.001.1,2026-09-
+27T12:29:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.46aea81f6b9c938b59b4b328b6498e5f9846d590.001.1,2026-09-
+27T01:44:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.caeec880f2531c08551df23074e1c920b8a4b7f0.002.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

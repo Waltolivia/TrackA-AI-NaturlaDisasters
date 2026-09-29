@@ -1,0 +1,87 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000062    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.919940+00:00    Last Seen: 2026-09-29T18:12:27.919940+00:00    Ended: N/A
+Primary Location: Doniphan; Atchison; Nodaway; Worth; Gentry; Harrison; Holt; Andrew
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T01:44:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 1:44AM CDT until October 2 at 1:00AM CDT by NWS Kansas City/Pleasant Hill MO
+Expires: 2026-09-29T16:15:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Doniphan; Atchison; Nodaway; Worth; Gentry; Harrison; Holt; Andrew
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...Portions of northeast Kansas, including the following area,
+Doniphan and Missouri, including the following areas, Andrew,
+Atchison MO, Gentry, Harrison, Holt, Nodaway and Worth.
+
+* WHEN...From late tonight through late Thursday night.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Creeks and streams may rise out of their banks. Low-water crossings
+may be flooded.
+
+* ADDITIONAL DETAILS...
+- Widespread areas approaching 2 or more inches are forecast, with
+potential for areas to receive 4 or more inches.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAEAX"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT FROM LATE TONIGHT THROUGH LATE THURSDAY NIGHT"
+  ],
+  "VTEC": [
+    "/O.CON.KEAX.FA.A.0017.260930T0600Z-261002T0600Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS63 KEAX 290644"
+  ],
+  "eventEndingTime": [
+    "2026-10-02T01:00:00-05:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.15f42253ceac18da1b7d574ff3bc0dbb1126818e.001.1,2026-09-
+28T13:21:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.0dfc9b4c217cbe6c782cc7ca8c53da2be49a39ab.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

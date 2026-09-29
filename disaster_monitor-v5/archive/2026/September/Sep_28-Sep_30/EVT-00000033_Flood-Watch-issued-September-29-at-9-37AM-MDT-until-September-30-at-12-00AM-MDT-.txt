@@ -1,0 +1,106 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000033    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.849057+00:00    Last Seen: 2026-09-29T18:12:26.849057+00:00    Ended: N/A
+Primary Location: Lower Washington County; Zion National Park; Southern Mountains; Upper Sevier River Valleys; Bryce Canyon Country; South Central Utah; Capitol Reef National Park and Vicinity; Western Canyonlands; Glen Canyon Recreation Area/Lake Powell
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T09:37:00-06:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 9:37AM MDT until September 30 at 12:00AM MDT by NWS Salt Lake City UT
+Expires: 2026-09-30T00:00:00-06:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Lower Washington County; Zion National Park; Southern Mountains; Upper Sevier River Valleys; Bryce Canyon
+Country; South Central Utah; Capitol Reef National Park and Vicinity; Western Canyonlands; Glen Canyon
+Recreation Area/Lake Powell
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...A portion of Utah, including the following areas, Bryce
+Canyon Country, Capitol Reef National Park and Vicinity, Glen
+Canyon Recreation Area/Lake Powell, South Central Utah, Southern
+Mountains, Upper Sevier River Valleys, Western Canyonlands, Lower
+Washington County and Zion National Park.
+
+* WHEN...Through this evening.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, dry washes, slot canyons, and other low-lying and
+flood-prone locations such as slickrock areas and recent burn scars
+including Cottonwood, Widemouth 2, France Canyon, Monroe Canyon,
+Forsyth, and Silver King.
+
+* ADDITIONAL DETAILS...
+- Deep tropical moisture will continue to bring the threat of heavy
+rainfall to portions of southern and eastern Utah through
+tonight. Additional rainfall totals of 0.50 to 1.00 inch, with
+locally up to 2.00 inches will occur in this area. The flooding
+threat will be exasperated by already saturated ground, with area
+streams, creeks, river and other waterways already running high.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFASLC"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT THROUGH THIS EVENING"
+  ],
+  "VTEC": [
+    "/O.CON.KSLC.FA.A.0011.000000T0000Z-260930T0600Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS65 KSLC 291537"
+  ],
+  "eventEndingTime": [
+    "2026-09-30T00:00:00-06:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.a09a68bce0080092e5575d4522b5b659779d3440.003.1,2026-09-
+28T22:26:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.a09a68bce0080092e5575d4522b5b659779d3440.002.1,2026-09-
+28T22:26:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.daca677bf5b335d5c818c3610df1e5c6a09f43a8.003.1,2026-09-
+28T00:24:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.daca677bf5b335d5c818c3610df1e5c6a09f43a8.002.1,2026-09-
+28T00:24:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.4e87ac7cfdb60d9795dc67044214a9b0c99f31cb.001.1,2026-09-
+27T22:39:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.04c2b99b56a556b222fb16bb9c979318f26c9668.001.1,2026-09-
+27T07:48:00-06:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.a7692b67262bb250325ea4584847ea7e5d56ace2.002.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

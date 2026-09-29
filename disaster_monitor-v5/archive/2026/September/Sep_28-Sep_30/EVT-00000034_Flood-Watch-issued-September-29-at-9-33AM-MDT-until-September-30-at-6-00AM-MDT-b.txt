@@ -1,0 +1,124 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000034    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.874536+00:00    Last Seen: 2026-09-29T18:12:26.874536+00:00    Ended: N/A
+Primary Location: Northwest Plateau; Chuska Mountains; Far Northwest Highlands; Northwest Highlands; West Central Plateau; West Central Mountains; West Central Highlands; Southwest Mountains; San Francisco River Valley; Tusas Mountains Including Chama; Jemez Mountains; Glorieta Mesa Including Glorieta Pass; Northern Sangre de Cristo Mountains; Southern Sangre de Cristo Mountains; East Slopes Sangre de Cristo Mountains; Upper Rio Grande Valley; Espanola Valley; Santa Fe Metro Area; Middle Rio Grande Valley/Albuquerque Metro Area; Lower Rio Grande Valley; Sandia/Manzano Mountains Including Edgewood; Estancia Valley; Central Highlands; South Central Highlands; Upper Tularosa Valley; South Central Mountains; Johnson and Bartlett Mesas Including Raton Pass; Far Northeast Highlands; Northeast Highlands; Union County; Harding County; Eastern San Miguel County; Guadalupe County; Quay County; Curry County; Roosevelt County; De Baca County; Chaves County Plains; Eastern Lincoln County; Southwest Chaves County; San Agustin Plains and Adjacent Lowlands
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T09:33:00-06:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 9:33AM MDT until September 30 at 6:00AM MDT by NWS Albuquerque NM
+Expires: 2026-09-29T18:00:00-06:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Northwest Plateau; Chuska Mountains; Far Northwest Highlands; Northwest Highlands; West Central Plateau; West
+Central Mountains; West Central Highlands; Southwest Mountains; San Francisco River Valley; Tusas Mountains
+Including Chama; Jemez Mountains; Glorieta Mesa Including Glorieta Pass; Northern Sangre de Cristo Mountains;
+Southern Sangre de Cristo Mountains; East Slopes Sangre de Cristo Mountains; Upper Rio Grande Valley; Espanola
+Valley; Santa Fe Metro Area; Middle Rio Grande Valley/Albuquerque Metro Area; Lower Rio Grande Valley;
+Sandia/Manzano Mountains Including Edgewood; Estancia Valley; Central Highlands; South Central Highlands; Upper
+Tularosa Valley; South Central Mountains; Johnson and Bartlett Mesas Including Raton Pass; Far Northeast
+Highlands; Northeast Highlands; Union County; Harding County; Eastern San Miguel County; Guadalupe County; Quay
+County; Curry County; Roosevelt County; De Baca County; Chaves County Plains; Eastern Lincoln County; Southwest
+Chaves County; San Agustin Plains and Adjacent Lowlands
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...All of northern and central New Mexico.
+
+* WHEN...Through late tonight.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Creeks and streams may rise out of their banks. Flooding may occur
+in poor drainage and urban areas. Low-water crossings may be
+flooded.
+
+* ADDITIONAL DETAILS...
+- A near-record to record surge of moisture combined with two
+merging storm systems will bring a prolonged multi-day period of
+showers and thunderstorms producing moderate to heavy rainfall.
+Combined with already rain-soaked soil, there is a moderate to
+high risk of flash flooding.
+- Low-lying, poorly drained areas, urban areas and arroyo systems
+will be most susceptible. Rivers and streams will see rises,
+potentially reaching flood stage. Recent burn scars may see flash
+flooding, including the Ruidoso area burn scars, Frijoles,
+Sacaton, Hummingbird, and Whiskey burn scars.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAABQ"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT THROUGH LATE TONIGHT"
+  ],
+  "VTEC": [
+    "/O.CON.KABQ.FA.A.0025.000000T0000Z-260930T1200Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS65 KABQ 291533"
+  ],
+  "eventEndingTime": [
+    "2026-09-30T06:00:00-06:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.d1b3a4452166cb68ff4556df28ad32f811f38017.002.1,2026-09-
+28T11:22:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.d1b3a4452166cb68ff4556df28ad32f811f38017.001.1,2026-09-
+28T11:22:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.477f6889093c3612abc90c37f71319676b1c463d.002.1,2026-09-
+27T22:29:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.477f6889093c3612abc90c37f71319676b1c463d.001.1,2026-09-
+27T22:29:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b2c30f270aa6c8768be046b93230ea3271cf9a0b.002.1,2026-09-
+27T12:07:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b2c30f270aa6c8768be046b93230ea3271cf9a0b.001.1,2026-09-
+27T12:07:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b1d1e5ae2a4e5aad856ce95482b7a5faad8996d4.002.1,2026-09-
+27T11:59:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b1d1e5ae2a4e5aad856ce95482b7a5faad8996d4.001.1,2026-09-
+27T11:59:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.ba32388f8c61e0201a6f140ae34e7851b718e76a.002.1,2026-09-
+27T01:39:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.ba32388f8c61e0201a6f140ae34e7851b718e76a.001.1,2026-09-
+27T01:39:00-06:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.69a57f937b51e87026ac16208636ec10ad825122.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

@@ -1,0 +1,127 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000029    Type: flood    Phase: ACTIVE_CONFIRMED    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.711080+00:00    Last Seen: 2026-09-29T18:12:26.711080+00:00    Ended: N/A
+Primary Location: Clinton, IA; Scott, IA
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T11:06:00-05:00    NWS    Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Warning issued September 29 at 11:06AM CDT until October 1 at 1:00PM CDT by NWS Quad Cities IA IL
+Expires: 2026-09-30T11:15:00-05:00    Urgency: Immediate    Certainty: Observed
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Clinton, IA; Scott, IA
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+...The Flood Warning is extended for the following rivers in Iowa...
+
+Wapsipinicon River near De Witt 4S affecting Scott and Clinton
+Counties.
+
+* WHAT...Moderate flooding is occurring and will continue.
+
+* WHERE...Wapsipinicon River near De Witt 4S.
+
+* WHEN...Until Thursday afternoon.
+
+* IMPACTS...At 12.0 feet, overbank flooding occurs. Water affects
+residences along the river between Wheatland and Calamus. Water
+affects businesses along the river near Calamus.
+
+* ADDITIONAL DETAILS...
+- At 10:30 AM CDT Tuesday the stage was 12.0 feet.
+- Forecast...The river is expected to fall below flood stage early
+Thursday morning and continue falling.
+- Flood stage is 11.0 feet.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+Motorists should not attempt to drive around barricades or drive cars
+through flooded areas.
+
+Caution is urged when walking near riverbanks.
+
+The next statement will be issued by Wednesday morning.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLSDVN"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WARNING NOW IN EFFECT UNTIL THURSDAY AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.EXT.KDVN.FL.W.0067.000000T0000Z-261001T1800Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS83 KDVN 291606"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T13:00:00-05:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.d849a3733b7d5b90b2c1d26ecd55903d076fba9c.001.1,2026-09-
+28T10:27:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.79aad7b0b8cf5f5cff8d248b6a17f1ddbe70d5f8.001.1,2026-09-
+27T20:23:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.db60aabc5e5fc05a360ce2fd38e8089e65219f4b.001.1,2026-09-
+27T10:17:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.0ed642483059d9b59eac0b64a2385eaea06ebcc3.001.1,2026-09-
+26T20:38:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.9b949fb3e2ee63bc5895d3cbb34c83428e3e6bcd.001.1,2026-09-
+26T09:00:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.d95d93928b42844640738fe2c4cd0fe20de7e515.001.1,2026-09-
+25T20:42:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.42fb1ed77fa0fef72c6ae77d76e596c3f8548831.003.1,2026-09-
+25T10:43:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.29d61db02245de13cd2c0c90e72ef2ebb56b8211.001.1,2026-09-
+24T20:24:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.1b9c33892c3bb15332068d255203d1d0c079edb3.001.1,2026-09-
+24T09:12:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.c3d4f6fc2760f716ebc9a3b5e8f5d32867f94dae.001.1,2026-09-
+23T20:56:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b4b2668337195a5896def4038316d48545cceb9f.006.1,2026-09-
+22T21:22:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.ea8fdec7f6d6c27827f4ccc86bd622edc090feca.001.1,2026-09-
+22T10:23:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.3d2cef778e6b7be60e34840d7695e13a0c94caea.002.1,2026-09-
+21T20:35:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.71acef68e750c8547dad09860588c21c7c3f0f6f.001.1,2026-09-
+21T11:15:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.72a1004c19fca4f45e91e42577309569e2d692fd.001.1,2026-09-
+20T20:27:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.6a87f4831d29bc973fd3fa9dce6f99e736badc38.001.1,2026-09-
+20T09:40:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.c10ba31e9363469b68935b3938561fa711696fb9.001.1,2026-09-
+19T20:57:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.3dc3355d642d579c56a5c678b202a442acdebbb2.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

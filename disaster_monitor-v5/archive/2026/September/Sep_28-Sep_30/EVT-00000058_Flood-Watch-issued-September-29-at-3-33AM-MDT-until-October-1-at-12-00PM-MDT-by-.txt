@@ -1,0 +1,93 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000058    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.733068+00:00    Last Seen: 2026-09-29T18:12:27.733068+00:00    Ended: N/A
+Primary Location: Jefferson and West Douglas Counties Above  6000 Feet/Gilpin/Clear Creek/Northeast Park Counties Below 9000 Feet; Elbert/Central and East Douglas Counties Above 6000 Feet; North and Northeast Elbert County Below 6000 Feet/North Lincoln County; Southeast Elbert County Below 6000 Feet/South Lincoln County
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T03:33:00-06:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 3:33AM MDT until October 1 at 12:00PM MDT by NWS Denver CO
+Expires: 2026-09-29T15:45:00-06:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Jefferson and West Douglas Counties Above  6000 Feet/Gilpin/Clear Creek/Northeast Park Counties Below 9000 Feet;
+Elbert/Central and East Douglas Counties Above 6000 Feet; North and Northeast Elbert County Below 6000
+Feet/North Lincoln County; Southeast Elbert County Below 6000 Feet/South Lincoln County
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...Portions of east central and northeast Colorado, including
+the following areas: the southern Front Range Foothills, the Palmer
+Divide, and adjacent plains through eastern Elbert and Lincoln
+counties.
+
+* WHEN...From late tonight through Thursday morning.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+
+* ADDITIONAL DETAILS...
+- A surge of tropical moisture from the remnants of Hurricane Polo
+and a storm system will bring a threat of flooding into our area
+late tonight through Thursday morning. Periods of heavy rainfall
+may lead to totals of 1 to 2.5 inches in the watch area, with
+locally higher amounts possible.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFABOU"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT FROM LATE TONIGHT THROUGH THURSDAY MORNING"
+  ],
+  "VTEC": [
+    "/O.CON.KBOU.FA.A.0007.260930T0600Z-261001T1800Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS65 KBOU 290933"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T12:00:00-06:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.aad7f08bb48f857f14af5ad722ffa4a77b4ab2ec.001.1,2026-09-
+28T11:48:00-06:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.37a61bf4dedbafbe71b27c7c53203ca91ade9a93.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

@@ -1,0 +1,71 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000024    Type: coastal flood    Phase: ADVISORY    Lifecycle: ACTIVE    Highest Severity: Minor
+Started: 2026-09-29T18:12:26.483444+00:00    Last Seen: 2026-09-29T18:12:26.483444+00:00    Ended: N/A
+Primary Location: Southern Fairfield
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T12:47:00-04:00    NWS    Coastal Flood Statement    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Coastal Flood Statement issued September 29 at 12:47PM EDT until September 29 at 4:00PM EDT by NWS Upton NY
+Expires: 2026-09-29T16:00:00-04:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Southern Fairfield
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Up to one half foot of inundation above ground level
+expected in vulnerable areas near the waterfront and shoreline.
+
+* WHERE...Southern Fairfield County.
+
+* WHEN...Until 4 PM EDT this afternoon.
+
+* IMPACTS...Brief minor flooding of the more vulnerable
+locations near the waterfront and shoreline around the time of
+high tide.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Do not drive through flooded roadways.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "CFWOKX"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "COASTAL FLOOD STATEMENT REMAINS IN EFFECT UNTIL 4 PM EDT THIS AFTERNOON FOR SPOTTY MINOR TIDAL FLOODING
+POSSIBLE"
+  ],
+  "VTEC": [
+    "/O.CON.KOKX.CF.S.0033.260929T1800Z-260929T2000Z/"
+  ],
+  "WMOidentifier": [
+    "WHUS41 KOKX 291647"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T16:00:00-04:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.8ea2a752824ff303910ed8293e136997629ab59f.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

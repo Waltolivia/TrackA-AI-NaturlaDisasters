@@ -1,0 +1,88 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000067    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:28.224523+00:00    Last Seen: 2026-09-29T18:12:28.224523+00:00    Ended: N/A
+Primary Location: Trego; Ellis; Scott; Lane; Ness; Rush; Hamilton; Kearny; Finney; Hodgeman; Stanton; Grant; Haskell; Gray; Ford; Morton; Stevens; Seward; Meade
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-28T23:57:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 28 at 11:57PM CDT until October 1 at 7:00PM CDT by NWS Dodge City KS
+Expires: 2026-09-29T16:00:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Trego; Ellis; Scott; Lane; Ness; Rush; Hamilton; Kearny; Finney; Hodgeman; Stanton; Grant; Haskell; Gray; Ford;
+Morton; Stevens; Seward; Meade
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flash flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...Portions of central, southwest, and west central Kansas,
+including the following counties, in central Kansas, Ellis and
+Rush. In southwest Kansas, Finney, Ford, Grant, Gray, Hamilton,
+Haskell, Hodgeman, Kearny, Meade, Morton, Seward, Stanton and
+Stevens. In west central Kansas, Lane, Ness, Scott and Trego.
+
+* WHEN...From 7 AM CDT  /6 AM MDT/ Tuesday through Thursday evening.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+
+* ADDITIONAL DETAILS...
+- Widespread showers and thunderstorms will spread into far
+southwest Kansas early today with periods of heavy rainfall being
+possible at times this afternoon through Thursday.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be prepared to take action
+should Flash Flood Warnings be issued.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFADDC"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT FROM 7 AM CDT /6 AM MDT/ TUESDAY THROUGH THURSDAY EVENING"
+  ],
+  "VTEC": [
+    "/O.CON.KDDC.FA.A.0003.260929T1200Z-261002T0000Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS63 KDDC 290457"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T19:00:00-05:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.9acdb80aa681857f73723b4e60ea17b2e12988e5.001.1,2026-09-
+27T23:45:00-06:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.b5d07c2d7260431965b6e9436630623d96ba8d8c.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

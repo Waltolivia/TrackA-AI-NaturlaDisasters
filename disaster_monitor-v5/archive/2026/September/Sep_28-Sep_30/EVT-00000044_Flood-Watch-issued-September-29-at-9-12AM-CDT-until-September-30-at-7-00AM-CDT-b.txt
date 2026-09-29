@@ -1,0 +1,98 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000044    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.179620+00:00    Last Seen: 2026-09-29T18:12:27.179620+00:00    Ended: N/A
+Primary Location: Guadalupe Mountains of Eddy County; Eddy County Plains; Northern Lea County; Central Lea County; Southern Lea County; Guadalupe Mountains Above 7000 Feet; Guadalupe and Delaware Mountains; Van Horn and Highway 54 Corridor; Eastern Culberson County
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T09:12:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 9:12AM CDT until September 30 at 7:00AM CDT by NWS Midland/Odessa TX
+Expires: 2026-09-29T17:15:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Guadalupe Mountains of Eddy County; Eddy County Plains; Northern Lea County; Central Lea County; Southern Lea
+County; Guadalupe Mountains Above 7000 Feet; Guadalupe and Delaware Mountains; Van Horn and Highway 54 Corridor;
+Eastern Culberson County
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flash flooding caused by excessive rainfall.
+
+* WHERE...Portions of southeast New Mexico, including the following
+areas, Central Lea, Eddy County Plains, Guadalupe Mountains of Eddy
+County, Northern Lea and Southern Lea and southwest Texas,
+including the following areas, Eastern Culberson, Guadalupe
+Mountains Above 7000 Feet, Guadalupe and Delaware Mountains and Van
+Horn and Highway 54 Corridor.
+
+* WHEN...Through late tonight.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Flooding may occur in poor drainage and urban areas. Low-water
+crossings may be flooded. Area creeks and streams are running high
+and could flood with more heavy rain.
+
+* ADDITIONAL DETAILS...
+- Tropical moisture from the remnants of Hurricane Polo will
+overspread the region, which will promote heavy rain across
+southeast New Mexico and far west Texas. Soils in these areas
+remain saturated following heavy rains from last week, which will
+further promote the risk for flash flooding.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be prepared to take action
+should Flash Flood Warnings be issued.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAMAF"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT THROUGH LATE TONIGHT"
+  ],
+  "VTEC": [
+    "/O.CON.KMAF.FA.A.0006.000000T0000Z-260930T1200Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS64 KMAF 291412"
+  ],
+  "eventEndingTime": [
+    "2026-09-30T07:00:00-05:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.3d312d7ceceecdbd597f28740af2591dc4f69b65.001.1,2026-09-
+28T13:52:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.13f8f22ef4cb2cae6fac90ba79d1c52ffae2a731.001.1,2026-09-
+28T00:11:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.7100a3566974619f3066d9efe1f8c3f6c7299223.001.1,2026-09-
+27T09:41:00-06:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.6c147d4b7a9239d92f70a7c496a6bd49e7f6b4cf.003.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

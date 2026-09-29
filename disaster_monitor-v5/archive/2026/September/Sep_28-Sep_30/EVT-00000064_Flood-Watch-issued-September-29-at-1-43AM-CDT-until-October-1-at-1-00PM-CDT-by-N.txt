@@ -1,0 +1,82 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000064    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:28.023564+00:00    Last Seen: 2026-09-29T18:12:28.023564+00:00    Ended: N/A
+Primary Location: Montague; Cooke; Grayson; Fannin; Young; Jack; Wise; Denton; Collin; Stephens; Palo Pinto; Parker; Tarrant; Dallas; Rockwall; Eastland; Erath; Hood; Somervell; Johnson; Ellis; Comanche; Mills; Hamilton; Bosque; Hill; Lampasas; Coryell; McLennan
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T01:43:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 1:43AM CDT until October 1 at 1:00PM CDT by NWS Fort Worth TX
+Expires: 2026-09-29T13:45:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Montague; Cooke; Grayson; Fannin; Young; Jack; Wise; Denton; Collin; Stephens; Palo Pinto; Parker; Tarrant;
+Dallas; Rockwall; Eastland; Erath; Hood; Somervell; Johnson; Ellis; Comanche; Mills; Hamilton; Bosque; Hill;
+Lampasas; Coryell; McLennan
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall is possible.
+
+* WHERE...Portions of North and Central Texas, mainly along and west
+of I-35.
+
+* WHEN...From Wednesday afternoon through Thursday afternoon.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Low-water crossings may be flooded.
+
+* ADDITIONAL DETAILS...
+- Slow moving thunderstorms may result in rainfall amounts of 2 to
+5 inches with locally higher amounts possible.
+- weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAFWD"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH IN EFFECT FROM WEDNESDAY AFTERNOON THROUGH THURSDAY AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.NEW.KFWD.FA.A.0007.260930T2100Z-261001T1800Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS64 KFWD 290643"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T13:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.42c765aed8ce98c7ecdac481bb15ebad257aaaad.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

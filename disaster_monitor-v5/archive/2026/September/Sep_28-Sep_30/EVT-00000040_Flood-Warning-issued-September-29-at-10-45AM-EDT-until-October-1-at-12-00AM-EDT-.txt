@@ -1,0 +1,109 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000040    Type: flood    Phase: ACTIVE_CONFIRMED    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.066783+00:00    Last Seen: 2026-09-29T18:12:27.066783+00:00    Ended: N/A
+Primary Location: Bristol, MA; Plymouth, MA
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T10:45:00-04:00    NWS    Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Warning issued September 29 at 10:45AM EDT until October 1 at 12:00AM EDT by NWS Boston/Norton MA
+Expires: 2026-09-30T10:45:00-04:00    Urgency: Immediate    Certainty: Observed
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Bristol, MA; Plymouth, MA
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+...The Flood Warning is extended for the following rivers in
+Massachusetts...
+
+Taunton River Near Bridgewater affecting Plymouth and Bristol
+Counties.
+
+For the Taunton River...including Bridgewater...Minor flooding is
+forecast.
+
+* WHAT...Minor flooding is occurring and minor flooding is forecast.
+
+* WHERE...Taunton River near Bridgewater.
+
+* WHEN...Until late Wednesday night.
+
+* IMPACTS...At 9.0 feet, Backwater flooding from the Taunton River
+will cause flooding of lower Purchade Brook in Middleboro.  This
+will cause Woloski Park to become impassable by most vehicles for
+an extended period of time.  Beware of the dangers of crossing
+flooded roadways. The water may be deeper than you think.
+Floodwaters have the ability to damage roadways. Heed the advice of
+local officials, and evacuate if asked to do so.
+
+* ADDITIONAL DETAILS...
+- At 9:45 AM EDT Tuesday the stage was 9.1 feet.
+- Recent Activity...The maximum river stage in the 24 hours ending
+at 9:45 AM EDT Tuesday was 9.1 feet.
+- Forecast...The river is expected to fall below flood stage
+tomorrow evening and continue falling to 6.4 feet Friday morning.
+- Flood stage is 8.0 feet.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Motorists should not attempt to drive around barricades or drive cars
+through flooded areas.
+
+Additional information is available at www.weather.gov.
+
+The next statement will be issued Wednesday morning at 1045 AM EDT.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLSBOX"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WARNING NOW IN EFFECT UNTIL LATE WEDNESDAY NIGHT"
+  ],
+  "VTEC": [
+    "/O.EXT.KBOX.FL.W.0010.000000T0000Z-261001T0400Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS81 KBOX 291445"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T00:00:00-04:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.94c26b71686a2e1b6c2b5a6b5112a9e9c1bc5fd7.001.1,2026-09-
+28T11:23:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.cd86db9efdea5c7fc1556bc997149d091185bb51.001.1,2026-09-
+28T07:11:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.191d971382585fba397f300b3cedc378ab8ce595.001.1,2026-09-
+27T21:44:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.110b2d77e32aa712dc5d42f2a9d99cdf21eeaa76.001.1,2026-09-
+27T11:53:00-04:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.27691a14b1e7d5ed4071ef02c5d498e8acd5216e.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

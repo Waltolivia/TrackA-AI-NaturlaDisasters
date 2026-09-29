@@ -1,0 +1,99 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000035    Type: flash flood    Phase: IMMINENT    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.922247+00:00    Last Seen: 2026-09-29T18:12:26.922247+00:00    Ended: N/A
+Primary Location: Cochise, AZ
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T08:24:00-07:00    NWS    Flash Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flash Flood Warning issued September 29 at 8:24AM MST until September 29 at 2:30PM MST by NWS Tucson AZ
+Expires: 2026-09-29T14:30:00-07:00    Urgency: Immediate    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Cochise, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+FFWTWC
+
+The National Weather Service in Tucson has issued a
+
+* Flash Flood Warning for...
+Southwestern Cochise County in southeastern Arizona...
+
+* Until 230 PM MST Tuesday.
+
+* At 824 AM MST, Doppler radar indicated thunderstorms producing
+heavy rain across the warned area. Up to 1 inch of rain has fallen.
+Additional rainfall amounts of 1 to 2 inches are possible in the
+warned area. Flash flooding is ongoing or expected to begin
+shortly.
+
+HAZARD...Flash flooding caused by thunderstorms.
+
+SOURCE...Radar indicated.
+
+IMPACT...Flash flooding of small creeks and streams, urban areas,
+highways, streets and underpasses as well as other poor
+drainage and low-lying areas.
+
+* Some locations that will experience flash flooding include...
+Sierra Vista, Hereford, Fort Huachuca, Palominas, Coronado National
+Memorial and Ramsey Canyon Preserve.
+
+This includes the following highways...
+Route 90 between mile markers 324 and 336. Route 80 between mile
+markers 328 and 335. Route 92 between mile markers 323 and 345.
+
+This includes the following Flash Flood Prone Locations...
+Moson Rd from HWY 90 and Hereford Rd.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+Be aware of your surroundings and do not drive on flooded roads.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFWTWC"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "VTEC": [
+    "/O.NEW.KTWC.FF.W.0232.260929T1524Z-260929T2130Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS55 KTWC 291524"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T14:30:00-07:00"
+  ],
+  "flashFloodDetection": [
+    "RADAR INDICATED"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.188d5d1cc9778be8a9ee423b5999f6f853dc6b63.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

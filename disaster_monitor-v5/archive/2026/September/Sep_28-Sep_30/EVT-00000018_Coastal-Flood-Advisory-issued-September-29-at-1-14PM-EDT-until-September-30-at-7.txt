@@ -1,0 +1,93 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000018    Type: coastal flood    Phase: ADVISORY    Lifecycle: ACTIVE    Highest Severity: Minor
+Started: 2026-09-29T18:12:26.306857+00:00    Last Seen: 2026-09-29T18:12:26.306857+00:00    Ended: N/A
+Primary Location: Monroe Middle Keys; Monroe Lower Keys
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T13:14:00-04:00    NWS    Coastal Flood Advisory    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Coastal Flood Advisory issued September 29 at 1:14PM EDT until September 30 at 7:00AM EDT by NWS Key West FL
+Expires: 2026-09-29T23:00:00-04:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Monroe Middle Keys; Monroe Lower Keys
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Saltwater flooding.
+
+* WHERE...Middle and Lower Florida Keys.
+
+* WHEN...Until 7 AM EDT Wednesday.
+
+* IMPACTS...Saltwater flooding of low elevation streets and lots
+is expected. Some storm drains will overflow, and some
+seawalls and docks will be overtopped. Boaters can expect less
+clearance under fixed bridges. Motorists should remember that
+persistent puddles around the times of high tide are almost
+certain to contain a mix of saltwater.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+If travel is required, allow extra time as some roads may be
+closed. Do not drive around barricades or through water of
+unknown depth. Take the necessary actions to protect flood-prone
+property.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "CFWKEY"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "COASTAL FLOOD ADVISORY NOW IN EFFECT UNTIL 7 AM EDT WEDNESDAY"
+  ],
+  "VTEC": [
+    "/O.EXT.KKEY.CF.Y.0003.000000T0000Z-260930T1100Z/"
+  ],
+  "WMOidentifier": [
+    "WHUS42 KKEY 291714"
+  ],
+  "eventEndingTime": [
+    "2026-09-30T07:00:00-04:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.78612d59f2b14bd6f07c56c119465a053ba04380.002.1,2026-09-
+29T03:59:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.f61198d5302c13e1e1926403ba022a4a43fa2361.001.1,2026-09-
+28T15:55:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b202fa7f60066dd00182239a0aac27692f5deafc.002.1,2026-09-
+28T17:51:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.a5364e19dae05339bd062766c7fe75e70aa5951c.002.1,2026-09-
+28T17:41:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.378d237818cadb78ddca55f5ada36967577db9b0.002.1,2026-09-
+28T09:22:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.7aa2e1fbe365c9772afab1dfec51647e0aca759a.002.1,2026-09-
+28T04:07:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.5327bc11f12e019747430a642703b1806988df27.002.1,2026-09-
+27T21:29:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.1884f9806ffdda13a55f432c459f35ea4938f3a3.001.2,2026-09-
+27T13:22:00-04:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.cdf42f6363d6dda45d0ee9d7c5bf691dc4ac42dc.002.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

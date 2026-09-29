@@ -1,0 +1,115 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000025    Type: flash flood    Phase: IMMINENT    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.566113+00:00    Last Seen: 2026-09-29T18:12:26.566113+00:00    Ended: N/A
+Primary Location: Coconino, AZ
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T09:37:00-07:00    NWS    Flash Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flash Flood Warning issued September 29 at 9:37AM MST until September 29 at 1:00PM MST by NWS Flagstaff AZ
+Expires: 2026-09-29T13:00:00-07:00    Urgency: Immediate    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Coconino, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+FFWFGZ
+
+The National Weather Service in Flagstaff has extended the
+
+* Flash Flood Warning for...
+The Paria River in...
+Coconino County in north central Arizona...
+
+* Until 100 PM MST /200 PM MDT/.
+
+* At 937 AM MST /1037 AM MDT/, a river gauge on the Paria River at
+Lees Ferry reported a rapid rise of 6 feet from heavy rain over the
+Paria River. Flash flooding is ongoing or expected to begin
+shortly.
+
+HAZARD...Life threatening flash flooding. Heavy rain producing
+flash flooding in and around the Paria River.
+
+SOURCE...River gauge reported.
+
+IMPACT...Life threatening flash flooding of areas in and around the
+Paria River.
+
+* Some locations that will experience flash flooding include...
+Paria Canyon, Paria River Slot Canyon and Lees Ferry.
+
+This includes the Colorado River near mile marker 0.
+
+This includes the following recreation areas and campgrounds...
+Lees Ferry Camp Site.
+
+This includes the following creeks, washes and rivers...
+Paria River and Colorado River.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Get out of the Paria River slot canyon!
+
+Get out of washes and creeks if you are camping or hiking! Flooding
+is occurring or imminent and will inundate creeks and washes.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFWFGZ"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM"
+  ],
+  "CMAMlongtext": [
+    "National Weather Service: A FLASH FLOOD WARNING is in effect for this area until 1:00 PM MST. This is a
+dangerous and life-threatening situation. Do not attempt to travel unless you are fleeing an area subject to
+flooding or under an evacuation order."
+  ],
+  "CMAMtext": [
+    "NWS: FLASH FLOOD WARNING this area til 1:00 PM MST. Avoid flooded areas."
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "VTEC": [
+    "/O.EXT.KFGZ.FF.W.0183.000000T0000Z-260929T2000Z/"
+  ],
+  "WEAHandling": [
+    "Imminent Threat"
+  ],
+  "WMOidentifier": [
+    "WGUS55 KFGZ 291637"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T13:00:00-07:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.66feadf8d2b1381db936e49030a8e0bc0ac8bbe4.001.1,2026-09-
+29T03:37:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.7dfebb6b16579962ca0922d09b2fd7f73e63406c.001.1,2026-09-
+28T23:39:00-07:00"
+  ],
+  "flashFloodDamageThreat": [
+    "CONSIDERABLE"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.d8bf281f1015e71c5e4019502166950b1947f224.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

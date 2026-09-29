@@ -1,0 +1,101 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000017    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.280357+00:00    Last Seen: 2026-09-29T18:12:26.280357+00:00    Ended: N/A
+Primary Location: Uncompahgre Plateau/Dallas Divide; Paradox Valley/Lower Dolores River; Four Corners/Upper Dolores River; Animas River Basin; Southeast Utah; La Sal and Abajo Mountains; Canyonlands/Natural Bridges
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T11:22:00-06:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 11:22AM MDT until September 30 at 6:00AM MDT by NWS Grand Junction CO
+Expires: 2026-09-30T06:00:00-06:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Uncompahgre Plateau/Dallas Divide; Paradox Valley/Lower Dolores River; Four Corners/Upper Dolores River; Animas
+River Basin; Southeast Utah; La Sal and Abajo Mountains; Canyonlands/Natural Bridges
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...Portions of Colorado, including the following areas, Animas
+River Basin, Four Corners/Upper Dolores River, Paradox Valley/Lower
+Dolores River and Uncompahgre Plateau and Dallas Divide and
+southeast Utah, including the following areas, Canyonlands/Natural
+Bridges, La Sal and Abajo Mountains and Southeast Utah.
+
+* WHEN...Through late tonight.
+
+* IMPACTS...Flooding will be possible over burn scars, at low-water
+crossings, and along creeks, streams, washes, arroyos and other
+flood-prone locations. Creeks and streams may rise out of their
+banks. Unpaved roads could become muddy and impassable.
+
+* ADDITIONAL DETAILS...
+- Periods of heavy rainfall, associated with remnant moisture from
+Hurricane Polo, are expected to produce numerous showers and
+embedded thunderstorms. Heavy rain falling on saturated soils and
+burn scars could lead to localized flash flooding and rises on
+local rivers.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAGJT"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT THROUGH LATE TONIGHT"
+  ],
+  "VTEC": [
+    "/O.CON.KGJT.FA.A.0009.000000T0000Z-260930T1200Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS65 KGJT 291722"
+  ],
+  "eventEndingTime": [
+    "2026-09-30T06:00:00-06:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.ed9ede493b5b1546377a5ccc5f8c64d7cb67cd19.001.1,2026-09-
+28T11:03:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.db9ea1d51f850f2b48b6bd66ab6f60bc005944be.001.1,2026-09-
+27T23:27:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.be23608a0bb93e7362e70d5e395b716563bb69d8.001.1,2026-09-
+27T21:00:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.4c2dd958580560f3aefbdfa5fe5606b541da1e5c.001.1,2026-09-
+27T00:45:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.4e0b211dcd7bab58026a9cb01526038e869174d9.001.1,2026-09-
+27T10:27:00-06:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.297cdc701262bb8a1e8beb22ff344aed20ab83bb.002.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

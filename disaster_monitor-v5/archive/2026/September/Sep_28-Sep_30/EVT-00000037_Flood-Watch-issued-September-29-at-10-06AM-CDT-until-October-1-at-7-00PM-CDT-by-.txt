@@ -1,0 +1,97 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000037    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.987773+00:00    Last Seen: 2026-09-29T18:12:26.987773+00:00    Ended: N/A
+Primary Location: Monona; Harrison; Shelby; Pottawattamie; Mills; Montgomery; Fremont; Page; Thurston; Wayne; Boone; Madison; Stanton; Cuming; Burt; Platte; Colfax; Dodge; Washington; Butler; Saunders; Douglas; Sarpy; Seward; Lancaster; Cass; Otoe; Saline; Jefferson; Gage; Johnson; Nemaha; Pawnee; Richardson
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T10:06:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 10:06AM CDT until October 1 at 7:00PM CDT by NWS Omaha/Valley NE
+Expires: 2026-09-29T18:15:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Monona; Harrison; Shelby; Pottawattamie; Mills; Montgomery; Fremont; Page; Thurston; Wayne; Boone; Madison;
+Stanton; Cuming; Burt; Platte; Colfax; Dodge; Washington; Butler; Saunders; Douglas; Sarpy; Seward; Lancaster;
+Cass; Otoe; Saline; Jefferson; Gage; Johnson; Nemaha; Pawnee; Richardson
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+Heavy rain will spread across the area today and into Thursday
+morning. This rain will be focused along and south of the Platte
+River and into southwest Iowa. While this rain is spread out over a
+longer period of time, flash flooding cannot be ruled out. The flash
+flooding threat is highest Wednesday afternoon and evening.
+
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...Portions of Iowa, including the following counties,
+Fremont, Harrison, Mills, Monona, Montgomery, Page, Pottawattamie
+and Shelby and Nebraska, including the following counties, Boone,
+Burt, Butler, Cass, Colfax, Cuming, Dodge, Douglas, Gage,
+Jefferson, Johnson, Lancaster, Madison, Nemaha, Otoe, Pawnee,
+Platte, Richardson, Saline, Sarpy, Saunders, Seward, Stanton,
+Thurston, Washington and Wayne.
+
+* WHEN...From 7 PM CDT this evening through Thursday evening.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Area creeks and streams are running high and could flood with more
+heavy rain.
+
+* ADDITIONAL DETAILS...
+- Prolonged rain falling on saturated soil could lead to flooding
+in the coming days. Rainfall amounts of 2-4 inches are expected
+in many locations through Thursday, with localized amounts
+topping 5 to 6 inches for some.
+- For flood safety information, visit weather.gov/safety/flood.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAOAX"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT FROM 7 PM CDT THIS EVENING THROUGH THURSDAY EVENING"
+  ],
+  "VTEC": [
+    "/O.CON.KOAX.FA.A.0012.260930T0000Z-261002T0000Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS63 KOAX 291506"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T19:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.d5461c844b0a3e0bbfcedc5f7a38144114fc53ac.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

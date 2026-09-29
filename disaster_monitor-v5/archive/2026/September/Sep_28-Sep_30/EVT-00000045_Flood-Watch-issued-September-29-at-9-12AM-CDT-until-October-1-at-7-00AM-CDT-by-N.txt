@@ -1,0 +1,82 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000045    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.212548+00:00    Last Seen: 2026-09-29T18:12:27.212548+00:00    Ended: N/A
+Primary Location: Borden; Scurry; Howard; Mitchell; Glasscock; Reagan; Terrell
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T09:12:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 9:12AM CDT until October 1 at 7:00AM CDT by NWS Midland/Odessa TX
+Expires: 2026-09-29T17:15:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Borden; Scurry; Howard; Mitchell; Glasscock; Reagan; Terrell
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flash flooding caused by excessive rainfall.
+
+* WHERE...Portions of southwest and western Texas, including the
+following counties, in southwest Texas, Terrell. In western Texas,
+Borden, Glasscock, Howard, Mitchell, Reagan and Scurry.
+
+* WHEN...From Wednesday afternoon through Thursday morning.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, arroyos, streams, and other low-lying and flood-prone
+locations. Flooding may occur in poor drainage and urban areas.
+Low-water crossings may be flooded.
+
+* ADDITIONAL DETAILS...
+- Multiple rounds of showers and thunderstorms will develop over
+the Watch area today through this evening. Heavy rainfall may
+quickly result in areas of flash flooding.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be prepared to take action
+should Flash Flood Warnings be issued.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAMAF"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH IN EFFECT FROM WEDNESDAY AFTERNOON THROUGH THURSDAY MORNING"
+  ],
+  "VTEC": [
+    "/O.NEW.KMAF.FA.A.0007.260930T1800Z-261001T1200Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS64 KMAF 291412"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T07:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.6c147d4b7a9239d92f70a7c496a6bd49e7f6b4cf.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

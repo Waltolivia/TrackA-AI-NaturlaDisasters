@@ -1,0 +1,202 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000036    Type: flash flood    Phase: IMMINENT    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.947407+00:00    Last Seen: 2026-09-29T18:12:26.970163+00:00    Ended: N/A
+Primary Location: Yavapai, AZ
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T08:24:00-07:00    NWS    Flash Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flash Flood Warning issued September 29 at 8:24AM MST until September 29 at 12:00PM MST by NWS Flagstaff AZ
+Expires: 2026-09-29T12:00:00-07:00    Urgency: Immediate    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Yavapai, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+FFWFGZ
+
+The National Weather Service in Flagstaff has extended the
+
+* Flash Flood Warning for...
+Yavapai County in west central Arizona...
+
+* Until noon MST.
+
+* At 824 AM MST, a river gauge on the Agua Fria River at Rock Springs
+reported a rapid rise of 3.5 feet from thunderstorms producing
+heavy rain across the warned area. Up to 1.5 inches of rain have
+fallen. Flash flooding is ongoing or expected to begin shortly.
+
+HAZARD...Life threatening flash flooding. Thunderstorms producing
+flash flooding.
+
+SOURCE...River gauge reported.
+
+IMPACT...Life threatening flash flooding of creeks and streams,
+normally dry washes, urban areas, highways, streets and
+underpasses.
+
+* Some locations that will experience flash flooding include...
+Rock Springs.
+
+This includes Interstate 17 near mile marker 242.
+
+This includes the following recreation areas and campgrounds...
+Black Canyon Campground.
+
+This includes the following creeks, washes and rivers...
+Black Canyon Creek, Agua Fria River and Slate Creek.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Flooding of washes and creeks will occur, some dirt roads will become
+muddy and impassable. Paved roads and underpasses could become
+flooded as well.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFWFGZ"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM"
+  ],
+  "CMAMlongtext": [
+    "National Weather Service: A FLASH FLOOD WARNING is in effect for this area until 12:00 PM MST. This is a
+dangerous and life-threatening situation. Do not attempt to travel unless you are fleeing an area subject to
+flooding or under an evacuation order."
+  ],
+  "CMAMtext": [
+    "NWS: FLASH FLOOD WARNING this area til 12:00 PM MST. Avoid flooded areas."
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "VTEC": [
+    "/O.EXT.KFGZ.FF.W.0185.000000T0000Z-260929T1900Z/"
+  ],
+  "WEAHandling": [
+    "Imminent Threat"
+  ],
+  "WMOidentifier": [
+    "WGUS55 KFGZ 291524"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T12:00:00-07:00"
+  ],
+  "flashFloodDamageThreat": [
+    "CONSIDERABLE"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.6f20796873f85551b3f0b735e72eb8e6b9ed3ee7.001.1
+
+[02] 2026-09-29T08:07:00-07:00    NWS    Flash Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flash Flood Warning issued September 29 at 8:07AM MST until September 29 at 2:00PM MST by NWS Flagstaff AZ
+Expires: 2026-09-29T14:00:00-07:00    Urgency: Immediate    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Yavapai, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+FFWFGZ
+
+The National Weather Service in Flagstaff has issued a
+
+* Flash Flood Warning for...
+The Agua Fria River in...
+Yavapai County in west central Arizona...
+
+* Until 200 PM MST.
+
+* At 807 AM MST, a river gauge on the Agua Fria River near Cordes
+Lakes reported a rapid rise of 4 feet from thunderstorms producing
+heavy rain over the Agua Fria River. Up to 2 inches of rain have
+fallen.
+
+HAZARD...Life threatening flash flooding. Thunderstorms producing
+flash flooding in and around the Agua Fria River.
+
+SOURCE...River gauge reported.
+
+IMPACT...Life threatening flash flooding of areas in and around the
+Agua Fria River.
+
+* Some locations that will experience flash flooding include...
+Agua Fria National Monument, Black Canyon City and Arcosanti.
+
+This includes Interstate 17 between mile markers 243 and 244...and
+between mile markers 265 and 266.
+
+This includes the following creeks, washes and rivers...
+Bishop Creek, Sycamore Creek, Tank Creek, Squaw Creek, Antelope
+Creek, Badger Spring Wash, Brushy Wash, Black Canyon, Indian Creek,
+Larry Creek, Yarber Wash, Ash Creek, Big Bug Creek, Agua Fria River
+and Silver Creek.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn Around, Don't Drown! Avoid driving across the Squaw Valley Road
+low water crossing in Black Canyon City. Flash flooding of the Agua
+Fria is imminent or occurring.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFWFGZ"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM"
+  ],
+  "CMAMlongtext": [
+    "National Weather Service: A FLASH FLOOD WARNING is in effect for this area until 2:00 PM MST. This is a
+dangerous and life-threatening situation. Do not attempt to travel unless you are fleeing an area subject to
+flooding or under an evacuation order."
+  ],
+  "CMAMtext": [
+    "NWS: FLASH FLOOD WARNING this area til 2:00 PM MST. Avoid flooded areas."
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "VTEC": [
+    "/O.NEW.KFGZ.FF.W.0186.260929T1507Z-260929T2100Z/"
+  ],
+  "WEAHandling": [
+    "Imminent Threat"
+  ],
+  "WMOidentifier": [
+    "WGUS55 KFGZ 291507"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T14:00:00-07:00"
+  ],
+  "flashFloodDamageThreat": [
+    "CONSIDERABLE"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.3c03f5df265227cd6948a79920c9a28a3f2746a6.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 2

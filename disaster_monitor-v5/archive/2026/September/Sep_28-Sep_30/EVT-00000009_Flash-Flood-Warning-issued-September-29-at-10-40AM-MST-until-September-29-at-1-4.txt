@@ -1,0 +1,281 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000009    Type: flash flood    Phase: IMMINENT    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.084702+00:00    Last Seen: 2026-09-29T18:12:26.682527+00:00    Ended: N/A
+Primary Location: Pima, AZ
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T10:40:00-07:00    NWS    Flash Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flash Flood Warning issued September 29 at 10:40AM MST until September 29 at 1:45PM MST by NWS Tucson AZ
+Expires: 2026-09-29T13:45:00-07:00    Urgency: Immediate    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Pinal, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+FFWTWC
+
+The National Weather Service in Tucson has issued a
+
+* Flash Flood Warning for...
+Southeastern Pinal County in southeastern Arizona...
+
+* Until 145 PM MST.
+
+* At 1040 AM MST, Doppler radar indicated thunderstorms producing
+heavy rain across the warned area. Up to 1.5 inches of rain have
+fallen. Additional rainfall amounts of 1 to 2 inches are possible
+in the warned area. Flash flooding is ongoing or expected to begin
+shortly.
+
+HAZARD...Flash flooding caused by thunderstorms.
+
+SOURCE...Radar indicated.
+
+IMPACT...Flash flooding of small creeks and streams, urban areas,
+highways, streets and underpasses as well as other poor
+drainage and low-lying areas.
+
+* Some locations that will experience flash flooding include...
+Oracle, Mammoth, Aravaipa Canyon Wilderness and San Carlos
+Reservoir.
+
+This includes Route 77 between mile markers 102 and 121.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+Be aware of your surroundings and do not drive on flooded roads.
+
+Please report observed flooding to local emergency services or law
+enforcement and request they pass this information to the National
+Weather Service when you can do so safely.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFWTWC"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "VTEC": [
+    "/O.NEW.KTWC.FF.W.0238.260929T1740Z-260929T2045Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS55 KTWC 291740"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T13:45:00-07:00"
+  ],
+  "flashFloodDetection": [
+    "RADAR INDICATED"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.48e71ef6a1ff4445c944a598cb602643879d27bc.001.1
+
+[02] 2026-09-29T09:40:00-07:00    NWS    Flash Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flash Flood Warning issued September 29 at 9:40AM MST until September 29 at 3:45PM MST by NWS Tucson AZ
+Expires: 2026-09-29T15:45:00-07:00    Urgency: Immediate    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Pima, AZ; Pinal, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+FFWTWC
+
+The National Weather Service in Tucson has issued a
+
+* Flash Flood Warning for...
+Northeastern Pima County in southeastern Arizona...
+Southeastern Pinal County in southeastern Arizona...
+
+* Until 345 PM MST Tuesday.
+
+* At 940 AM MST, Doppler radar and automated rain gauges indicated
+thunderstorms producing heavy rain across the warned area. Up to
+1.5 inches of rain have fallen. Additional rainfall amounts of 1 to
+2 inches are possible in the warned area. Flash flooding is ongoing
+or expected to begin shortly.
+
+HAZARD...Flash flooding caused by thunderstorms.
+
+SOURCE...Radar and automated gauges.
+
+IMPACT...Flash flooding of small creeks and streams, urban areas,
+highways, streets and underpasses as well as other poor
+drainage and low-lying areas.
+
+* Some locations that will experience flash flooding include...
+Catalina, Oro Valley, Marana, Oracle, Casas Adobes, Saddlebrooke,
+San Manuel, Saddlebrooke Ranch, Tortolita, Mount
+Lemmon/Summerhaven, Catalina State Park, Catalina Foothills,
+Saguaro National Park West, Picture Rocks, Campo Bonito, Biosphere
+2, Oracle Junction, Dove Mountain and Redington.
+
+This includes the following highways...
+Route 79 between mile markers 92 and 94. Route 77 between mile
+markers 73 and 101. Interstate 10 between mile markers 243 and 249.
+
+This includes the following Flash Flood Prone Locations...
+River Rd at San Pedro River, Silverbell Rd near Ina Rd, Overton Rd at
+Canada del Oro, Sunset Rd west of Camino de Oeste and E Wilds Rd at
+the Canada del Oro.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+Be aware of your surroundings and do not drive on flooded roads.
+
+Please report observed flooding to local emergency services or law
+enforcement and request they pass this information to the National
+Weather Service when you can do so safely.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFWTWC"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "VTEC": [
+    "/O.NEW.KTWC.FF.W.0235.260929T1640Z-260929T2245Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS55 KTWC 291640"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T15:45:00-07:00"
+  ],
+  "flashFloodDetection": [
+    "RADAR AND GAUGE INDICATED"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.259d8c0dbbda730480bd1e779db928af1f718b65.001.1
+
+[03] 2026-09-29T09:12:00-07:00    NWS    Flash Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flash Flood Warning issued September 29 at 9:12AM MST until September 29 at 3:15PM MST by NWS Tucson AZ
+Expires: 2026-09-29T15:15:00-07:00    Urgency: Immediate    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Pima, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+FFWTWC
+
+The National Weather Service in Tucson has issued a
+
+* Flash Flood Warning for...
+Northeastern Pima County in southeastern Arizona...
+
+* Until 315 PM MST Tuesday.
+
+* At 912 AM MST, Doppler radar indicated thunderstorms producing
+heavy rain across the warned area. Between 1 and 1.5 inches of rain
+have fallen. Additional rainfall amounts of 1 to 3 inches are
+possible in the warned area. Flash flooding is ongoing or expected
+to begin shortly.
+
+HAZARD...Flash flooding caused by thunderstorms.
+
+SOURCE...Radar indicated.
+
+IMPACT...Flash flooding of small creeks and streams, urban areas,
+highways, streets and underpasses as well as other poor
+drainage and low-lying areas.
+
+* Some locations that will experience flash flooding include...
+Flowing Wells, Mount Lemmon/Summerhaven, Sabino Canyon Recreation
+Area, Catalina Foothills and Seven Falls.
+
+This includes the following highways...
+Route 77 near mile marker 72. Interstate 10 between mile markers 250
+and 252.
+
+This includes the following Flash Flood Prone Locations...
+Camino De La Tierra at the Rillito River and Snyder Rd from Kolb Rd
+to Sabino Canyon Rd.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+Be aware of your surroundings and do not drive on flooded roads.
+
+Please report observed flooding to local emergency services or law
+enforcement and request they pass this information to the National
+Weather Service when you can do so safely.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFWTWC"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "VTEC": [
+    "/O.NEW.KTWC.FF.W.0234.260929T1612Z-260929T2215Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS55 KTWC 291612"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T15:15:00-07:00"
+  ],
+  "flashFloodDetection": [
+    "RADAR INDICATED"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.d5acb9243d20e06a5c9993ec779481a2e5aa9b65.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 3

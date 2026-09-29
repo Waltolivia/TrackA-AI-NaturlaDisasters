@@ -1,0 +1,95 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000057    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.689517+00:00    Last Seen: 2026-09-29T18:12:27.689517+00:00    Ended: N/A
+Primary Location: Phillips; Smith; Jewell; Rooks; Osborne; Mitchell; Valley; Greeley; Nance; Sherman; Howard; Merrick; Polk; Dawson; Buffalo; Hall; Hamilton; York; Gosper; Phelps; Kearney; Adams; Clay; Fillmore; Furnas; Harlan; Franklin; Webster; Nuckolls; Thayer
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T05:22:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 5:22AM CDT until October 1 at 7:00PM CDT by NWS Hastings NE
+Expires: 2026-09-29T17:30:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Phillips; Smith; Jewell; Rooks; Osborne; Mitchell; Valley; Greeley; Nance; Sherman; Howard; Merrick; Polk;
+Dawson; Buffalo; Hall; Hamilton; York; Gosper; Phelps; Kearney; Adams; Clay; Fillmore; Furnas; Harlan; Franklin;
+Webster; Nuckolls; Thayer
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...Portions of north central Kansas, including the following
+counties, Jewell, Mitchell, Osborne, Phillips, Rooks and Smith and
+Nebraska, including the following counties, Adams, Buffalo, Clay,
+Dawson, Fillmore, Franklin, Furnas, Gosper, Greeley, Hall,
+Hamilton, Harlan, Howard, Kearney, Merrick, Nance, Nuckolls,
+Phelps, Polk, Sherman, Thayer, Valley, Webster and York.
+
+* WHEN...From this evening through Thursday evening.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+
+* ADDITIONAL DETAILS...
+- After a wet period last week with much of the area seeing 3 to 5
+inches of rainfall, another prolonged light to moderate rain
+event will impact the entire Watch area.  Periodic showers are
+expected today, but tonight into Thursday will be the primary
+period to see heavier rain rates and excessive runoff, especially
+Wednesday into Thursday. Another 3 to 5 inches of rain is
+possible over the watch area.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAGID"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT FROM THIS EVENING THROUGH THURSDAY EVENING"
+  ],
+  "VTEC": [
+    "/O.CON.KGID.FA.A.0005.260930T0000Z-261002T0000Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS63 KGID 291022"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T19:00:00-05:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.efd6f900247512d186c64c5dbfd5c4109d00840c.001.1,2026-09-
+28T13:04:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.bcf41b39892fdd42ec1bf1f9d7a06edfc0eb8d6e.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1
