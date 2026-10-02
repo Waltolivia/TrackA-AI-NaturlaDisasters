@@ -137,14 +137,14 @@ Copy the example target configuration:
 cp config/targets.example.json config/targets.local.json
 ```
 
-`targets.example.json` is the project's inexpensive baseline, reviewed on
-2026-09-28. It contains one fast, cost-conscious target from each supported
-provider:
+`targets.study-v1.json` is the proposed frozen study baseline, reviewed on
+2026-09-28. `targets.example.json` currently mirrors it for local setup. The
+study file contains one fast, cost-conscious target from each provider:
 
 | Provider | Model ID | Experimental condition |
 | --- | --- | --- |
-| OpenAI | `gpt-5.6-luna` | No web search |
-| Anthropic | `claude-haiku-4-5` | No web search |
+| OpenAI | `gpt-5.4-nano-2026-03-17` | No web search |
+| Anthropic | `claude-sonnet-5-5` | No web search |
 | Google | `gemini-3.5-flash-lite` | No web search |
 
 These models were selected to emphasize speed, cost, and broad API availability
@@ -152,16 +152,16 @@ rather than maximum benchmark performance. They are inexpensive API models, but
 they are **not guaranteed to be identical** to the models, system prompts, or
 tools used in the providers' free consumer chat products.
 
-Anthropic currently lists Haiku 4.5's retirement as no sooner than October 15,
-2026. It is the cost-focused baseline requested by the team, but the team must
-check its lifecycle before collection and document any successor as a new
-experimental condition rather than silently changing the model mid-study.
+Each target has an explicit 2,048-token output ceiling. OpenAI uses a dated
+snapshot; Anthropic documents Sonnet 5.5 as a fixed model ID; and Google lists
+Flash-Lite as stable. Provider serving infrastructure can still change, so the
+runner archives the requested and resolved model information for every probe.
 
 The initial baseline deliberately disables browsing. Browsing changes the
 information available to a model and may add tool-use charges, so search-enabled
 probes should be introduced later as a separately named experimental condition,
 not silently added to these targets. See `config/README.md` for every target
-field, one-provider testing, model lifecycle guidance, and the procedure for
+field, isolated-provider testing, model lifecycle guidance, and the procedure for
 adding a search condition.
 
 Verify that every configured model is available to the team's API account.
@@ -174,7 +174,7 @@ Run a real pilot:
 ```bash
 uv run ai-probe-runner \
   --trigger examples/trigger.flash-flood.json \
-  --targets config/targets.local.json \
+  --targets config/targets.study-v1.json \
   --delay-seconds 1 \
   --fail-on-probe-error
 ```

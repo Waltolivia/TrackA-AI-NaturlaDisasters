@@ -5,6 +5,7 @@
     "model": "mock-v1",
     "interface": "local-mock",
     "browsing": false,
+    "max_output_tokens": 2048,
     "enabled": true
   }
 ]
