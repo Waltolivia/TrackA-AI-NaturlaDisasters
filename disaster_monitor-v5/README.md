@@ -93,7 +93,42 @@ See `python -m disaster_monitor.queue_cli --help` for queue-management commands 
 
 ## macOS always-on installation
 
-The `macos/` directory contains the launch-agent template and installer from the prior always-on release. Test the monitor manually before enabling automatic startup.
+The `macos/` directory contains a `launchd` user agent. `launchd` starts the monitor when you log in and restarts it if it exits. The Mac must remain powered on and connected to the network; a sleeping Mac cannot poll APIs.
+
+One-time setup from the `disaster_monitor-v5` directory:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m pytest tests -v
+export NWS_USER_AGENT='DisasterMonitor/0.5 (your-email@example.com)'
+./macos/install_launch_agent.sh
+```
+
+Use a real contact address in `NWS_USER_AGENT`; this is required by the NWS API. The installer writes the absolute project path into `~/Library/LaunchAgents/com.disastermonitor.plist`, so it does not depend on a shell being open. The launch agent stores stdout/stderr in `logs/launchd.out.log` and `logs/launchd.err.log`.
+
+Verify and operate the service:
+
+```bash
+launchctl print "gui/$(id -u)/com.disastermonitor"
+tail -f logs/disaster_monitor.log
+cat data/health.json
+launchctl kickstart -k "gui/$(id -u)/com.disastermonitor"  # restart
+launchctl bootout "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.disastermonitor.plist"  # stop/disable
+```
+
+For a Mac dedicated to this service, configure **System Settings → Energy** to prevent automatic sleep while connected to power. From Terminal, the equivalent AC-power setting is:
+
+```bash
+sudo pmset -c sleep 0
+```
+
+Do not use a laptop with its lid closed unless it has a supported power/display setup. For operation before a user logs in, use a system `LaunchDaemon` managed by an administrator rather than this per-user `LaunchAgent`; that requires choosing a service account and setting ownership/permissions for the project data.
+
+To disable the service permanently, run `launchctl bootout` as above and remove `~/Library/LaunchAgents/com.disastermonitor.plist`.
+
+This monitor currently polls NWS active alerts (including tornadoes, hurricanes, and floods) and NASA EONET (including earthquake and wildfire events). It stores the source payloads, normalized events, monthly archive reports, SQLite data, backups, and durable outbox jobs. It is not a generic commercial weather API and should not be treated as the sole source for emergency warnings.
 
 
 ## Experiment and Formatting
