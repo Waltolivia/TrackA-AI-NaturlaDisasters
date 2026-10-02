@@ -1,0 +1,91 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000047    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.280733+00:00    Last Seen: 2026-09-29T18:12:27.280733+00:00    Ended: N/A
+Primary Location: Yuma County; Kit Carson County; Cheyenne County; Cheyenne; Rawlins; Decatur; Norton; Sherman; Thomas; Sheridan; Graham; Wallace; Logan; Gove; Greeley; Wichita; Dundy; Hitchcock; Red Willow
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T07:56:00-06:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 7:56AM MDT until October 1 at 6:00PM MDT by NWS Goodland KS
+Expires: 2026-09-30T03:00:00-06:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Yuma County; Kit Carson County; Cheyenne County; Cheyenne; Rawlins; Decatur; Norton; Sherman; Thomas; Sheridan;
+Graham; Wallace; Logan; Gove; Greeley; Wichita; Dundy; Hitchcock; Red Willow
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...Portions of Colorado, including the following areas,
+Cheyenne CO, Kit Carson and Yuma, Kansas, including the following
+areas, Cheyenne KS, Decatur, Gove, Graham, Greeley, Logan, Norton,
+Rawlins, Sheridan, Sherman, Thomas, Wallace and Wichita, and
+southwest Nebraska, including the following areas, Dundy, Hitchcock
+and Red Willow.
+
+* WHEN...From 6 PM MDT  /7 PM CDT/ this evening through Thursday
+afternoon.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Flooding may occur in poor drainage and urban areas.
+
+* ADDITIONAL DETAILS...
+- Total rainfall amounts are forecast to be around 1.0-3.0 inches,
+with a few areas seeing 4.0-5.0 inches. This is a multi-day
+event, the rain will be split across multiple storms/showers.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAGLD"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT FROM 6 PM MDT /7 PM CDT/ THIS EVENING THROUGH THURSDAY AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.CON.KGLD.FA.A.0006.260930T0000Z-261002T0000Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS63 KGLD 291356"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T18:00:00-06:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.ad07452d0f5bebcd950472d277503ab4ffe1e4c5.001.1,2026-09-
+28T11:59:00-06:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.2ae98f4b004bdeac110358f5abea3b1868cbe520.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

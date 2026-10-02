@@ -1,0 +1,111 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000051    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.420232+00:00    Last Seen: 2026-09-29T18:12:27.420232+00:00    Ended: N/A
+Primary Location: Western Pima County Including Ajo/Organ Pipe Cactus National Monument; Tohono O'odham Nation including Sells; Upper Santa Cruz River and Altar Valleys including Nogales; Tucson Metro Area including Tucson/Green Valley/Marana/Vail; South Central Pinal County including Eloy/Picacho Peak State Park; Southeast Pinal County including Kearny/Mammoth/Oracle; Upper San Pedro River Valley including Sierra Vista/Benson; Eastern Cochise County Below 5000 Feet including Douglas/Willcox; Upper Gila River and Aravaipa Valleys including Clifton/Safford; White Mountains of Graham and Greenlee Counties including Hannagan Meadow; Galiuro and Pinaleno Mountains including Mount Graham; Chiricahua Mountains including Chiricahua National Monument; Dragoon/Mule/Huachuca and Santa Rita Mountains including Bisbee/Canelo Hills/Madera Canyon; Santa Catalina and Rincon Mountains including Mount Lemmon/Summerhaven; Baboquivari Mountains including Kitt Peak
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T04:34:00-07:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 4:34AM MST until September 29 at 11:00PM MST by NWS Tucson AZ
+Expires: 2026-09-29T23:00:00-07:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Western Pima County Including Ajo/Organ Pipe Cactus National Monument; Tohono O'odham Nation including Sells;
+Upper Santa Cruz River and Altar Valleys including Nogales; Tucson Metro Area including Tucson/Green
+Valley/Marana/Vail; South Central Pinal County including Eloy/Picacho Peak State Park; Southeast Pinal County
+including Kearny/Mammoth/Oracle; Upper San Pedro River Valley including Sierra Vista/Benson; Eastern Cochise
+County Below 5000 Feet including Douglas/Willcox; Upper Gila River and Aravaipa Valleys including
+Clifton/Safford; White Mountains of Graham and Greenlee Counties including Hannagan Meadow; Galiuro and Pinaleno
+Mountains including Mount Graham; Chiricahua Mountains including Chiricahua National Monument;
+Dragoon/Mule/Huachuca and Santa Rita Mountains including Bisbee/Canelo Hills/Madera Canyon; Santa Catalina and
+Rincon Mountains including Mount Lemmon/Summerhaven; Baboquivari Mountains including Kitt Peak
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flash flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...A portion of Southeast Arizona, including the following
+areas, Baboquivari Mountains, Catalina and Rincon Mountains,
+Chiricahua Mountains, Dragoon and Mule and Huachuca and Santa Rita
+Mountains, Eastern Cochise County below 5000 feet, Galiuro and
+Pinaleno Mountains, South Central Pinal County, Southeast Pinal
+County, Tohono O'odham Nation, Tucson Metro Area, Upper Gila River
+Valley, Upper San Pedro River Valley, Upper Santa Cruz River
+Valley/Altar Valley, Western Pima County and White Mountains of
+Graham and Greenlee Counties.
+
+* WHEN...Through this evening.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Low-water crossings may be flooded.
+
+* ADDITIONAL DETAILS...
+- Deep tropical moisture will combine with an approaching upper low
+and trough, resulting in areas of heavy rainfall. Rainfall totals
+of 1 to 2 inches are possible across most valley locations in
+Southeast Arizona, with 2 to 4 inches possible across the Sky
+Islands and White Mountains. Locally heavier amounts are possible
+under the stronger thunderstorms, especially for the White
+Mountains.
+
+- Http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be prepared to take action
+should Flash Flood Warnings be issued.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFATWC"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT THROUGH THIS EVENING"
+  ],
+  "VTEC": [
+    "/O.CON.KTWC.FA.A.0013.000000T0000Z-260930T0600Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS65 KTWC 291134"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T23:00:00-07:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.04d192db05724f0c7a2a70e3605de6ec7413265e.001.1,2026-09-
+27T20:59:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.16c5a93bf9af759d09682cbc4103bf6d09d36ac0.001.1,2026-09-
+27T14:54:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.73304bb0be784914e4426a27961a591ebe2d6bbe.001.1,2026-09-
+26T21:17:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.47a62653695189a26effd54fa380b6af9554460d.001.1,2026-09-
+26T13:17:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.854af8573e9f023c9636225b0e2b41c1574896d1.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

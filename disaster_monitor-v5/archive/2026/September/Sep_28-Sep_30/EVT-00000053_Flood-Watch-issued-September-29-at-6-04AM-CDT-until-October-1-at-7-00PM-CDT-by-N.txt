@@ -1,0 +1,87 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000053    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.509620+00:00    Last Seen: 2026-09-29T18:12:27.509620+00:00    Ended: N/A
+Primary Location: Clay; Cherokee; Buena Vista; Woodbury; Ida; Dakota
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T06:04:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 6:04AM CDT until October 1 at 7:00PM CDT by NWS Sioux Falls SD
+Expires: 2026-09-29T15:00:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Clay; Cherokee; Buena Vista; Woodbury; Ida; Dakota
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...Portions of Iowa, including the following counties, Buena
+Vista, Cherokee, Clay, Ida and Woodbury and northeast Nebraska,
+including the following county, Dakota.
+
+* WHEN...From this evening through Thursday evening.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Flooding may occur in poor drainage and urban areas.
+
+* ADDITIONAL DETAILS...
+- Widespread rainfall up to 2 inches is likely through Thursday,
+with localized amounts up to 3 or 4 inches possible.
+- Stay up to date with the latest river observations and forecasts
+at: water.noaa.gov
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAFSD"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT FROM THIS EVENING THROUGH THURSDAY EVENING"
+  ],
+  "VTEC": [
+    "/O.CON.KFSD.FA.A.0003.260930T0000Z-261002T0000Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS63 KFSD 291104"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T19:00:00-05:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.87ebf76c72c73d54f645332b59f0fafae3c7b08e.001.1,2026-09-
+28T13:44:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.3a2d3a899808e6b6c9924047e176983a10912696.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

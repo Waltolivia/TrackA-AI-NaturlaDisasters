@@ -1,0 +1,88 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000046    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.245105+00:00    Last Seen: 2026-09-29T18:12:27.245105+00:00    Ended: N/A
+Primary Location: Gaines; Dawson; Andrews; Martin; Loving; Winkler; Ector; Midland; Ward; Crane; Upton; Pecos; Reeves County Plains; Davis Mountains; Davis Mountains Foothills
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T09:12:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 9:12AM CDT until September 30 at 7:00AM CDT by NWS Midland/Odessa TX
+Expires: 2026-09-29T17:15:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Gaines; Dawson; Andrews; Martin; Loving; Winkler; Ector; Midland; Ward; Crane; Upton; Pecos; Reeves County
+Plains; Davis Mountains; Davis Mountains Foothills
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flash flooding caused by excessive rainfall.
+
+* WHERE...Portions of southwest and western Texas, including the
+following areas, in southwest Texas, Davis Mountains, Davis
+Mountains Foothills and Pecos. In western Texas, Andrews, Crane,
+Dawson, Ector, Gaines, Loving, Martin, Midland, Reeves County
+Plains, Upton, Ward and Winkler.
+
+* WHEN...Through Wednesday morning.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Flooding may occur in poor drainage and urban areas. Low-water
+crossings may be flooded. Area creeks and streams are running high
+and could flood with more heavy rain.
+
+* ADDITIONAL DETAILS...
+- Tropical moisture from the remnants of Hurricane Polo will
+overspread the region, which will promote heavy rain across
+southeast New Mexico and far west Texas. Soils in portions of the
+region remain saturated following heavy rains from last week,
+which will further promote the risk for flash flooding.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be prepared to take action
+should Flash Flood Warnings be issued.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAMAF"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH IN EFFECT THROUGH WEDNESDAY MORNING"
+  ],
+  "VTEC": [
+    "/O.EXA.KMAF.FA.A.0006.000000T0000Z-260930T1200Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS64 KMAF 291412"
+  ],
+  "eventEndingTime": [
+    "2026-09-30T07:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.6c147d4b7a9239d92f70a7c496a6bd49e7f6b4cf.002.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

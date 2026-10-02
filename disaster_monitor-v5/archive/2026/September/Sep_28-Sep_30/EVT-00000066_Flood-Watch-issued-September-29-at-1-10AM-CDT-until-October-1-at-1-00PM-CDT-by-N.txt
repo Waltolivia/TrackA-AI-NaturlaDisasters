@@ -1,0 +1,85 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000066    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:28.115530+00:00    Last Seen: 2026-09-29T18:12:28.115530+00:00    Ended: N/A
+Primary Location: Seminole; Hughes; Garvin; Murray; Pontotoc; Coal; Jefferson; Carter; Johnston; Atoka; Love; Marshall; Bryan; Wichita; Baylor; Archer; Clay
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T01:10:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 1:10AM CDT until October 1 at 1:00PM CDT by NWS Norman OK
+Expires: 2026-09-29T15:15:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Seminole; Hughes; Garvin; Murray; Pontotoc; Coal; Jefferson; Carter; Johnston; Atoka; Love; Marshall; Bryan;
+Wichita; Baylor; Archer; Clay
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall is possible.
+
+* WHERE...Portions of Oklahoma, including the following counties,
+Atoka, Bryan, Carter, Coal, Garvin, Hughes, Jefferson, Johnston,
+Love, Marshall, Murray, Pontotoc and Seminole and northern Texas,
+including the following counties, Archer, Baylor, Clay and Wichita.
+
+* WHEN...From Wednesday afternoon through Thursday afternoon.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Flooding may occur in poor drainage and urban areas.
+
+* ADDITIONAL DETAILS...
+- Thunderstorms with very heavy rainfall are expected Wednesday
+evening through Thursday morning. Rainfall totals of 2-4 inches
+are likely, with some locations possibly receiving as much as 6
+inches of rain.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAOUN"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH IN EFFECT FROM WEDNESDAY AFTERNOON THROUGH THURSDAY AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.NEW.KOUN.FA.A.0007.260930T2100Z-261001T1800Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS64 KOUN 290610"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T13:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.82adf4e73357e768aef33e6f0442302177975e12.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

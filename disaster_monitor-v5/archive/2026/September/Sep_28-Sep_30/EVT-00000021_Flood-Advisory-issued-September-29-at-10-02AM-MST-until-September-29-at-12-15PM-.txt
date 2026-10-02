@@ -1,0 +1,168 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000021    Type: flood    Phase: ADVISORY    Lifecycle: ACTIVE    Highest Severity: Minor
+Started: 2026-09-29T18:12:26.381321+00:00    Last Seen: 2026-09-29T18:12:26.735400+00:00    Ended: N/A
+Primary Location: Gila, AZ; Maricopa, AZ; Pinal, AZ
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T10:02:00-07:00    NWS    Flood Advisory    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Advisory issued September 29 at 10:02AM MST until September 29 at 12:15PM MST by NWS Phoenix AZ
+Expires: 2026-09-29T12:15:00-07:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Gila, AZ; Pinal, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues.
+
+* WHERE...Gila County in east central Arizona...
+Pinal County in southeastern Arizona...
+
+* WHEN...Until 1215 PM MST.
+
+* IMPACTS...Minor flooding in low-lying and poor drainage areas.
+Rises in small streams and normally dry arroyos. Some low-water
+crossings may become impassable.
+
+* ADDITIONAL DETAILS...
+- At 1002 AM MST, Doppler radar indicated heavy rain. Minor
+flooding is ongoing or expected to begin shortly in the advisory
+area. Up to 1.25 inches of rain have fallen.
+- Additional rainfall amounts up to 0.75 inches are expected over
+the area. This additional rain will result in minor flooding.
+- Some locations that will experience flooding include...
+Globe, Miami, Cutter, Central Heights-Midland City and Claypool.
+- Bloody Tanks Wash, Russell Gulch, Six Shooter Canyon, and Ice
+House Canyon.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+Be aware of your surroundings and do not drive on flooded roads.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLSPSR"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "FLOOD ADVISORY NOW IN EFFECT UNTIL 1215 PM MST THIS AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.EXT.KPSR.FA.Y.0072.000000T0000Z-260929T1915Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS85 KPSR 291702"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T12:15:00-07:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.98ffd9257d4a0dd20d0efb9267c45a6c7822aa31.001.1,2026-09-
+29T06:13:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.48a81e8bfca7b8a55ab05e78be889243aa4ba0d2.001.1,2026-09-
+29T03:20:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.001db958b19c248b99db2fb82d6adc4466b65301.001.1
+
+[02] 2026-09-29T09:02:00-07:00    NWS    Flood Advisory    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Advisory issued September 29 at 9:02AM MST until September 29 at 12:00PM MST by NWS Phoenix AZ
+Expires: 2026-09-29T12:00:00-07:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Gila, AZ; Maricopa, AZ; Pinal, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall is expected.
+
+* WHERE...Gila County in east central Arizona...
+Maricopa County in south central Arizona...
+Pinal County in southeastern Arizona...
+
+* WHEN...Until noon MST.
+
+* IMPACTS...Minor flooding in low-lying and poor drainage areas.
+Rises in small streams and normally dry arroyos. Some low-water
+crossings may become impassable.
+
+* ADDITIONAL DETAILS...
+- At 902 AM MST, Doppler radar indicated heavy rain due to
+thunderstorms. Minor flooding is ongoing or expected to begin
+shortly in the advisory area. Between 0.5 and 1.25 inches of rain
+have fallen.
+- Additional rainfall amounts of 0.5 to 1.25 inches are expected
+over the area. This additional rain will result in minor
+flooding.
+- Some locations that will experience flooding include...
+Florence, Coolidge, Superior, Roosevelt, Boyce Thompson
+Arboretum, Top-Of-The-World, Top Of The World, Apache Lake, Queen
+Valley, Florence Junction, Tonto National Monument, Roosevelt
+Dam, Kings Ranch, Gold Camp, Four Peaks, Magma, Coolidge Airport,
+Tortilla Flat, Roosevelt Estates and Inspiration.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+Please report observed flooding to local emergency services or law
+enforcement and request they pass this information to the National
+Weather Service when you can do so safely.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLSPSR"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "FLOOD ADVISORY IN EFFECT UNTIL NOON MST TODAY"
+  ],
+  "VTEC": [
+    "/O.NEW.KPSR.FA.Y.0075.260929T1602Z-260929T1900Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS85 KPSR 291602"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T12:00:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.5afe14788c3a807a5efe5da273d6fa9a0aa1c5f2.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 2

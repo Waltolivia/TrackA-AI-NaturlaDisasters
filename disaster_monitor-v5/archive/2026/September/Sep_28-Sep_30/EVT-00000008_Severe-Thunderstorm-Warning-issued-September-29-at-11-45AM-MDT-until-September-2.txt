@@ -1,0 +1,107 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000008    Type: severe thunderstorm    Phase: ACTIVE_CONFIRMED    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.055776+00:00    Last Seen: 2026-09-29T18:12:26.055776+00:00    Ended: N/A
+Primary Location: Dona Ana, NM
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T11:45:00-06:00    NWS    Severe Thunderstorm Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Severe Thunderstorm Warning issued September 29 at 11:45AM MDT until September 29 at 12:30PM MDT by NWS El Paso Tx/Santa Teresa NM
+Expires: 2026-09-29T12:30:00-06:00    Urgency: Immediate    Certainty: Observed
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Dona Ana, NM
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+SVREPZ
+
+The National Weather Service in El Paso has issued a
+
+* Severe Thunderstorm Warning for...
+West central Dona Ana County in south central New Mexico...
+
+* Until 1230 PM MDT.
+
+* At 1144 AM MDT, a severe thunderstorm was located 9 miles south of
+Rincon, moving northeast at 25 mph.
+
+HAZARD...60 mph wind gusts and penny size hail.
+
+SOURCE...Radar indicated.
+
+IMPACT...Expect damage to roofs, siding, and trees.
+
+* Locations impacted include...
+Hatch, Leasburg, Rincon, Radium Springs, Hill, Fort Selden State
+Historic Site, Leasburg Dam State Park, and Magdalena Peak.
+
+This includes Interstate 25 in New Mexico between mile markers 13 and
+39.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Remain alert for a possible tornado! Tornadoes can develop quickly
+from severe thunderstorms. If you spot a tornado go at once into the
+basement or small central room in a sturdy structure.
+
+For your protection move to an interior room on the lowest floor of a
+building.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "SVREPZ"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "VTEC": [
+    "/O.NEW.KEPZ.SV.W.0135.260929T1745Z-260929T1830Z/"
+  ],
+  "WMOidentifier": [
+    "WUUS54 KEPZ 291745"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T12:30:00-06:00"
+  ],
+  "eventMotionDescription": [
+    "2026-09-29T17:44:00-00:00...storm...239DEG...23KT...32.53,-107.08"
+  ],
+  "hailThreat": [
+    "RADAR INDICATED"
+  ],
+  "maxHailSize": [
+    "0.75"
+  ],
+  "maxWindGust": [
+    "60 MPH"
+  ],
+  "tornadoDetection": [
+    "POSSIBLE"
+  ],
+  "windThreat": [
+    "RADAR INDICATED"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.15868e2d0d4812678db7346798fc340721c546e6.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

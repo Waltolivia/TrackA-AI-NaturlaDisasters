@@ -1,0 +1,90 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000056    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.649101+00:00    Last Seen: 2026-09-29T18:12:27.649101+00:00    Ended: N/A
+Primary Location: Custer; Perkins; Lincoln; Chase; Hayes; Frontier
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T05:23:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 5:23AM CDT until October 1 at 7:00PM CDT by NWS North Platte NE
+Expires: 2026-09-29T19:00:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Custer; Perkins; Lincoln; Chase; Hayes; Frontier
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...Portions of central and southwest Nebraska, including the
+following counties, in central Nebraska, Custer. In southwest
+Nebraska, Chase, Frontier, Hayes, Lincoln and Perkins.
+
+* WHEN...Today through Thursday evening.
+
+* IMPACTS...Creeks and streams may rise out of their banks. Flooding
+may occur in poor drainage and urban areas. Low-water crossings may
+be flooded.
+
+* ADDITIONAL DETAILS...
+- Scattered areas of locally heavy rainfall could redevelop late
+this afternoon into this evening. A lull in precipitation is then
+likely from late this evening though the overnight hours. On
+Wednesday, as moisture arrives from the remnants of Hurricane
+Polo, additional heavy rainfall will be possible, especially
+mid-morning into Wednesday night.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFALBF"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT FROM THIS EVENING THROUGH THURSDAY EVENING"
+  ],
+  "VTEC": [
+    "/O.CON.KLBF.FA.A.0003.260930T0000Z-261002T0000Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS63 KLBF 291023"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T19:00:00-05:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.a8876989f60bd169784916a8a1be01cca0a3ece0.001.1,2026-09-
+28T12:59:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.12ad2d0646fc68bd0a5717df2cef200da2f76a0b.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

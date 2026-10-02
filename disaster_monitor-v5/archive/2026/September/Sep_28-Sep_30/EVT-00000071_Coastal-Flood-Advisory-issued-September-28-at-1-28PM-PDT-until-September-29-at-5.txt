@@ -1,0 +1,106 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000071    Type: coastal flood    Phase: ADVISORY    Lifecycle: ACTIVE    Highest Severity: Minor
+Started: 2026-09-29T18:12:28.385701+00:00    Last Seen: 2026-09-29T18:12:28.385701+00:00    Ended: N/A
+Primary Location: Catalina and Santa Barbara Islands; Ventura County Beaches; Malibu Coast; Los Angeles County Beaches
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-28T13:28:00-07:00    NWS    Coastal Flood Advisory    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Coastal Flood Advisory issued September 28 at 1:28PM PDT until September 29 at 5:00PM PDT by NWS Los Angeles/Oxnard CA
+Expires: 2026-09-29T17:00:00-07:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Catalina and Santa Barbara Islands; Ventura County Beaches; Malibu Coast; Los Angeles County Beaches
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...For the Beach Hazards Statement, dangerous rip currents
+and breaking waves due to elevated surf. For the Coastal Flood
+Advisory, moderate coastal flooding expected. For the High
+Surf Advisory, breaking waves of 4 to 7 feet with dangerous
+rip currents.
+
+* WHERE...Catalina and Santa Barbara Islands, Ventura County
+Beaches, Malibu Coast and Los Angeles County Beaches.
+
+* WHEN...Until 5 PM PDT Tuesday.
+
+* IMPACTS...Moderate flooding of sea water is likely over some
+vulnerable low-lying coastal areas, especially around the time
+of high tide, including over beach parking lots, bike paths,
+and harbor walkways. Moderate to locally significant beach
+erosion is likely. Very localized damage possible to most
+vulnerable areas. There is an increased risk for ocean
+drowning. Rip currents can pull swimmers and surfers out to
+sea. Large breaking waves can cause injury, wash people off
+beaches and rocks, and capsize small boats near shore.
+
+* ADDITIONAL DETAILS...Areas of most concern are Avalon, Long
+Beach (Peninsula and Belmont Shore). While the surf will
+likely be smaller than Marie (from earlier this month), the
+lingering erosion effects enhance the vulnerabilities for
+locally more significant coastal flooding.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Take the necessary actions to protect flood-prone property. Do
+NOT drive around barricades or through water of unknown depth.
+
+Remain out of the water due to dangerous surf conditions, or stay
+near occupied lifeguard towers. Rock jetties can be deadly in
+such conditions, stay off the rocks.
+
+Remain out of the water due to hazardous swimming conditions, or
+stay near occupied lifeguard towers. Rock jetties can be deadly
+in such conditions, stay off the rocks.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "CFWLOX"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "COASTAL FLOOD ADVISORY REMAINS IN EFFECT UNTIL 5 PM PDT TUESDAY... ...HIGH SURF ADVISORY REMAINS IN EFFECT
+UNTIL 5 PM PDT TUESDAY"
+  ],
+  "VTEC": [
+    "/O.CON.KLOX.CF.Y.0007.000000T0000Z-260930T0000Z/"
+  ],
+  "WMOidentifier": [
+    "WHUS46 KLOX 282028"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T17:00:00-07:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.3902db603baa6b79ea3e158a025a7032a807be9e.001.1,2026-09-
+27T19:20:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b924f36a1e5250c15212d46a72bbbe86fea6fb21.001.1,2026-09-
+27T12:18:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.72457396b787c31adb899050dfb6013e55c6067f.001.1,2026-09-
+26T19:27:00-07:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.3653e8d3cb86ced5db774a3454b4673b0fd47b73.001.1,2026-09-
+26T13:02:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.a4111ead28f9716f2c527f4ec207e43f66f2e895.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

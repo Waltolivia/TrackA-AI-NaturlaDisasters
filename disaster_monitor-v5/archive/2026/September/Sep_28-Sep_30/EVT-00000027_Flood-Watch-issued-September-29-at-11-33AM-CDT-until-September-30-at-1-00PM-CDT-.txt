@@ -1,0 +1,93 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000027    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.605532+00:00    Last Seen: 2026-09-29T18:12:26.605532+00:00    Ended: N/A
+Primary Location: Parmer; Castro; Swisher; Bailey; Lamb; Cochran
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T11:33:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 11:33AM CDT until September 30 at 1:00PM CDT by NWS Lubbock TX
+Expires: 2026-09-30T01:00:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Parmer; Castro; Swisher; Bailey; Lamb; Cochran
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...Portions of northwest Texas and the far southern Panhandle
+of Texas, including the following counties, in northwest Texas,
+Bailey, Cochran and Lamb. In the Panhandle of Texas, Castro, Parmer
+and Swisher.
+
+* WHEN...Through 1 PM CDT Wednesday afternoon.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Flooding may occur in poor drainage and urban areas. Low-water
+crossings may be flooded.
+
+* ADDITIONAL DETAILS...
+- Multiple rounds of heavy showers and thunderstorms are expected
+through early Wednesday. Storms may move repeatedly over the same
+areas, which combined with high rainfall rates may result in
+flash flooding. This will occur across areas that already
+received several inches of rain over the last week.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFALUB"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT THROUGH WEDNESDAY AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.CON.KLUB.FA.A.0002.000000T0000Z-260930T1800Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS64 KLUB 291633"
+  ],
+  "eventEndingTime": [
+    "2026-09-30T13:00:00-05:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.c72d7fce84e77e0e75f9eb8163249fcd1a42a9bd.001.1,2026-09-
+28T14:01:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.fef574a87320c7f7170031d9befc8a511be16b47.001.1,2026-09-
+28T01:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.e626fda7436c4b5cf626b2f595a83945f7211418.002.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

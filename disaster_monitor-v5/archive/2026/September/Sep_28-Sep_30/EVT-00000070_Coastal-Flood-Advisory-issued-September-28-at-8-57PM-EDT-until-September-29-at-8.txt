@@ -1,0 +1,72 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000070    Type: coastal flood    Phase: ADVISORY    Lifecycle: ACTIVE    Highest Severity: Minor
+Started: 2026-09-29T18:12:28.351053+00:00    Last Seen: 2026-09-29T18:12:28.351053+00:00    Ended: N/A
+Primary Location: Eastern Clay; Eastern Putnam; Western St. Johns
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-28T20:57:00-04:00    NWS    Coastal Flood Advisory    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Coastal Flood Advisory issued September 28 at 8:57PM EDT until September 29 at 8:00PM EDT by NWS Jacksonville FL
+Expires: 2026-09-29T20:00:00-04:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Eastern Clay; Eastern Putnam; Western St. Johns
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Minor coastal flooding.
+
+* WHERE...Eastern Clay, Eastern Putnam and Western St. Johns
+Counties.
+
+* WHEN...Until 8 PM EDT Tuesday.
+
+* IMPACTS...Flooding of lots, parks, and roads with only isolated
+road closures expected.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+If travel is required, allow extra time as some roads may be
+closed. Do not drive around barricades or through water of
+unknown depth. Take the necessary actions to protect flood-prone
+property.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "CFWJAX"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "COASTAL FLOOD ADVISORY IN EFFECT UNTIL 8 PM EDT TUESDAY"
+  ],
+  "VTEC": [
+    "/O.EXA.KJAX.CF.Y.0002.000000T0000Z-260930T0000Z/"
+  ],
+  "WMOidentifier": [
+    "WHUS42 KJAX 290057"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T20:00:00-04:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.9dbc3a92f8e2c27df713b8eba22c28be496300b9.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

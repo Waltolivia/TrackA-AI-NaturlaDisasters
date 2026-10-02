@@ -1,0 +1,89 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000031    Type: coastal flood    Phase: ADVISORY    Lifecycle: ACTIVE    Highest Severity: Minor
+Started: 2026-09-29T18:12:26.785134+00:00    Last Seen: 2026-09-29T18:12:26.785134+00:00    Ended: N/A
+Primary Location: Mainland Monroe; Far South Miami-Dade County
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T11:41:00-04:00    NWS    Coastal Flood Statement    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Coastal Flood Statement issued September 29 at 11:41AM EDT until September 30 at 2:00PM EDT by NWS Miami FL
+Expires: 2026-09-30T08:00:00-04:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Mainland Monroe; Far South Miami-Dade County
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Isolated minor coastal flooding.
+
+* WHERE...Mainland Monroe and Far South Miami-Dade County.
+
+* WHEN...Through Wednesday afternoon.
+
+* IMPACTS...Some water on low lying roads and property.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Do not drive through flooded roadways.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "CFWMFL"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "COASTAL FLOOD STATEMENT REMAINS IN EFFECT THROUGH WEDNESDAY AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.CON.KMFL.CF.S.0004.000000T0000Z-260930T1800Z/"
+  ],
+  "WMOidentifier": [
+    "WHUS42 KMFL 291541"
+  ],
+  "eventEndingTime": [
+    "2026-09-30T14:00:00-04:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.352a8efa83057fcb5feae27909be3962ae50400b.003.1,2026-09-
+28T20:00:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.71c5005ee8e3030ce49f28f9bc734f02a1d7e70b.003.1,2026-09-
+28T12:09:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.71cd485fdf8756b019c0e288182d75d90caa7b60.003.1,2026-09-
+28T03:01:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.cd3f28512529857103fd8f11497b9703eaeed637.002.1,2026-09-
+27T13:36:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.95c8125c2a0bebfd3fe204c88078ae653c458c1d.003.1,2026-09-
+27T03:53:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.d7b5ae9919e44df52aa518dc891eddef7e4e7744.003.1,2026-09-
+27T06:17:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.7876cd78db930ef8ad68fa208f25ad7aeafdc51b.004.1,2026-09-
+26T19:34:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b11d61c0efcce07c0173cab89ca092d0ac2bdd62.004.1,2026-09-
+26T02:30:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.be51a1d2bf617c88d8bccb235742ad89231397b3.003.1,2026-09-
+25T14:55:00-04:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.5dd94328eaebdc71a5bc25ab09337b893bfc6a92.003.1,2026-09-
+25T02:08:00-04:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.f7ff4c3d4fd1ad9a0641216d12cc7dba7a0bf355.002.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

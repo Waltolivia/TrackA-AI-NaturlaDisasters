@@ -1,0 +1,85 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000020    Type: flood    Phase: ADVISORY    Lifecycle: ACTIVE    Highest Severity: Minor
+Started: 2026-09-29T18:12:26.355329+00:00    Last Seen: 2026-09-29T18:12:26.355329+00:00    Ended: N/A
+Primary Location: Catron, NM; Socorro, NM
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T11:04:00-06:00    NWS    Flood Advisory    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Advisory issued September 29 at 11:04AM MDT until September 29 at 2:00PM MDT by NWS Albuquerque NM
+Expires: 2026-09-29T14:00:00-06:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Catron, NM; Socorro, NM
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Arroyo and small stream flooding caused by excessive
+rainfall is expected.
+
+* WHERE...West Central Socorro County in central New Mexico...
+East Central Catron County in west central New Mexico...
+
+* WHEN...Until 200 PM MDT.
+
+* IMPACTS...Minor flooding in low-lying and poor drainage areas.
+Rises in small streams and normally dry arroyos. Water over
+roadways. Overflowing poor drainage areas. Some low-water crossings
+may become impassable.
+
+* ADDITIONAL DETAILS...
+- At 1101 AM MDT, Doppler radar indicated moderate-to-heavy rain
+due to thunderstorms. This  will cause arroyo and small stream
+flooding. Between 0.5 and 1.5 inches of rain have fallen.
+- Additional rainfall amounts up to 1 inch are expected over the
+area. This additional rain will result in minor flooding.
+- Some locations that will experience flooding include...
+Datil and National Radio Astronomy Observatory.
+- The ground is already saturated in some spots due to moderate to
+heavy rain that fell Monday and Monday night.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLSABQ"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "FLOOD ADVISORY IN EFFECT UNTIL 2 PM MDT THIS AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.NEW.KABQ.FA.Y.0349.260929T1704Z-260929T2000Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS85 KABQ 291704"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T14:00:00-06:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.07c53a706ffae509b6bbf4909e9b67baeadd6135.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

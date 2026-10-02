@@ -1,0 +1,84 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000028    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.634256+00:00    Last Seen: 2026-09-29T18:12:26.634256+00:00    Ended: N/A
+Primary Location: Stonewall
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T11:33:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 11:33AM CDT until October 1 at 7:00AM CDT by NWS Lubbock TX
+Expires: 2026-09-30T01:00:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Stonewall
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall is possible.
+
+* WHERE...A portion of the low-lying Rolling Plains, including
+Stonewall County.
+
+* WHEN...From 7 PM CDT Wednesday evening through 7 AM CDT Thursday
+morning.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Flooding may occur in poor drainage and urban areas. Low-water
+crossings may be flooded.
+
+* ADDITIONAL DETAILS...
+- Multiple rounds of heavy showers and thunderstorms are expected
+through early Wednesday. Storms may move repeatedly over the same
+areas, which combined with high rainfall rates may result in
+flash flooding.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFALUB"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH IN EFFECT FROM WEDNESDAY EVENING THROUGH THURSDAY MORNING"
+  ],
+  "VTEC": [
+    "/O.NEW.KLUB.FA.A.0003.261001T0000Z-261001T1200Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS64 KLUB 291633"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T07:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.e626fda7436c4b5cf626b2f595a83945f7211418.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

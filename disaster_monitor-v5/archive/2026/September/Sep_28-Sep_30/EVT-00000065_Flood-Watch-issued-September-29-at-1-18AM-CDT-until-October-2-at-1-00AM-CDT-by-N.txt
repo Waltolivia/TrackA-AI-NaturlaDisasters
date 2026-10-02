@@ -1,0 +1,94 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000065    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:28.068397+00:00    Last Seen: 2026-09-29T18:12:28.068397+00:00    Ended: N/A
+Primary Location: Fisher; Nolan; Sterling; Coke; Runnels; Irion; Tom Green; Concho; Crockett; Schleicher; Sutton; Haskell; Throckmorton; Jones; Shackelford; Taylor; Callahan; Coleman; Brown; McCulloch; San Saba; Menard; Kimble; Mason
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T01:18:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 1:18AM CDT until October 2 at 1:00AM CDT by NWS San Angelo TX
+Expires: 2026-09-29T16:15:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Fisher; Nolan; Sterling; Coke; Runnels; Irion; Tom Green; Concho; Crockett; Schleicher; Sutton; Haskell;
+Throckmorton; Jones; Shackelford; Taylor; Callahan; Coleman; Brown; McCulloch; San Saba; Menard; Kimble; Mason
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flash flooding caused by excessive rainfall is possible.
+
+* WHERE...A portion of west central Texas, including the following
+counties, Brown, Callahan, Coke, Coleman, Concho, Crockett, Fisher,
+Haskell, Irion, Jones, Kimble, Mason, McCulloch, Menard, Nolan,
+Runnels, San Saba, Schleicher, Shackelford, Sterling, Sutton,
+Taylor, Throckmorton and Tom Green.
+
+* WHEN...From late tonight through late Thursday night.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+
+* ADDITIONAL DETAILS...
+- There is an increased danger to lives and property due to flash
+flooding. Flash flooding is likely and considerable flash
+flooding is possible.
+
+- Multiple rounds of heavy rain are possible through Thursday night
+as an influx of moisture arrives from the remnants of a tropical
+disturbance. This will coincide with an approaching upper level
+low pressure system and an associated frontal boundary. High
+precipitable water values will support efficient rainfall
+production with this activity. Model guidance suggests heavy rain
+and thunderstorms capable of producing rainfall totals in the 2
+to 4 inch range across the watch area. Locally higher amounts of
+7+ inches can occur.
+
+- Http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be prepared to take action
+should Flash Flood Warnings be issued.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFASJT"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH IN EFFECT FROM LATE TONIGHT THROUGH LATE THURSDAY NIGHT"
+  ],
+  "VTEC": [
+    "/O.NEW.KSJT.FA.A.0007.260930T0600Z-261002T0600Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS64 KSJT 290618"
+  ],
+  "eventEndingTime": [
+    "2026-10-02T01:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.eb464936598ad9958b19a459a7212962209c4b88.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

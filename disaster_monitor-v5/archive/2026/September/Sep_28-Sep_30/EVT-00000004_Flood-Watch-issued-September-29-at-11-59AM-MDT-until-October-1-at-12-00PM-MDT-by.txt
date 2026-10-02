@@ -1,0 +1,91 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000004    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:25.964108+00:00    Last Seen: 2026-09-29T18:12:25.964108+00:00    Ended: N/A
+Primary Location: Northwestern Fremont County  Above 8500Ft; Teller County/Rampart Range above 7500fT/Pike's Peak Between 7500 And 11000 Ft; Pikes Peak above 11000 Ft; Northern El Paso County/Monument Ridge/Rampart Range Below 7500 Ft; Colorado Springs Vicinity/Southern El Paso County/Rampart Range Below 7400 Ft
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T11:59:00-06:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 11:59AM MDT until October 1 at 12:00PM MDT by NWS Pueblo CO
+Expires: 2026-09-29T20:00:00-06:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Northwestern Fremont County  Above 8500Ft; Teller County/Rampart Range above 7500fT/Pike's Peak Between 7500 And
+11000 Ft; Pikes Peak above 11000 Ft; Northern El Paso County/Monument Ridge/Rampart Range Below 7500 Ft;
+Colorado Springs Vicinity/Southern El Paso County/Rampart Range Below 7400 Ft
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flash flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...Fremont, Teller and El Paso counties.
+
+
+* WHEN...Through Thursday morning.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+
+* ADDITIONAL DETAILS...
+- Periods of heavy rainfall associated with a remnant tropical
+storm system will spread across southern Colorado through
+Thursday.
+- Fremont, Teller and El Paso counties.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be prepared to take action
+should Flash Flood Warnings be issued.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAPUB"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT THROUGH THURSDAY MORNING"
+  ],
+  "VTEC": [
+    "/O.CON.KPUB.FA.A.0008.260929T1800Z-261001T1800Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS65 KPUB 291759"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T12:00:00-06:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.bcbc20dd327d92cf418a5e2c071e4191f75e57da.004.1,2026-09-
+28T22:22:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.a7d9b7ef692161c506ce984f786d94fe5ab0e7b8.004.1,2026-09-
+28T14:54:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.5483998d58e327b8d25fd1116347b52f774e002d.003.1,2026-09-
+28T12:09:00-06:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.8236e294135fc5a968a3b397eada07c17d05286e.004.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

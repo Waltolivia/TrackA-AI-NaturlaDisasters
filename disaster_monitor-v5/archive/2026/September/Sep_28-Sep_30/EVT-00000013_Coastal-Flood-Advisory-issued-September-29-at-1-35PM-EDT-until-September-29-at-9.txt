@@ -1,0 +1,91 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000013    Type: coastal flood    Phase: ADVISORY    Lifecycle: ACTIVE    Highest Severity: Minor
+Started: 2026-09-29T18:12:26.166945+00:00    Last Seen: 2026-09-29T18:12:26.166945+00:00    Ended: N/A
+Primary Location: Ocean; Coastal Ocean
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T13:35:00-04:00    NWS    Coastal Flood Advisory    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Coastal Flood Advisory issued September 29 at 1:35PM EDT until September 29 at 9:00PM EDT by NWS Mount Holly NJ
+Expires: 2026-09-29T21:00:00-04:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Ocean; Coastal Ocean
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Up to one half foot of inundation above ground level in
+low-lying areas near shorelines and tidal waterways.
+
+* WHERE...Ocean and Coastal Ocean.
+
+* WHEN...Until 9 PM EDT this evening.
+
+* IMPACTS...Flooding of lots, parks, and roads with only
+isolated road closures expected.
+
+* ADDITIONAL DETAILS...Minor tidal flooding in the back bays of
+Barnegat Bay is expected to continue through this afternoon and
+possibly into early Wednesday morning's high tide cycle.
+Further extensions of the advisory may be possible depending on
+how quickly water drains out of the bay.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+A Coastal Flood Advisory means that minor tidal flooding is
+expected. Minor tidal flooding often results in some road
+closures. Usually, the most vulnerable roadways will flood.
+
+Do not leave your vehicle at a location that is prone to tidal
+flooding. Do not drive your vehicle through flood waters. The
+water may be deeper than you think it is. You will be putting
+yourself in danger and your vehicle may be damaged, leading to
+costly repairs.
+
+Visit the National Water Prediction Service at
+https://water.noaa.gov/wfo/phi for additional water level and
+flood impact information for your local tide gauge.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "CFWPHI"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "COASTAL FLOOD ADVISORY NOW IN EFFECT UNTIL 9 PM EDT THIS EVENING"
+  ],
+  "VTEC": [
+    "/O.EXT.KPHI.CF.Y.0022.000000T0000Z-260930T0100Z/"
+  ],
+  "WMOidentifier": [
+    "WHUS41 KPHI 291735"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T21:00:00-04:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.f5f8add299ccd4f592320bacfa3fceac9683321e.001.2,2026-09-
+28T13:34:00-04:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.7d3b3a8069002f6dbe252ba962475f44020b772f.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

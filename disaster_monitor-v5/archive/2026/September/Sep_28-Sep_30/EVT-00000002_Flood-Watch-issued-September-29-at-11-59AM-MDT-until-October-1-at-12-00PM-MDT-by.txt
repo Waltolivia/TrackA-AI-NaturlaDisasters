@@ -1,0 +1,105 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000002    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:25.931987+00:00    Last Seen: 2026-09-29T18:12:25.931987+00:00    Ended: N/A
+Primary Location: Northern Sangre de Cristo Mountains Between 8500 And 11000 Ft; Northern Sangre de Cristo Mountains above 11000 Ft; Southern Sangre De Cristo Mountains Between 7500 and 11000 Ft; Southern Sangre De Cristo Mountains Above 11000 Ft; Western/Central Fremont County Below 8500 Ft; Wet Mountain Valley Below 8500 Ft; Wet Mountains between 6300 and 10000Ft; Wet Mountains above 10000 Ft; Canon City Vicinity/Eastern Fremont County; Pueblo Vicinity/Pueblo County Below 6300 Feet; Walsenburg Vicinity/Upper Huerfano River Basin Below 7500 Ft; Trinidad Vicinity/Western Las Animas County Below 7500 Ft; Crowley County; La Junta Vicinity/Otero County; Eastern Las Animas County; Western Kiowa County; Eastern Kiowa County; Las Animas Vicinity/Bent County; Lamar Vicinity/Prowers County; Springfield Vicinity/Baca County
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T11:59:00-06:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 11:59AM MDT until October 1 at 12:00PM MDT by NWS Pueblo CO
+Expires: 2026-09-29T20:00:00-06:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Northern Sangre de Cristo Mountains Between 8500 And 11000 Ft; Northern Sangre de Cristo Mountains above 11000
+Ft; Southern Sangre De Cristo Mountains Between 7500 and 11000 Ft; Southern Sangre De Cristo Mountains Above
+11000 Ft; Western/Central Fremont County Below 8500 Ft; Wet Mountain Valley Below 8500 Ft; Wet Mountains between
+6300 and 10000Ft; Wet Mountains above 10000 Ft; Canon City Vicinity/Eastern Fremont County; Pueblo
+Vicinity/Pueblo County Below 6300 Feet; Walsenburg Vicinity/Upper Huerfano River Basin Below 7500 Ft; Trinidad
+Vicinity/Western Las Animas County Below 7500 Ft; Crowley County; La Junta Vicinity/Otero County; Eastern Las
+Animas County; Western Kiowa County; Eastern Kiowa County; Las Animas Vicinity/Bent County; Lamar
+Vicinity/Prowers County; Springfield Vicinity/Baca County
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flash flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...The Southeast Mountains, the Wet Mountain Valley, eastern
+Fremont county and the southeast plains.
+
+* WHEN...Through Thursday morning.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+
+* ADDITIONAL DETAILS...
+- Periods of heavy rainfall associated with a remnant tropical
+storm system will spread across southern Colorado through
+Thursday.
+
+- The Southeast Mountains, including the Aspen Acres burn area, the
+Wet Mountain Valley, eastern Fremont county, and the southeast
+plains.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be prepared to take action
+should Flash Flood Warnings be issued.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAPUB"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT THROUGH THURSDAY MORNING"
+  ],
+  "VTEC": [
+    "/O.CON.KPUB.FA.A.0008.000000T0000Z-261001T1800Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS65 KPUB 291759"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T12:00:00-06:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.bcbc20dd327d92cf418a5e2c071e4191f75e57da.003.1,2026-09-
+28T22:22:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.a7d9b7ef692161c506ce984f786d94fe5ab0e7b8.003.1,2026-09-
+28T14:54:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.5483998d58e327b8d25fd1116347b52f774e002d.004.1,2026-09-
+28T12:09:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.5483998d58e327b8d25fd1116347b52f774e002d.002.1,2026-09-
+28T12:09:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.54c8667ca8dd797df9c65bc2cb37990dafa8e189.002.1,2026-09-
+28T06:43:00-06:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.4ed418a60fc0bd496accb1e19fea3c795eb6c701.001.1,2026-09-
+27T23:20:00-06:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.8236e294135fc5a968a3b397eada07c17d05286e.003.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

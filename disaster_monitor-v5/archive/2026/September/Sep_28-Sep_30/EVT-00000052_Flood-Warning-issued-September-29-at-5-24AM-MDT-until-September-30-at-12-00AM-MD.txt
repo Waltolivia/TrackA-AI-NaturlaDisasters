@@ -1,0 +1,97 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000052    Type: flood    Phase: WARNING    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.465067+00:00    Last Seen: 2026-09-29T18:12:27.465067+00:00    Ended: N/A
+Primary Location: San Miguel, NM
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T05:24:00-06:00    NWS    Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Warning issued September 29 at 5:24AM MDT until September 30 at 12:00AM MDT by NWS Albuquerque NM
+Expires: 2026-09-29T21:00:00-06:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+San Miguel, NM
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+...The National Weather Service in Albuquerque has issued a Flood
+Warning for the following rivers in New Mexico...
+
+Pecos River Above Pecos affecting San Miguel County.
+
+* WHAT...Minor flooding is forecast.
+
+* WHERE...Pecos River above Pecos.
+
+* WHEN...From this morning to late tonight.
+
+* IMPACTS...At 5.0 feet, Fast flowing water may erode banks and
+approach homes near the river.  Private bridges could drive
+localized flooding as debris accumulates along the upstream sides.
+Further rises may make bridges unsafe to cross and isolate
+residents.
+
+* ADDITIONAL DETAILS...
+- At 5:00 AM MDT Tuesday the stage was 3.3 feet.
+- Bankfull stage is 4.5 feet.
+- Forecast...The river is expected to rise above flood stage late
+this morning to a crest of 5.1 feet this afternoon. It will then
+fall below flood stage this evening.
+- Flood stage is 5.0 feet.
+- Flood History...This crest compares to a previous crest of 5.1
+feet on 05/21/1991.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Motorists should not attempt to drive around barricades or drive cars
+through flooded areas.
+
+Caution is urged when walking near riverbanks.
+
+Additional information is available at www.weather.gov/abq.
+
+The next statement will be issued this evening at 900 PM MDT.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLWABQ"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WARNING IN EFFECT FROM THIS MORNING TO LATE TONIGHT"
+  ],
+  "VTEC": [
+    "/O.NEW.KABQ.FL.W.0004.260929T1736Z-260930T0600Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS45 KABQ 291124"
+  ],
+  "eventEndingTime": [
+    "2026-09-30T00:00:00-06:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.5b9540bd8e2280dd1ba2ebddb1e980a871f9c71d.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

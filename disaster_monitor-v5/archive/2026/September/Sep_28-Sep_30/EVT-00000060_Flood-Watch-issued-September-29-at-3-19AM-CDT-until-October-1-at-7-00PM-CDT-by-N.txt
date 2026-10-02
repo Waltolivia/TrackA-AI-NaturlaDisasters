@@ -1,0 +1,81 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000060    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.825869+00:00    Last Seen: 2026-09-29T18:12:27.825869+00:00    Ended: N/A
+Primary Location: Russell; Lincoln
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T03:19:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 3:19AM CDT until October 1 at 7:00PM CDT by NWS Wichita KS
+Expires: 2026-09-29T18:00:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Russell; Lincoln
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...A portion of central Kansas, including the following
+counties, Lincoln and Russell.
+
+* WHEN...From this evening through Thursday evening.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Creeks and streams may rise out of their banks.
+
+* ADDITIONAL DETAILS...
+- Showers and storms producing heavy rainfall will start to
+overspread the area tonight and will continue through Wednesday.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAICT"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT FROM THIS EVENING THROUGH THURSDAY EVENING"
+  ],
+  "VTEC": [
+    "/O.CON.KICT.FA.A.0007.260930T0000Z-261002T0000Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS63 KICT 290819"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T19:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.0b6188bdcccdc288b46168c9ef07161018d79d45.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

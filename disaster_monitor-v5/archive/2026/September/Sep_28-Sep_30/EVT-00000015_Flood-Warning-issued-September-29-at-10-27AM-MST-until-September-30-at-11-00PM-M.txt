@@ -1,0 +1,100 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000015    Type: flood    Phase: WARNING    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.219916+00:00    Last Seen: 2026-09-29T18:12:26.219916+00:00    Ended: N/A
+Primary Location: Graham, AZ
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T10:27:00-07:00    NWS    Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Warning issued September 29 at 10:27AM MST until September 30 at 11:00PM MST by NWS Tucson AZ
+Expires: 2026-09-29T23:00:00-07:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Graham, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+...The National Weather Service in Tucson has issued a Flood Warning
+for the following rivers in Arizona...
+
+Gila River Near Gila River near Solomon affecting Graham County.
+
+For the Upper Gila...including Gila River at Calva, Gila River at
+Duncan, Gila River near Solomon, Gila River At Kelvin, San Carlos
+Reservoir at Coolidge Dam...Minor flooding is forecast.
+
+* WHAT...Minor flooding is forecast.
+
+* WHERE...Gila River near Gila River near Solomon.
+
+* WHEN...From late tonight to Wednesday evening.
+
+* IMPACTS...At 22.5 feet, Bridges in Safford Valley closed and
+extensive agricultural flooding. Homes and structures closest to
+the river threatened.
+
+* ADDITIONAL DETAILS...
+- At 9:30 AM MST Tuesday the stage was 8.2 feet.
+- Bankfull stage is 19.0 feet.
+- Forecast...The river will rise to 14.9 feet this evening. It will
+then rise above flood stage just after midnight tonight to 22.5
+feet late tonight. It will fall below flood stage late tomorrow
+morning.
+- Flood stage is 21.0 feet.
+- Flood History...This crest compares to a previous crest of 20.8
+feet on 10/02/1983.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Caution is urged when walking near riverbanks.
+
+Be especially cautious at night when it is harder to recognize the
+dangers of flooding.
+
+Additional information is available at www.weather.gov.
+
+The next statement will be issued this evening at 1100 PM MST.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLWTWC"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WARNING IN EFFECT FROM LATE TONIGHT TO WEDNESDAY EVENING"
+  ],
+  "VTEC": [
+    "/O.NEW.KTWC.FL.W.0001.260930T0858Z-261001T0600Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS45 KTWC 291727"
+  ],
+  "eventEndingTime": [
+    "2026-09-30T23:00:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.4fb168ac493cdce8629ad7ba36dae90941713b6c.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

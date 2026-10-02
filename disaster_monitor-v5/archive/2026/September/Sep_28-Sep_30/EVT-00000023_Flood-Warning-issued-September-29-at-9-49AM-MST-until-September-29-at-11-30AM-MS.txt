@@ -1,0 +1,214 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000023    Type: flood    Phase: WARNING    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:26.459383+00:00    Last Seen: 2026-09-29T18:12:26.664611+00:00    Ended: N/A
+Primary Location: Maricopa, AZ
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T09:49:00-07:00    NWS    Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Warning issued September 29 at 9:49AM MST until September 29 at 11:30AM MST by NWS Phoenix AZ
+Expires: 2026-09-29T11:30:00-07:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Maricopa, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Urban areas and small streams flooding caused by excessive
+rainfall continues.
+
+* WHERE...Maricopa County in south central Arizona...
+
+* WHEN...Until 1130 AM MST.
+
+* IMPACTS...Moderate to heavy rainfall has led to flooding of Indian
+Bend Wash. Low-water crossings may be inundated with water and may
+not be passable.
+
+* ADDITIONAL DETAILS...
+- At 944 AM MST, gauge reports indicated continued flow in Indian
+Bend Wash, impacting low water crossings through the wash.
+- This includes the following streams and drainages...
+Indian Bend Wash.
+- Some locations that will experience flooding include...
+Paradise Valley.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLWPSR"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WARNING NOW IN EFFECT UNTIL 1130 AM MST THIS MORNING"
+  ],
+  "VTEC": [
+    "/O.EXT.KPSR.FA.W.0007.000000T0000Z-260929T1830Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS45 KPSR 291649"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T11:30:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.b6ba9b0a152ea0561f5fbeff4825f7dcaebdfec0.001.1
+
+[02] 2026-09-29T09:42:00-07:00    NWS    Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Warning issued September 29 at 9:42AM MST until September 29 at 12:45PM MST by NWS Phoenix AZ
+Expires: 2026-09-29T12:45:00-07:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Maricopa, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall is expected.
+
+* WHERE...Maricopa County in south central Arizona...
+
+* WHEN...Until 1245 PM MST.
+
+* IMPACTS...Flooding of rivers, creeks, streams, and other low-lying
+and flood-prone locations is imminent or occurring.
+
+* ADDITIONAL DETAILS...
+- At 942 AM MST, local law enforcement reported heavy rain in the
+warned area due to thunderstorms. Flooding is already occurring.
+- Some locations that will experience flooding include...
+Buckeye, Hassayampa and Arlington.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLWPSR"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WARNING IN EFFECT UNTIL 1245 PM MST THIS AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.NEW.KPSR.FA.W.0009.260929T1642Z-260929T1945Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS45 KPSR 291642"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T12:45:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.b37977c17803eb090ee20d037c243c0e8f9468f0.001.1
+
+[03] 2026-09-29T09:26:00-07:00    NWS    Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Warning issued September 29 at 9:26AM MST until September 29 at 12:30PM MST by NWS Phoenix AZ
+Expires: 2026-09-29T12:30:00-07:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Maricopa, AZ
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Urban areas and small streams flooding caused by excessive
+rainfall is expected.
+
+* WHERE...Maricopa County in south central Arizona...
+
+* WHEN...Until 1230 PM MST.
+
+* IMPACTS...Low-water crossings are inundated with water and may not
+be passable.
+
+* ADDITIONAL DETAILS...
+- At 925 AM MST, gauge reports indicated continued flow in washes
+from earlier rainfall that may result in some low water crossings
+being impassable.
+- Some locations that will experience flooding include...
+Phoenix, Peoria, New River, Cave Creek, Carefree, Anthem and
+Seven Springs.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLWPSR"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WARNING IN EFFECT UNTIL 1230 PM MST THIS AFTERNOON... ...REPLACES FLASH FLOOD WARNING"
+  ],
+  "VTEC": [
+    "/O.NEW.KPSR.FA.W.0008.260929T1626Z-260929T1930Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS45 KPSR 291626"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T12:30:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.c239a48318f9f5dc7eb3af47ecd50dd85bb30abd.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 3

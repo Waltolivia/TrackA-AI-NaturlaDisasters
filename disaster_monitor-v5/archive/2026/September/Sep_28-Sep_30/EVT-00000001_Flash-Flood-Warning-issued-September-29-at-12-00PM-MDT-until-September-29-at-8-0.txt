@@ -1,0 +1,174 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000001    Type: flash flood    Phase: IMMINENT    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:25.906430+00:00    Last Seen: 2026-09-29T18:12:26.042063+00:00    Ended: N/A
+Primary Location: Socorro, NM
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T12:00:00-06:00    NWS    Flash Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flash Flood Warning issued September 29 at 12:00PM MDT until September 29 at 8:00PM MDT by NWS Albuquerque NM
+Expires: 2026-09-29T20:00:00-06:00    Urgency: Immediate    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Lincoln, NM; Socorro, NM
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+FFWABQ
+
+The National Weather Service in Albuquerque has issued a
+
+* Flash Flood Warning for...
+Southwestern Lincoln County in central New Mexico...
+Southeastern Socorro County in central New Mexico...
+
+* Until 800 PM MDT Tuesday.
+
+* At noon MDT, Doppler radar indicated thunderstorms producing heavy
+rain across the warned area. Up to 0.5 inches of rain have fallen,
+where the ground is already saturated and fields are already
+pooling with water from recent heavy rains. Additional rainfall
+amounts up to 2 inches are possible in the warned area. Flash
+flooding is ongoing or expected to begin shortly.
+
+HAZARD...Flash flooding caused by thunderstorms.
+
+SOURCE...Radar indicated.
+
+IMPACT...Flash flooding of small creeks and streams, urban areas,
+highways, streets and underpasses as well as other poor
+drainage and low-lying areas.
+
+* Some locations that will experience flash flooding include...
+Carrizozo and Oscuro.
+
+This includes Highway 380 between Mile Markers 36 and 71.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFWABQ"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "VTEC": [
+    "/O.NEW.KABQ.FF.W.0204.260929T1800Z-260930T0200Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS55 KABQ 291800"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T20:00:00-06:00"
+  ],
+  "flashFloodDetection": [
+    "RADAR INDICATED"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.c5f71eeb99444914feeaa94b967e8eb0131d5734.001.1
+
+[02] 2026-09-29T11:48:00-06:00    NWS    Flash Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flash Flood Warning issued September 29 at 11:48AM MDT until September 29 at 7:45PM MDT by NWS Albuquerque NM
+Expires: 2026-09-29T19:45:00-06:00    Urgency: Immediate    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Socorro, NM
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+FFWABQ
+
+The National Weather Service in Albuquerque has issued a
+
+* Flash Flood Warning for...
+Southeastern Socorro County in central New Mexico...
+
+* Until 745 PM MDT Tuesday.
+
+* At 1148 AM MDT, Doppler radar indicated thunderstorms producing
+moderate-to-heavy rain across the warned area. Up to 1 inch of rain
+has fallen, where the ground is already saturated and fields are
+already pooling with water from recent heavy rains. Additional
+rainfall amounts up to 2 inches are possible in the warned area.
+Flash flooding is ongoing or expected to begin shortly.
+
+HAZARD...Flash flooding caused by thunderstorms.
+
+SOURCE...Radar indicated.
+
+IMPACT...Flash flooding of small creeks and streams, urban areas,
+highways, streets and underpasses as well as other poor
+drainage and low-lying areas.
+
+* Some locations that will experience flash flooding include...
+Socorro, San Antonio, Bosque Del Apache Refuge, Bingham, Escondida,
+Lemitar, Laborcita and Luis Lopez.
+
+This includes the following highways...
+Highway 380 between Mile Markers 1 and 35. Interstate 25 between Mile
+Markers 103 and 146...and between Mile Markers 148 and 150...and near
+Mile Marker 154.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFWABQ"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "VTEC": [
+    "/O.NEW.KABQ.FF.W.0203.260929T1748Z-260930T0145Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS55 KABQ 291748"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T19:45:00-06:00"
+  ],
+  "flashFloodDetection": [
+    "RADAR INDICATED"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.c6a08c658b0230a9de162b3da5b2b8278e07d590.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 2

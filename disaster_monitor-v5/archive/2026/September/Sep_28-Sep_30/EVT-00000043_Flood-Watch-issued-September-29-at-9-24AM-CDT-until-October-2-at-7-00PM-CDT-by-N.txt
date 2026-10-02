@@ -1,0 +1,103 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000043    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.152190+00:00    Last Seen: 2026-09-29T18:12:27.152190+00:00    Ended: N/A
+Primary Location: Llano; Burnet; Williamson; Val Verde; Edwards; Real; Kerr; Bandera; Gillespie; Kendall; Blanco; Hays; Travis; Bastrop; Kinney; Uvalde; Medina; Bexar; Comal; Guadalupe; Caldwell; Maverick; Zavala; Frio; Atascosa; Wilson; Gonzales; Dimmit
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T09:24:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 9:24AM CDT until October 2 at 7:00PM CDT by NWS Austin/San Antonio TX
+Expires: 2026-09-29T17:30:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Llano; Burnet; Williamson; Val Verde; Edwards; Real; Kerr; Bandera; Gillespie; Kendall; Blanco; Hays; Travis;
+Bastrop; Kinney; Uvalde; Medina; Bexar; Comal; Guadalupe; Caldwell; Maverick; Zavala; Frio; Atascosa; Wilson;
+Gonzales; Dimmit
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+The weather pattern on Wednesday will begin to change as an
+approaching upper level low over the southwestern U.S. weakens the
+subtropical ridge axis over Texas and the western Gulf. Isolated to
+scattered showers and thunderstorms will develop during the daytime
+hours. A Pacific cold front will move into the region Thursday
+spreading showers and thunderstorms over more of the area. Rainfall
+totals from Wednesday evening through Friday will be 2-4 inches with
+isolated amounts up to 8 inches possible.
+
+* WHAT...Flooding caused by excessive rainfall is possible.
+
+* WHERE...A portion of south central Texas, including the following
+counties, Atascosa, Bandera, Bastrop, Bexar, Blanco, Burnet,
+Caldwell, Comal, Dimmit, Edwards, Frio, Gillespie, Gonzales,
+Guadalupe, Hays, Kendall, Kerr, Kinney, Llano, Maverick, Medina,
+Real, Travis, Uvalde, Val Verde, Williamson, Wilson and Zavala.
+
+* WHEN...From Wednesday evening through Friday evening.
+
+* IMPACTS...There is a potential for life threatening flooding
+somewhere in the watch area. Excessive runoff may result in
+flooding of rivers, creeks, streams, and other low-lying and
+flood-prone locations. Creeks and streams may rise out of their
+banks. Flooding may occur in poor drainage and urban areas.
+Low-water crossings may be flooded. Extensive street flooding and
+flooding of creeks and rivers are possible.
+
+* ADDITIONAL DETAILS...
+- Rainfall totals of 2-4 inches with isolated amounts of 8 inches
+are possible.
+- Some locations that may experience flooding include...
+San Antonio, Austin, Round Rock, New Braunfels, Cedar Park,
+Georgetown, San Marcos, Pflugerville, Medina, Schertz, Kyle, Del
+Rio, Eagle Pass, Seguin, Cibolo, Kerrville, Converse, Universal
+City, Taylor and Uvalde.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAEWX"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH IN EFFECT FROM WEDNESDAY EVENING THROUGH FRIDAY EVENING"
+  ],
+  "VTEC": [
+    "/O.NEW.KEWX.FA.A.0008.261001T0000Z-261003T0000Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS64 KEWX 291424"
+  ],
+  "eventEndingTime": [
+    "2026-10-02T19:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.a89003886ff6e908fd8b92753f4de69804d3f0db.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

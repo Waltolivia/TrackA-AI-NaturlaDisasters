@@ -1,0 +1,85 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000030    Type: flood    Phase: ADVISORY    Lifecycle: ACTIVE    Highest Severity: Minor
+Started: 2026-09-29T18:12:26.754837+00:00    Last Seen: 2026-09-29T18:12:26.754837+00:00    Ended: N/A
+Primary Location: Grant, NM; Hidalgo, NM
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T10:00:00-06:00    NWS    Flood Advisory    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Advisory issued September 29 at 10:00AM MDT until September 29 at 1:00PM MDT by NWS El Paso Tx/Santa Teresa NM
+Expires: 2026-09-29T13:00:00-06:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Grant, NM; Hidalgo, NM
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall is expected.
+
+* WHERE...South Central Grant County in southwestern New Mexico...
+Central Hidalgo County in southwestern New Mexico...
+
+* WHEN...Until 100 PM MDT.
+
+* IMPACTS...Minor flooding in low-lying and poor drainage areas.
+Water over roadways.
+
+* ADDITIONAL DETAILS...
+- At 1000 AM MDT, Doppler radar indicated heavy rain due to
+thunderstorms. Minor flooding is ongoing or expected to begin
+shortly in the advisory area. Up to 0.75 inches of rain have
+fallen.
+- Additional rainfall of up to 0.5 inches is expected over the
+area. This additional rain will result in minor flooding.
+- Some locations that will experience flooding include...
+Separ.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Turn around, don't drown when encountering flooded roads. Most flood
+deaths occur in vehicles.
+
+Please report observed flooding to local emergency services or law
+enforcement and request they pass this information to the National
+Weather Service when you can do so safely.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLSEPZ"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "FLOOD ADVISORY IN EFFECT UNTIL 1 PM MDT THIS AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.NEW.KEPZ.FA.Y.0398.260929T1600Z-260929T1900Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS84 KEPZ 291600"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T13:00:00-06:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.549e5b0b0f6232ba564169905c3793178831879b.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

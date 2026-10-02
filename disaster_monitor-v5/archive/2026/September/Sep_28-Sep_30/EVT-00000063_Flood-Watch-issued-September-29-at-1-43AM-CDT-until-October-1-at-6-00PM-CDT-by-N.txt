@@ -1,0 +1,82 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000063    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.970617+00:00    Last Seen: 2026-09-29T18:12:27.970617+00:00    Ended: N/A
+Primary Location: Republic; Washington; Marshall; Nemaha; Brown; Cloud; Clay; Riley; Pottawatomie; Jackson; Ottawa
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T01:43:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 1:43AM CDT until October 1 at 6:00PM CDT by NWS Topeka KS
+Expires: 2026-09-29T13:45:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Republic; Washington; Marshall; Nemaha; Brown; Cloud; Clay; Riley; Pottawatomie; Jackson; Ottawa
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Multiple rounds of heavy rain with an increasing potential
+for flooding.
+
+* WHERE...Portions of north central and northeast Kansas, including
+the following counties, in north central Kansas, Clay, Cloud,
+Ottawa, Republic and Washington. In northeast Kansas, Brown,
+Jackson, Marshall, Nemaha, Pottawatomie and Riley.
+
+* WHEN...From this evening through Thursday afternoon.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+
+* ADDITIONAL DETAILS...
+- A slow moving, moisture laden system is expected to bring
+widespread rainfall of one to three inches, with locally higher
+amounts of around five inches.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFATOP"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT FROM THIS EVENING THROUGH THURSDAY AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.CON.KTOP.FA.A.0010.260930T0000Z-261001T2300Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS63 KTOP 290643"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T18:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.632a8243443802b995944a7b8ec6a29739fd0780.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

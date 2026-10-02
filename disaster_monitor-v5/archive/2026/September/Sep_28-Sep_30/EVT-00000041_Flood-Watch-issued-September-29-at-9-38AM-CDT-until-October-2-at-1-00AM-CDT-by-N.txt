@@ -1,0 +1,85 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000041    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.089826+00:00    Last Seen: 2026-09-29T18:12:27.089826+00:00    Ended: N/A
+Primary Location: Wapello; Appanoose; Davis
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T09:38:00-05:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 9:38AM CDT until October 2 at 1:00AM CDT by NWS Des Moines IA
+Expires: 2026-09-29T17:00:00-05:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Wapello; Appanoose; Davis
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive rainfall continues to be
+possible.
+
+* WHERE...All of central Iowa.
+
+* WHEN...From 7 PM CDT this evening through late Thursday night.
+
+* IMPACTS...Excessive runoff may result in flooding of rivers,
+creeks, streams, and other low-lying and flood-prone locations.
+Area creeks and streams are running high and could flood with more
+heavy rain.
+
+* ADDITIONAL DETAILS...
+- A prolong period of showers and storms is forecast Tuesday night
+through Thursday evening. This rain will fall on saturated soil.
+Rainfall totals will range from 2 to 4 inches in a southwest to
+northeast oriented band across central Iowa, with locally higher
+amounts likely. This rainfall may lead to flash flooding. In
+addition, poor drainage and low lying area may experience
+ponding. All this rainfall will cause rises on areas rivers,
+which may exceed flood stage in at least a few locations.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+For the latest stream observations and forecasts refer to
+weather.gov/desmoines/water.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFADMX"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH IN EFFECT FROM 7 PM CDT THIS EVENING THROUGH LATE THURSDAY NIGHT"
+  ],
+  "VTEC": [
+    "/O.EXA.KDMX.FA.A.0015.260930T0000Z-261002T0600Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS63 KDMX 291438"
+  ],
+  "eventEndingTime": [
+    "2026-10-02T01:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.3056ddb667b188d198a595dbc04ec8d1cbfdeddf.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

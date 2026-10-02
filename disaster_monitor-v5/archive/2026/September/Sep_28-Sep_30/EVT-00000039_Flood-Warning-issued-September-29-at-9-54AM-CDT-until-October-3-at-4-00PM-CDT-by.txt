@@ -1,0 +1,87 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000039    Type: flood    Phase: WARNING    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.037033+00:00    Last Seen: 2026-09-29T18:12:27.037033+00:00    Ended: N/A
+Primary Location: Marshall, KS
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T09:54:00-05:00    NWS    Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Warning issued September 29 at 9:54AM CDT until October 3 at 4:00PM CDT by NWS Topeka KS
+Expires: 2026-09-30T01:00:00-05:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Marshall, KS
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+...The National Weather Service in Topeka has issued a Flood Warning
+for the following rivers in Kansas...
+
+Big Blue River near Blue Rapids affecting Marshall County.
+
+* WHAT...Minor flooding is forecast.
+
+* WHERE...Big Blue River near Blue Rapids.
+
+* WHEN...From Wednesday morning to Saturday afternoon.
+
+* IMPACTS...At 26.0 feet, Minor lowland flooding occurs from
+Marysville to Tuttle Creek Lake.
+
+* ADDITIONAL DETAILS...
+- At 9:15 AM CDT Tuesday the stage was 22.9 feet.
+- Forecast...The river is expected to rise above flood stage late
+tomorrow morning to a crest of 29.4 feet early Thursday morning.
+It will then fall below flood stage early Saturday morning.
+- Flood stage is 26.0 feet.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+Motorists should not attempt to drive around barricades or drive cars
+through flooded areas.
+
+This product along with additional weather and stream information is
+available at www.weather.gov/top/.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLWTOP"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WARNING IN EFFECT FROM WEDNESDAY MORNING TO SATURDAY AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.NEW.KTOP.FL.W.0054.260930T1500Z-261003T2100Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS43 KTOP 291454"
+  ],
+  "eventEndingTime": [
+    "2026-10-03T16:00:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.19fdbb881a7963057efc7f48e1bfc43a2e57918f.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

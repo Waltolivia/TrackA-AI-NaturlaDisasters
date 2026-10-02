@@ -1,0 +1,92 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000068    Type: coastal flood    Phase: ADVISORY    Lifecycle: ACTIVE    Highest Severity: Minor
+Started: 2026-09-29T18:12:28.277443+00:00    Last Seen: 2026-09-29T18:12:28.277443+00:00    Ended: N/A
+Primary Location: San Francisco; North Bay Interior Valleys; San Francisco Bay Shoreline; Northern Monterey Bay; Southern Monterey Bay and Big Sur Coast
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-28T21:16:00-07:00    NWS    Coastal Flood Advisory    Minor
+------------------------------------------------------------------------------------------------------------------------
+Headline: Coastal Flood Advisory issued September 28 at 9:16PM PDT until October 1 at 5:00PM PDT by NWS San Francisco CA
+Expires: 2026-09-29T15:00:00-07:00    Urgency: Expected    Certainty: Likely
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+San Francisco; North Bay Interior Valleys; San Francisco Bay Shoreline; Northern Monterey Bay; Southern Monterey
+Bay and Big Sur Coast
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Up to 1.2 ft of inundation above ground level is
+possible in low-lying areas near shorelines and tidal
+waterways.
+
+* WHERE...Bayshore locations along the San Francisco Bay, San
+Pablo Bay, and Monterey Bay.
+
+* WHEN...Now through 5 PM PDT Thursday.
+
+* IMPACTS...Flooding of lots, parks, and roads with only
+isolated road closures expected. High tides will result in
+flooding along coastal trails, cut off access to some low-
+lying beaches and coastal areas, and bring water and waves
+farther up the beach than typical.
+
+* ADDITIONAL DETAILS...At the San Francisco tidal gauge, high tide
+is expected to be 1.2 ft above normal (7.01 ft MLLW) at 1:30 PM
+Tuesday 9/29, 1.2 ft above normal (7.03 ft MLLW) at 2:10 PM
+Wednesday 9/30, and 1.1 ft above normal (6.92 ft MLLW) at 2:58
+PM Thursday 10/01. These predictions include up to 0.7 ft of
+surge that will enhance the astronomical tide and flooding
+threat. High tide varies up to 90 minutes earlier or later along
+the Pacific Coast and through the San Francisco Bay,
+respectively.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+If travel is required, allow extra time as some roads may be
+closed. Do not drive around barricades or through water of
+unknown depth. Take the necessary actions to protect flood-prone
+property.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "CFWMTR"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "NWSheadline": [
+    "COASTAL FLOOD ADVISORY REMAINS IN EFFECT UNTIL 5 PM PDT THURSDAY"
+  ],
+  "VTEC": [
+    "/O.CON.KMTR.CF.Y.0011.000000T0000Z-261002T0000Z/"
+  ],
+  "WMOidentifier": [
+    "WHUS46 KMTR 290416"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T17:00:00-07:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.1ba25e19eb82af39dd04774cf557db9ac2fd781c.001.1,2026-09-
+27T20:17:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.af3758352f1af80d35c24fb9305054c7bb097104.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

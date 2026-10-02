@@ -1,0 +1,94 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000061    Type: flood    Phase: WATCH    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.868811+00:00    Last Seen: 2026-09-29T18:12:27.868811+00:00    Ended: N/A
+Primary Location: Kaibab Plateau; Marble and Glen Canyons; Grand Canyon Country; Coconino Plateau; Yavapai County Mountains; Northeast Plateaus and Mesas Hwy 264 Northward; Chinle Valley; Chuska Mountains and Defiance Plateau; Little Colorado River Valley in Coconino County; Little Colorado River Valley in Navajo County; Little Colorado River Valley in Apache County; Western Mogollon Rim; Eastern Mogollon Rim; White Mountains; Northern Gila County; Yavapai County Valleys and Basins; Oak Creek and Sycamore Canyons; Black Mesa Area; Northeast Plateaus and Mesas South of Hwy 264
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T01:09:00-07:00    NWS    Flood Watch    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Watch issued September 29 at 1:09AM MST until September 29 at 11:00PM MST by NWS Flagstaff AZ
+Expires: 2026-09-29T23:00:00-07:00    Urgency: Future    Certainty: Possible
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Kaibab Plateau; Marble and Glen Canyons; Grand Canyon Country; Coconino Plateau; Yavapai County Mountains;
+Northeast Plateaus and Mesas Hwy 264 Northward; Chinle Valley; Chuska Mountains and Defiance Plateau; Little
+Colorado River Valley in Coconino County; Little Colorado River Valley in Navajo County; Little Colorado River
+Valley in Apache County; Western Mogollon Rim; Eastern Mogollon Rim; White Mountains; Northern Gila County;
+Yavapai County Valleys and Basins; Oak Creek and Sycamore Canyons; Black Mesa Area; Northeast Plateaus and Mesas
+South of Hwy 264
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+* WHAT...Flooding caused by excessive and long duration rainfall.
+
+* WHERE...All of northern and central Arizona.
+
+* WHEN...Through this evening.
+
+* IMPACTS...Flooding will be possible over burn areas, low-water
+crossings, creeks, streams, washes and swimming holes. Larger
+creeks and rivers may exceed bankfull. Flooding of paved roads and
+highway underpasses will be possible. Unpaved roads could become
+muddy and impassable.
+
+* ADDITIONAL DETAILS...
+- Low pressure will interact with tropical moisture from the
+eastern Pacific. This could potentially produce numerous showers
+and embedded thunderstorms, with heavy rain that will fall over
+saturated soils and burn scars. This could lead to localized
+flash flooding and rises on local rivers, such as the Little
+Colorado River.
+- Additional information is available at weather.gov/flagstaff.
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+You should monitor later forecasts and be alert for possible Flood
+Warnings. Those living in areas prone to flooding should be prepared
+to take action should flooding develop.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FFAFGZ"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WATCH REMAINS IN EFFECT THROUGH THIS EVENING"
+  ],
+  "VTEC": [
+    "/O.CON.KFGZ.FA.A.0009.000000T0000Z-260930T0600Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS65 KFGZ 290809"
+  ],
+  "eventEndingTime": [
+    "2026-09-29T23:00:00-07:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.e50ed3715982b7d38f6d11c8fb3fa472fd629878.001.1,2026-09-
+26T12:01:00-07:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.04f9ec06e0d5c3e71805492cdafcfada613cc631.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1

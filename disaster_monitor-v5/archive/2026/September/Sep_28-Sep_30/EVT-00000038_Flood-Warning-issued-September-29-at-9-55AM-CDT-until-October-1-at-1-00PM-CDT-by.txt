@@ -1,0 +1,132 @@
+========================================================================================================================
+DISASTER EVENT REPORT
+========================================================================================================================
+
+Event: EVT-00000038    Type: flood    Phase: ACTIVE_CONFIRMED    Lifecycle: ACTIVE    Highest Severity: Severe
+Started: 2026-09-29T18:12:27.012940+00:00    Last Seen: 2026-09-29T18:12:27.012940+00:00    Ended: N/A
+Primary Location: Lake, IL
+
+EVENT HISTORY
+========================================================================================================================
+
+[01] 2026-09-29T09:55:00-05:00    NWS    Flood Warning    Severe
+------------------------------------------------------------------------------------------------------------------------
+Headline: Flood Warning issued September 29 at 9:55AM CDT until October 1 at 1:00PM CDT by NWS Chicago IL
+Expires: 2026-09-30T04:00:00-05:00    Urgency: Immediate    Certainty: Observed
+
+AFFECTED AREAS
+------------------------------------------------------------------------------------------------------------------------
+Lake, IL
+
+DESCRIPTION
+------------------------------------------------------------------------------------------------------------------------
+...The Flood Warning continues for the following rivers in
+Illinois...
+
+Des Plaines River near Russell affecting Lake IL County.
+
+* WHAT...Minor flooding is occurring and minor flooding is forecast.
+
+* WHERE...Des Plaines River from IL/WI state line downstream to US-41
+in Gurnee, including the Russell gauge.
+
+* WHEN...Until Thursday afternoon.
+
+* IMPACTS...At 7.0 feet, Low-lying wetlands and agricultural land is
+inundated near the river.
+
+* ADDITIONAL DETAILS...
+- At 9:30 AM CDT Tuesday the stage was 7.4 feet.
+- Forecast...The river will slowly fall below flood stage towards
+the end of the week. However, additional rainfall is expected
+Wednesday and Thursday, which may result in renewed rises.
+- Flood stage is 7.0 feet.
+- http://www.weather.gov/safety/flood
+
+INSTRUCTIONS
+------------------------------------------------------------------------------------------------------------------------
+A Flood Warning means water levels above flood stage are imminent or
+may already be occurring. Persons along rivers and streams in the
+warned area should take immediate precautions to protect life and
+property.
+
+These forecasts are based almost entirely on observed precipitation
+as little to no additional precipitation is currently expected over
+the next 24 to 48 hours.
+
+Additional information is available at www.weather.gov.
+
+The next statement will be issued by late tonight.
+
+ADDITIONAL NWS PARAMETERS
+------------------------------------------------------------------------------------------------------------------------
+{
+  "AWIPSidentifier": [
+    "FLSLOT"
+  ],
+  "BLOCKCHANNEL": [
+    "EAS",
+    "NWEM",
+    "CMAS"
+  ],
+  "EAS-ORG": [
+    "WXR"
+  ],
+  "NWSheadline": [
+    "FLOOD WARNING NOW IN EFFECT UNTIL THURSDAY AFTERNOON"
+  ],
+  "VTEC": [
+    "/O.EXT.KLOT.FL.W.0075.000000T0000Z-261001T1800Z/"
+  ],
+  "WMOidentifier": [
+    "WGUS83 KLOT 291455"
+  ],
+  "eventEndingTime": [
+    "2026-10-01T13:00:00-05:00"
+  ],
+  "expiredReferences": [
+    "w-nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b8ad1939b714543f020f6037cf2cfd7a8705ba90.002.1,2026-09-
+28T08:37:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.337c1ba9d8f0617e5fd634072b1785a8bccc4fc7.002.1,2026-09-
+27T20:09:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.6efc3f4a6f6c9132e07e564bedb6f2c0ab4e8141.002.1,2026-09-
+27T10:28:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.8142b6734fa1399e2866f4b56b499ee6c5ec159f.002.1,2026-09-
+26T21:12:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.2c71983bc69c0792c2e2b1d190550fcb3236095d.002.1,2026-09-
+26T10:47:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.951759a5df5a3425be1df9eaeca8ef446b499430.002.1,2026-09-
+25T20:41:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.e74fe38c273b0bba1814a01038b588aa79958106.001.1,2026-09-
+25T09:14:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.8ff2165e0da55233b8995df679228eda56292898.002.1,2026-09-
+24T20:28:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.b27f8f406ffaecbd4b82dc6639c78ffa8cce751f.002.1,2026-09-
+24T11:12:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.8466fbc308a3da03603065de3a425b18e2dd60d8.002.1,2026-09-
+23T20:29:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.a19c3b34911b3f7ee96bf38cb64eed7c94cff02f.002.1,2026-09-
+23T11:20:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.1be9ff2706a5a97a1b88bc94ce30635ea5e9cf38.002.1,2026-09-
+22T21:16:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.3ff521a03d10f018c876ec1322593ad941032900.001.1,2026-09-
+22T10:21:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.a133a67c6499ba6d06c3732ce9bb35361ba299fd.001.1,2026-09-
+21T19:17:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.3c967b0cce947e852b0796714f78d0aff5cffabd.001.1,2026-09-
+21T10:21:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.f812a5ff0e3f4e642e18d0b046272e988a240463.001.1,2026-09-
+20T21:02:00-05:00 w-
+nws.webmaster@noaa.gov,urn:oid:2.49.0.1.840.0.023d56d87685b261f608048266eb5ead72063253.001.1,2026-09-
+20T09:14:00-05:00"
+  ]
+}
+
+SOURCE
+------------------------------------------------------------------------------------------------------------------------
+Source: NWS    Source Alert ID: urn:oid:2.49.0.1.840.0.bcf215431270e5c666897d33f83d18e28023ea2d.001.1
+
+========================================================================================================================
+SOURCE SUMMARY
+========================================================================================================================
+NWS: 1
