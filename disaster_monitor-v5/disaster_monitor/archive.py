@@ -137,10 +137,18 @@ def render_event(db, event_id, root="archive"):
 
     if opened:
         month_folder = _month_folder(opened, root)
-        week_folder = month_folder / _week_folder_name(opened)
+        week_folder = (
+            month_folder
+            / _week_folder_name(opened)
+            / "events"
+        )
     else:
         month_folder = Path(root) / "unknown" / "Unknown"
-        week_folder = month_folder / "Unknown_Dates"
+        week_folder = (
+            month_folder
+            / "Unknown_Dates"
+            / "events"
+        )
 
     week_folder.mkdir(
         parents=True,
