@@ -335,6 +335,16 @@ The v5 collector already includes health output, rotating logs, database
 backups, and a macOS launchd template. Start both services manually first; only
 enable automatic startup after the real-provider pilot succeeds.
 
+### Collector tiered storage (local week, then AWS)
+
+The collector keeps a rolling local window of one week (`LOCAL_RETENTION_DAYS`).
+Finished events older than that window are copied to an AWS DynamoDB table and
+only then deleted from SQLite and `archive/`, so the local disk never grows
+without bound. It is off by default; turn it on with `AWS_ARCHIVE_ENABLED=true`
+plus `AWS_REGION`/`AWS_DYNAMODB_TABLE` and normal boto3 credentials. See
+[`disaster_monitor-v5/README.md`](disaster_monitor-v5/README.md#tiered-storage-one-local-week-then-aws)
+for details and the `python -m disaster_monitor.archive_cli` commands.
+
 ## Important current boundaries
 
 - EONET sometimes provides coordinates instead of a human-readable place. The

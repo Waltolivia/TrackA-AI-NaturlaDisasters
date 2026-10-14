@@ -82,3 +82,27 @@ class Database:
         with self.connect() as db:return db.execute('SELECT * FROM events WHERE opened_at LIKE ? ORDER BY opened_at,id',(prefix+'%',)).fetchall()
     def count_alerts(self):
         with self.connect() as db:return db.execute('SELECT count(*) n FROM alerts').fetchone()['n']
+    def events_ready_for_archive(self,cutoff,limit=None):
+        """Finished events whose collection ended at or before `cutoff` (ISO text).
+
+        Only ENDED/COMPLETE events are eligible. An event that is still ACTIVE
+        keeps receiving revisions, so it must never be moved out of the local
+        database.
+        """
+        query=("SELECT * FROM events WHERE status IN ('ENDED','COMPLETE') "
+               "AND COALESCE(collection_complete_at,ended_at) IS NOT NULL "
+               "AND COALESCE(collection_complete_at,ended_at) <= ? ORDER BY id")
+        params=[cutoff]
+        if limit is not None:query+=' LIMIT ?';params.append(limit)
+        with self.connect() as db:return db.execute(query,params).fetchall()
+    def source_links_for_event(self,event_id):
+        with self.connect() as db:return db.execute('SELECT * FROM source_links WHERE event_id=? ORDER BY source,source_event_id',(event_id,)).fetchall()
+    def review_rows_for_event(self,event_id):
+        with self.connect() as db:return db.execute('SELECT * FROM review_queue WHERE candidate_event_id=? ORDER BY id',(event_id,)).fetchall()
+    def delete_event(self,event_id):
+        """Remove one event and every row that belongs to it (children first)."""
+        with self.connect() as db:
+            db.execute('DELETE FROM review_queue WHERE candidate_event_id=?',(event_id,))
+            db.execute('DELETE FROM alerts WHERE event_id=?',(event_id,))
+            db.execute('DELETE FROM source_links WHERE event_id=?',(event_id,))
+            db.execute('DELETE FROM events WHERE id=?',(event_id,))

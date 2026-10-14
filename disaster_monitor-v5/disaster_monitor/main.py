@@ -10,6 +10,7 @@ from .collectors import nws,eonet
 from .lifecycle import evaluate
 from .health import HealthTracker
 from .backup import backup_database
+from .aws_archive import AwsArchiver
 
 def configure_logging():
     Path(settings.log_path).parent.mkdir(parents=True,exist_ok=True)
@@ -58,6 +59,19 @@ async def backup_worker():
         except Exception: log.exception('database backup failed')
         await asyncio.sleep(settings.backup_interval_hours*3600)
 
+async def archive_worker(db):
+    # Keep a rolling local window, then move older finished events to AWS.
+    if not settings.aws_archive_enabled:
+        log.info('aws archive disabled; local data is retained indefinitely'); return
+    archiver=AwsArchiver(table_name=settings.aws_dynamodb_table,region=settings.aws_region,retention_days=settings.local_retention_days)
+    while True:
+        try:
+            result=await asyncio.to_thread(archiver.archive,db,archive_path=settings.archive_path)
+            if result['events_eligible'] or result['events_failed']: log.info('aws archive %s',result)
+        except asyncio.CancelledError: raise
+        except Exception: log.exception('aws archive failed')
+        await asyncio.sleep(settings.aws_archive_interval_hours*3600)
+
 async def main():
     db=Database(settings.database_path); prompter=JsonPrompter(settings.outbox_path); health=HealthTracker(settings.health_path,settings.database_path)
     timeout=httpx.Timeout(settings.request_timeout_seconds)
@@ -66,7 +80,7 @@ async def main():
         try: loop.add_signal_handler(sig,stop.set)
         except NotImplementedError: pass
     async with httpx.AsyncClient(timeout=timeout,follow_redirects=True) as client:
-        tasks=[asyncio.create_task(worker('NWS',settings.nws_poll_seconds,lambda c:nws.fetch(c,settings.user_agent),db,prompter,client,health)),asyncio.create_task(worker('NASA_EONET',settings.eonet_poll_seconds,lambda c:eonet.fetch(c,settings.eonet_days),db,prompter,client,health)),asyncio.create_task(lifecycle_worker(db,prompter)),asyncio.create_task(heartbeat_worker(health)),asyncio.create_task(backup_worker())]
+        tasks=[asyncio.create_task(worker('NWS',settings.nws_poll_seconds,lambda c:nws.fetch(c,settings.user_agent),db,prompter,client,health)),asyncio.create_task(worker('NASA_EONET',settings.eonet_poll_seconds,lambda c:eonet.fetch(c,settings.eonet_days),db,prompter,client,health)),asyncio.create_task(lifecycle_worker(db,prompter)),asyncio.create_task(heartbeat_worker(health)),asyncio.create_task(backup_worker()),asyncio.create_task(archive_worker(db))]
         log.info('Disaster Monitor started')
         await stop.wait(); log.info('shutdown requested')
         for task in tasks: task.cancel()

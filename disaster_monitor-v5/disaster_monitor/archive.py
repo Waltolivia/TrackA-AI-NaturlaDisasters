@@ -129,9 +129,13 @@ def _week_folder_name(when):
     return f"{start_label}-{end_label}"
 
 
-def render_event(db, event_id, root="archive"):
-    event = db.get_event(event_id)
-    alerts = db.alerts_for_event(event_id)
+def _event_folder(event, root="archive"):
+    """
+    Return the `events/` folder that holds one event's detailed report.
+
+    Example:
+        archive/2026/September/Sep_28-Sep_30/events
+    """
 
     opened = _dt(event["opened_at"])
 
@@ -142,10 +146,18 @@ def render_event(db, event_id, root="archive"):
         month_folder = Path(root) / "unknown" / "Unknown"
         week_folder = month_folder / "Unknown_Dates"
 
-    week_folder.mkdir(
-        parents=True,
-        exist_ok=True
-    )
+    return week_folder / "events"
+
+
+def event_report_path(event, root="archive"):
+    """
+    Return the on-disk path of one event's detailed report without
+    touching the filesystem.
+
+    Individual event reports live in an `events/` folder inside the
+    month/week folder so the monthly index and the per-event reports
+    stay separated.
+    """
 
     name = _safe(
         event["title"]
@@ -153,8 +165,23 @@ def render_event(db, event_id, root="archive"):
         else event["canonical_type"]
     )
 
-    path = week_folder / (
+    return _event_folder(event, root) / (
         f'{event["public_id"]}_{name}.txt'
+    )
+
+
+def render_event(db, event_id, root="archive"):
+    event = db.get_event(event_id)
+    alerts = db.alerts_for_event(event_id)
+
+    opened = _dt(event["opened_at"])
+
+    path = event_report_path(event, root)
+    events_folder = path.parent
+
+    events_folder.mkdir(
+        parents=True,
+        exist_ok=True
     )
 
     lines = [

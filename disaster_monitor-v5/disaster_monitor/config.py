@@ -23,5 +23,12 @@ class Settings:
     backup_path: str = os.getenv('BACKUP_PATH', 'backups')
     backup_interval_hours: int = int(os.getenv('BACKUP_INTERVAL_HOURS', '24'))
     backup_keep_days: int = int(os.getenv('BACKUP_KEEP_DAYS', '14'))
+    # Tiered storage: keep a rolling local window, then move older finished
+    # events to Amazon DynamoDB (simplest/cheapest AWS database for this load).
+    local_retention_days: int = int(os.getenv('LOCAL_RETENTION_DAYS', '7'))
+    aws_archive_enabled: bool = os.getenv('AWS_ARCHIVE_ENABLED', 'false').lower() in {'1','true','yes','on'}
+    aws_region: str = os.getenv('AWS_REGION', os.getenv('AWS_DEFAULT_REGION', 'us-east-1'))
+    aws_dynamodb_table: str = os.getenv('AWS_DYNAMODB_TABLE', 'disaster_monitor_history')
+    aws_archive_interval_hours: int = int(os.getenv('AWS_ARCHIVE_INTERVAL_HOURS', '24'))
 
 settings = Settings()

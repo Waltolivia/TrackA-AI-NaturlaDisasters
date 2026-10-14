@@ -89,3 +89,56 @@ def test_meaningful_status_changes_notify_but_routine_updates_do_not():
         assert sorted(x['action'] for x in payloads)==sorted(['NEW_EVENT','STATUS_CHANGED','STATUS_CHANGED'])
         confirmed=next(x for x in payloads if x['status']=='ACTIVE_CONFIRMED')
         assert confirmed['details']['previous_status']=='WARNING'
+
+class _FakeTable:
+    def __init__(self):self.items=[]
+    def put_item(self,Item):self.items.append(Item)
+
+class _FakeResource:
+    def __init__(self):self.table=_FakeTable();self.requested=[]
+    def Table(self,name):self.requested.append(name);return self.table
+
+def _finished_event(db,p,root):
+    """Create one event, end it, and let collection complete."""
+    process(db,p,alert(),archive_path=root/'archive')
+    ended=datetime(2026,9,28,14,0,tzinfo=timezone.utc)
+    evaluate(db,p,ended,end_grace_minutes=30,completion_grace_hours=24,archive_path=root/'archive')
+    completed=ended+timedelta(hours=25)
+    evaluate(db,p,completed,end_grace_minutes=30,completion_grace_hours=24,archive_path=root/'archive')
+    return completed
+
+def test_local_data_is_kept_for_a_week_then_moved_to_aws():
+    from disaster_monitor.aws_archive import AwsArchiver
+    with tempfile.TemporaryDirectory() as d:
+        root=Path(d);db=Database(str(root/'x.db'));p=JsonPrompter(root/'out')
+        completed=_finished_event(db,p,root)
+        resource=_FakeResource()
+        archiver=AwsArchiver(region='us-east-1',table_name='history',retention_days=7,resource=resource)
+
+        # Still inside the one-week local window: nothing is copied or deleted.
+        recent=archiver.archive(db,archive_path=root/'archive',now=completed,create_table=False)
+        assert recent['events_eligible']==0 and recent['events_archived']==0
+        assert db.get_event(1) is not None and db.count_alerts()==1
+        assert list((root/'archive').glob('**/events/*.txt'))
+
+        # Older than a week: everything is copied to AWS, then removed locally.
+        result=archiver.archive(db,archive_path=root/'archive',now=completed+timedelta(days=8),create_table=False)
+        assert result['events_archived']==1 and result['events_failed']==0
+        assert result['items_written']==len(resource.table.items)>0
+        assert result['reports_removed']==1
+        assert resource.requested==['history','history']
+        assert {item['sk'] for item in resource.table.items} >= {'META','REPORT'}
+        assert all(item['pk']=='EVENT#EVT-00000001' for item in resource.table.items)
+        assert db.get_event(1) is None and db.count_alerts()==0
+        assert not list((root/'archive').glob('**/events/*.txt'))
+
+def test_active_events_are_never_archived():
+    from disaster_monitor.aws_archive import AwsArchiver
+    with tempfile.TemporaryDirectory() as d:
+        root=Path(d);db=Database(str(root/'x.db'));p=JsonPrompter(root/'out')
+        process(db,p,alert(),archive_path=root/'archive')
+        resource=_FakeResource()
+        archiver=AwsArchiver(region='us-east-1',retention_days=7,resource=resource)
+        result=archiver.archive(db,archive_path=root/'archive',now=datetime.now(timezone.utc)+timedelta(days=30),create_table=False)
+        assert result['events_eligible']==0 and not resource.table.items
+        assert db.get_event(1) is not None
