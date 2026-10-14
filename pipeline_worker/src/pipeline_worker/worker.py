@@ -15,6 +15,7 @@ from ai_probe_runner.questions import PROBE_TRIGGER_TYPES, normalize_trigger
 
 from .config import WorkerConfig
 from .database import JobDatabase
+from .s3_results import S3ResultArchive
 
 log = logging.getLogger("pipeline-worker")
 NON_PROBE_ACTIONS = {
@@ -39,6 +40,16 @@ class PipelineWorker:
     def __init__(self, config: WorkerConfig):
         self.config = config.resolved()
         self.database = JobDatabase(self.config.state_db)
+        self.s3_archive = (
+            S3ResultArchive(
+                bucket=self.config.s3_bucket,
+                region=self.config.aws_region,
+                prefix=self.config.s3_prefix,
+            )
+            if self.config.s3_enabled
+            else None
+        )
+        self._next_s3_retry_at = 0.0
         self.config.output_dir.mkdir(parents=True, exist_ok=True)
         if self.config.queue_layout == "v5":
             for state in ("pending", "processing", "completed", "failed"):
@@ -54,6 +65,7 @@ class PipelineWorker:
         return counts
 
     def run_once(self, max_jobs: int | None = None) -> dict[str, Any]:
+        s3_result = self._retry_pending_s3_uploads()
         discovery = self.discover()
         processed = succeeded = failed = 0
         while max_jobs is None or processed < max_jobs:
@@ -72,15 +84,21 @@ class PipelineWorker:
             "processed": processed,
             "succeeded": succeeded,
             "failed": failed,
+            "s3": s3_result,
             "state": self.database.summary(),
         }
 
     def run_forever(self) -> None:
         log.info(
-            "worker started outbox=%s targets=%s output=%s",
+            "worker started outbox=%s targets=%s output=%s s3=%s",
             self.config.outbox,
             self.config.targets,
             self.config.output_dir,
+            (
+                f"s3://{self.config.s3_bucket}/{self.config.s3_prefix}"
+                if self.s3_archive
+                else "disabled"
+            ),
         )
         try:
             while True:
@@ -246,6 +264,17 @@ class PipelineWorker:
             )
 
         if result.success and result.summary is not None:
+            s3_uploaded = False
+            if self.s3_archive is not None:
+                try:
+                    self.s3_archive.upload_cycle(Path(result.summary["cycle_dir"]))
+                    s3_uploaded = True
+                except Exception as exc:  # noqa: BLE001 - retry is independent
+                    log.warning(
+                        "AI probes complete; S3 upload pending job_id=%s error=%s",
+                        job_id,
+                        exc,
+                    )
             completed_path = self._finish_queue_file(path, "completed")
             if completed_path != path:
                 self.database.update_trigger_path(job_id, completed_path)
@@ -257,9 +286,13 @@ class PipelineWorker:
                 stderr=_bounded(result.stderr),
             )
             log.info(
-                "job succeeded job_id=%s cycle=%s",
+                "AI job succeeded job_id=%s completed=%s/%s results=%s readable=%s s3=%s",
                 job_id,
+                result.summary["completed_probe_count"],
+                result.summary["expected_probe_count"],
                 result.summary["cycle_dir"],
+                result.summary.get("readable_results") or "AI_RESULTS.md",
+                "uploaded" if s3_uploaded else ("pending" if self.s3_archive else "disabled"),
             )
             return True
 
@@ -325,6 +358,9 @@ class PipelineWorker:
                 ),
             )
 
+        for line in completed.stderr.splitlines():
+            log.info("AI progress job_id=%s %s", job_id, line)
+
         try:
             summary = json.loads(completed.stdout)
             if not isinstance(summary, dict):
@@ -364,6 +400,18 @@ class PipelineWorker:
             summary=summary,
             error=error,
         )
+
+    def _retry_pending_s3_uploads(self) -> dict[str, int]:
+        if self.s3_archive is None:
+            return {"attempted": 0, "uploaded": 0, "failed": 0}
+        now = time.monotonic()
+        if now < self._next_s3_retry_at:
+            return {"attempted": 0, "uploaded": 0, "failed": 0}
+        self._next_s3_retry_at = now + self.config.s3_retry_seconds
+        result = self.s3_archive.upload_pending(self.config.output_dir)
+        if result["attempted"]:
+            log.info("S3 AI retry sync %s", result)
+        return result
 
     def _claim_queue_file(self, path: Path) -> Path:
         if self.config.queue_layout != "v5" or path.parent.name != "pending":

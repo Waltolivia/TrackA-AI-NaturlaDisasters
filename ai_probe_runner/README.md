@@ -14,8 +14,9 @@ message written by `disaster_monitor-v5`; schema 2 messages remain supported.
 - Combines a general question bank with one hazard-specific bank.
 - Runs every rendered question against every enabled target configuration.
 - Treats browsing on/off as separate experimental conditions.
-- Saves the raw and normalized triggers, rendered questions, normalized records, raw responses,
-  timestamps, model identifiers, citations, token usage, errors, and hashes.
+- Saves readable Markdown and compact JSON alongside raw and normalized
+  triggers, rendered questions, provider responses, timestamps, model
+  identifiers, citations, token usage, errors, and hashes.
 - Includes a mock provider so the full pipeline can be tested without API keys.
 
 ## Folder layout
@@ -108,9 +109,10 @@ uv run ai-probe-runner \
   --targets config/targets.mock.json
 ```
 
-Output is written under `data/YYYY-MM-DD/<cycle-id>/`. The `data/` directory is
-ignored by Git because collected research data should not be mixed with source
-code.
+Integrated output is written under
+`pipeline_data/results/YYYY/Month/Week/EVT-.../EVT-..._AI/runs/MSG-.../`.
+Standalone manual output uses the same structure with an inferred event/date.
+Collected data directories are ignored by Git.
 
 ## API keys and real providers
 
@@ -137,14 +139,14 @@ Copy the example target configuration:
 cp config/targets.example.json config/targets.local.json
 ```
 
-`targets.study-v1.json` is the proposed frozen study baseline, reviewed on
-2026-09-28. `targets.example.json` currently mirrors it for local setup. The
-study file contains one fast, cost-conscious target from each provider:
+`targets.study-v1.json` preserves the original Sonnet baseline.
+`targets.study-v2.json` is the current cost-controlled condition, and
+`targets.example.json` mirrors v2 for local setup:
 
 | Provider | Model ID | Experimental condition |
 | --- | --- | --- |
 | OpenAI | `gpt-5.4-nano-2026-03-17` | No web search |
-| Anthropic | `claude-sonnet-5-5` | No web search |
+| Anthropic | `claude-haiku-5-5` | No web search; low effort |
 | Google | `gemini-3.5-flash-lite` | No web search |
 
 These models were selected to emphasize speed, cost, and broad API availability
@@ -152,10 +154,9 @@ rather than maximum benchmark performance. They are inexpensive API models, but
 they are **not guaranteed to be identical** to the models, system prompts, or
 tools used in the providers' free consumer chat products.
 
-Each target has an explicit 2,048-token output ceiling. OpenAI uses a dated
-snapshot; Anthropic documents Sonnet 5.5 as a fixed model ID; and Google lists
-Flash-Lite as stable. Provider serving infrastructure can still change, so the
-runner archives the requested and resolved model information for every probe.
+Each v2 target has an explicit 1,024-token output ceiling. The Anthropic target
+also requests low effort. The runner archives both requested and resolved model
+information for every probe.
 
 The initial baseline deliberately disables browsing. Browsing changes the
 information available to a model and may add tool-use charges, so search-enabled
@@ -174,7 +175,7 @@ Run a real pilot:
 ```bash
 uv run ai-probe-runner \
   --trigger examples/trigger.flash-flood.json \
-  --targets config/targets.study-v1.json \
+  --targets config/targets.study-v2.json \
   --delay-seconds 1 \
   --fail-on-probe-error
 ```
@@ -213,7 +214,14 @@ The preferred input is the schema 3 queue message written by
   "source": "NWS",
   "source_alert_id": "official-alert-id",
   "sent_at": "2026-09-28T16:00:00Z",
-  "generated_at": "2026-09-28T16:01:00Z"
+  "generated_at": "2026-09-28T16:01:00Z",
+  "archive": {
+    "year": "2026",
+    "month": "September",
+    "week": "Sep_28-Sep_30",
+    "event_id": "EVT-00000001",
+    "relative_prefix": "2026/September/Sep_28-Sep_30/EVT-00000001"
+  }
 }
 ```
 
@@ -230,6 +238,7 @@ preserving every original collector field:
 | `disaster.location` | `area` | Human-readable area placed in prompts |
 | `source_alert_id` | `source_id` | Links results to the source alert |
 | `sent_at`, then `generated_at` | `timestamp` | Gives prompts a clear reference time |
+| `archive.relative_prefix` | retained | Places GT and AI under the same event folder |
 
 Schema 3 `NEW_EVENT`, `STATUS_CHANGED`, and `SEVERITY_CHANGED` actions can start
 AI probes. Schema 2 `NEW_EVENT` and `ESCALATION` remain supported. Lifecycle
@@ -315,6 +324,8 @@ research-protocol changes that should be committed and documented.
 
 Each cycle contains:
 
+- `AI_RESULTS.md`: readable event/model/question/answer report; open this first.
+- `responses.json`: compact machine-readable prompts and answers.
 - `manifest.json`: cycle timing, counts, hashes, runtime, and Git commit.
 - `trigger.raw.json`: exact object received from the collector or manual caller.
 - `trigger.json`: normalized trigger used to select and render questions.
@@ -336,9 +347,9 @@ value, but a future ground-truth change should add a human-readable place name o
 reverse-geocoded region if EONET events are included in the study. Do not ask an
 AI model to invent a place name from incomplete coordinates during normalization.
 
-The runner intentionally does not claim queue files or schedule collection.
-Those responsibilities belong to the root `pipeline_worker`. Durable off-host
-upload remains a deployment responsibility.
+The runner intentionally does not claim queue files or upload to S3. Those
+responsibilities belong to the root `pipeline_worker`, which uploads complete
+cycles and retries storage separately from paid probes.
 
 ## Common problems
 

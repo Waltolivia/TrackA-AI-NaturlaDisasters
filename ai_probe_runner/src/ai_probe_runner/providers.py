@@ -22,6 +22,7 @@ class Provider(Protocol):
         model: str,
         browsing: bool,
         max_output_tokens: int,
+        effort: str | None = None,
     ) -> ProviderResult: ...
 
 
@@ -33,12 +34,14 @@ class MockProvider:
         model: str,
         browsing: bool,
         max_output_tokens: int,
+        effort: str | None = None,
     ) -> ProviderResult:
         text = "Mock response: consult the relevant local emergency authority."
         raw = {
             "model": model,
             "browsing": browsing,
             "max_output_tokens": max_output_tokens,
+            "effort": effort,
             "input": prompt,
             "output": text,
         }
@@ -60,6 +63,7 @@ class OpenAIProvider:
         model: str,
         browsing: bool,
         max_output_tokens: int,
+        effort: str | None = None,
     ) -> ProviderResult:
         kwargs: dict[str, Any] = {
             "model": model,
@@ -102,6 +106,7 @@ class AnthropicProvider:
         model: str,
         browsing: bool,
         max_output_tokens: int,
+        effort: str | None = None,
     ) -> ProviderResult:
         kwargs: dict[str, Any] = {
             "model": model,
@@ -116,6 +121,8 @@ class AnthropicProvider:
                     "max_uses": 5,
                 }
             ]
+        if effort:
+            kwargs["output_config"] = {"effort": effort}
         response = self.client.messages.create(**kwargs)
         raw = response.model_dump(mode="json")
         text = "".join(
@@ -153,6 +160,7 @@ class GoogleProvider:
         model: str,
         browsing: bool,
         max_output_tokens: int,
+        effort: str | None = None,
     ) -> ProviderResult:
         kwargs: dict[str, Any] = {
             "model": model,

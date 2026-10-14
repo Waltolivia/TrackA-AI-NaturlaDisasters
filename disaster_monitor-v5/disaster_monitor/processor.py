@@ -8,7 +8,7 @@ from .archive import render_event
 
 def digest(alert):return hashlib.sha256(json.dumps(alert.raw,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
-def process(db,prompter,alert,high_threshold=.78,review_threshold=.58,suppress_notifications=False,archive_path='archive'):
+def process(db,prompter,alert,high_threshold=.78,review_threshold=.58,suppress_notifications=False,archive_path='archive',s3_archive=None):
     if not is_natural_disaster(alert):return 'filtered'
     h=digest(alert)
     if db.seen(alert.source,alert.source_id,h):return 'duplicate'
@@ -31,4 +31,6 @@ def process(db,prompter,alert,high_threshold=.78,review_threshold=.58,suppress_n
     if trigger != 'ROUTINE_UPDATE':
         prompter.emit(after,alert,trigger,{'match_confidence':confidence,'match_reason':reason,'previous_status':None if created else before['operational_phase'],'status':new_phase,'previous_severity':None if created else before['severity'],'severity':alert.severity},suppress=suppress_notifications)
     render_event(db,event_id,archive_path)
+    # S3 synchronization happens asynchronously from its durable marker.
+    if s3_archive is not None:s3_archive.schedule(event_id)
     return trigger

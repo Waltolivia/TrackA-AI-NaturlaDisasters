@@ -69,7 +69,7 @@ Global options go before the command:
 
 ```bash
 uv run --project pipeline_worker pipeline-worker \
-  --targets ai_probe_runner/config/targets.study-v1.json \
+  --targets ai_probe_runner/config/targets.study-v2.json \
   --max-attempts 8 \
   --retry-base-seconds 60 \
   --poll-seconds 5 \
@@ -91,6 +91,11 @@ uv run --project pipeline_worker pipeline-worker \
 | `--lease-seconds` | `7200` | Crash-recovery claim lease |
 | `--job-timeout-seconds` | `7200` | Maximum AI subprocess time |
 | `--probe-delay-seconds` | `0` | Delay between provider calls |
+| `--s3` / `--no-s3` | environment/default off | Enable shared S3 uploads |
+| `--s3-bucket` | `S3_BUCKET` | Private shared research bucket |
+| `--s3-prefix` | `disaster_monitor-v5/archive` | Common GT/AI key prefix |
+| `--aws-region` | `AWS_REGION` or `us-east-1` | Bucket region |
+| `--s3-retry-seconds` | `60` | Retry scan interval for completed cycles |
 
 Paths are resolved against the repository root, not the terminal's current
 directory. The AI subprocess runs from `ai_probe_runner/`, allowing that
@@ -106,6 +111,28 @@ module's local `.env` file to load normally.
 - Changed triggers, question banks, or target configurations cannot be resumed
   into an older cycle.
 - Original error records remain in `probes.jsonl` for research auditing.
+- A completed cycle is marked `.s3-uploaded.json` only after every S3 write
+  succeeds. Missing markers retry separately, so storage outages never rerun
+  completed paid probes.
+
+## Shared event storage
+
+New schema 3 triggers contain the collector-authoritative
+`archive.relative_prefix`. The worker uses it to place each AI cycle beside the
+matching ground-truth folder:
+
+```text
+.../EVT-00000001/
+  EVT-00000001_weather/
+  EVT-00000001_AI/
+    AI_RESULTS.md
+    responses.json
+    runs/MSG-.../
+```
+
+The files directly under `EVT-..._AI` are the convenient latest view. Every
+trigger-specific cycle remains under `runs/`. See
+[`deployment/S3_SETUP.md`](../deployment/S3_SETUP.md) for bucket and IAM setup.
 
 Do not run two workers against the same outbox with separate worker databases.
 For the initial deployment, use one worker process and one persistent database.

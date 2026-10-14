@@ -14,7 +14,7 @@ def test_example_targets_are_three_provider_no_search_baseline() -> None:
     config_path = Path(__file__).parents[1] / "config" / "targets.example.json"
     targets = json.loads(config_path.read_text(encoding="utf-8"))
     study_targets = json.loads(
-        (config_path.parent / "targets.study-v1.json").read_text(encoding="utf-8")
+        (config_path.parent / "targets.study-v2.json").read_text(encoding="utf-8")
     )
 
     assert {
@@ -23,12 +23,14 @@ def test_example_targets_are_three_provider_no_search_baseline() -> None:
         if target.get("enabled", True)
     } == {
         ("openai", "gpt-5.4-nano-2026-03-17", False),
-        ("anthropic", "claude-sonnet-5-5", False),
+        ("anthropic", "claude-haiku-5-5", False),
         ("google", "gemini-3.5-flash-lite", False),
     }
     assert all(target.get("target_id") for target in targets)
     assert all(target.get("interface") for target in targets)
-    assert all(target.get("max_output_tokens") == 2048 for target in targets)
+    assert all(target.get("max_output_tokens") == 1024 for target in targets)
+    anthropic = next(target for target in targets if target["provider"] == "anthropic")
+    assert anthropic["effort"] == "low"
     assert targets == study_targets
 
 
@@ -292,6 +294,9 @@ def test_mock_cycle_archives_trigger_questions_and_responses(tmp_path: Path) -> 
     assert (cycle_dir / "trigger.raw.json").is_file()
     assert (cycle_dir / "trigger.json").is_file()
     assert (cycle_dir / "questions.json").is_file()
+    assert (cycle_dir / "AI_RESULTS.md").is_file()
+    assert (cycle_dir / "responses.json").is_file()
+    assert "# AI Probe Results" in (cycle_dir / "AI_RESULTS.md").read_text()
     assert all(record["status"] == "success" for record in records)
 
 

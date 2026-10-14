@@ -11,7 +11,10 @@ Always-on Python disaster monitor using **NWS** and **NASA EONET**. IPAWS has be
 - Suppresses downstream messages during each collector's first successful startup sync.
 - Sends durable one-time JSON jobs for meaningful live changes only.
 - Produces monthly human-readable indexes and detailed per-event text reports with unrestricted long NWS affected-area, description, instruction, and parameter sections.
-- Keeps a rolling local window and moves older finished events to an AWS DynamoDB archive (see [Tiered storage](#tiered-storage-one-local-week-then-aws)).
+- Immediately queues each newly written event snapshot for the shared private
+  S3 archive when `S3_ARCHIVE_ENABLED=true`.
+- Optionally keeps a rolling local window and moves older finished events to a
+  secondary AWS DynamoDB archive (see [Optional secondary tier](#optional-secondary-tier-one-local-week-then-dynamodb)).
 - Maintains heartbeat health, rotating logs, SQLite backups, retry/backoff, and macOS launchd support.
 
 ## Downstream notification rules
@@ -48,20 +51,53 @@ outbox/completed/               successful jobs
 outbox/failed/                  failed jobs
 logs/disaster_monitor.log       rotating runtime log
 backups/                        SQLite backups
+data/s3_pending/                durable retry markers for S3 snapshots
 ```
 
-## Tiered storage: one local week, then AWS
+## Primary shared archive: immediate S3 snapshots
 
-The monitor keeps a rolling local window (`LOCAL_RETENTION_DAYS`, one week by
+S3 is the project's primary shared research archive. Local SQLite and report
+files remain the working copy. Within seconds of a local event write, the S3
+worker uploads a current report, normalized event JSON, and alert JSON beneath:
+
+```text
+s3://BUCKET/disaster_monitor-v5/archive/YYYY/Month/Week/EVT-.../
+  EVT-..._weather/
+    EVENT_REPORT.txt
+    event.json
+    alerts.json
+    archive_manifest.json
+```
+
+Every downstream queue message includes the same `archive.relative_prefix`.
+The AI worker uses it to create the adjacent `EVT-..._AI/` folder without
+guessing from the AI request time.
+
+Enable S3 after creating the private bucket and IAM identity described in
+[`../deployment/S3_SETUP.md`](../deployment/S3_SETUP.md):
+
+```bash
+export S3_ARCHIVE_ENABLED=true
+export S3_BUCKET='YOUR-GLOBALLY-UNIQUE-BUCKET'
+export S3_PREFIX='disaster_monitor-v5/archive'
+export S3_SYNC_SECONDS=5
+export AWS_REGION='us-west-2'
+```
+
+If an upload fails, its `data/s3_pending/` marker remains and is retried. This
+module never deletes local files.
+
+## Optional secondary tier: one local week, then DynamoDB
+
+This older, independent feature keeps a rolling local window
+(`LOCAL_RETENTION_DAYS`, one week by
 default). Finished events older than that window are copied to **Amazon
 DynamoDB** and only then removed from SQLite and `archive/`, so a network or
 credential problem can never lose data.
 
-DynamoDB is used because it is the simplest and cheapest AWS database for this
-workload: it is fully managed (no VPC, no security group, no connection string),
-it is billed `PAY_PER_REQUEST` so there is nothing to pay while the monitor is
-idle, and the write volume here (a few hundred small items per day) sits inside
-the AWS always-free tier.
+DynamoDB is not required for the shared S3 file archive. Keep it disabled
+during the first S3 pilot unless the team explicitly wants old completed rows
+removed from local SQLite.
 
 Only `ENDED`/`COMPLETE` events are eligible. An `ACTIVE` event is still
 receiving revisions and is never moved out of the local database. One DynamoDB
@@ -132,12 +168,18 @@ OUTBOX_PATH=outbox
 ARCHIVE_PATH=archive
 END_GRACE_MINUTES=30
 COLLECTION_GRACE_HOURS=24
-# Tiered storage (see "Tiered storage: one local week, then AWS")
+# Optional secondary DynamoDB tier
 LOCAL_RETENTION_DAYS=7
 AWS_ARCHIVE_ENABLED=false
 AWS_REGION=us-east-1
 AWS_DYNAMODB_TABLE=disaster_monitor_history
 AWS_ARCHIVE_INTERVAL_HOURS=24
+# Immediate shared S3 archive
+S3_ARCHIVE_ENABLED=false
+S3_BUCKET=
+S3_PREFIX=disaster_monitor-v5/archive
+S3_PENDING_PATH=data/s3_pending
+S3_SYNC_SECONDS=5
 ```
 
 ## Operational phase derivation

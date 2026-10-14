@@ -5,6 +5,7 @@ from pathlib import Path
 
 from pipeline_worker.config import WorkerConfig
 from pipeline_worker.worker import PipelineWorker
+from pipeline_worker.s3_results import S3ResultArchive
 
 REPOSITORY_ROOT = Path(__file__).parents[2]
 
@@ -36,6 +37,13 @@ def v5_payload(action: str = "NEW_EVENT", event_type: str = "flash flood") -> di
         "sent_at": "2026-09-28T12:00:00Z",
         "generated_at": "2026-09-28T12:01:00Z",
         "headline": "Flash Flood Warning for Test County",
+        "archive": {
+            "year": "2026",
+            "month": "September",
+            "week": "Sep_28-Sep_30",
+            "event_id": "EVT-00000001",
+            "relative_prefix": "2026/September/Sep_28-Sep_30/EVT-00000001",
+        },
     }
 
 
@@ -191,3 +199,90 @@ def test_manual_retry_resets_attempt_budget(tmp_path: Path) -> None:
     claimed_again = worker.database.claim_next(max_attempts=1, lease_seconds=60)
     assert claimed_again is not None
     assert claimed_again["attempt_count"] == 1
+
+
+class FakeS3Client:
+    def __init__(self, fail: bool = False):
+        self.fail = fail
+        self.objects = {}
+
+    def put_object(self, **kwargs):
+        if self.fail:
+            raise ConnectionError("simulated S3 outage")
+        self.objects[kwargs["Key"]] = kwargs
+
+
+def test_ai_results_share_event_prefix_and_include_readable_summary(tmp_path: Path) -> None:
+    worker_config = config(tmp_path)
+    worker_config = WorkerConfig(
+        **{**worker_config.__dict__, "s3_enabled": True, "s3_bucket": "study-bucket"}
+    )
+    worker = PipelineWorker(worker_config)
+    client = FakeS3Client()
+    worker.s3_archive = S3ResultArchive(
+        bucket="study-bucket",
+        region="us-west-2",
+        client=client,
+    )
+    trigger = worker.config.outbox / "pending" / "trigger.json"
+    trigger.write_text(json.dumps(v5_payload()), encoding="utf-8")
+
+    result = worker.run_once()
+
+    assert result["succeeded"] == 1
+    job = worker.database.get("MSG-new-event")
+    assert job is not None
+    cycle_dir = Path(job["cycle_dir"])
+    assert (cycle_dir / "AI_RESULTS.md").is_file()
+    assert (cycle_dir / "responses.json").is_file()
+    assert (cycle_dir / ".s3-uploaded.json").is_file()
+    ai_root = cycle_dir.parent.parent
+    assert (ai_root / "AI_RESULTS.md").is_file()
+    assert (ai_root / "responses.json").is_file()
+    assert (ai_root / "LATEST.json").is_file()
+    prefix = (
+        "disaster_monitor-v5/archive/2026/September/Sep_28-Sep_30/"
+        "EVT-00000001/EVT-00000001_AI/"
+    )
+    assert prefix + "AI_RESULTS.md" in client.objects
+    assert prefix + "responses.json" in client.objects
+    assert any(
+        key.startswith(prefix + "runs/MSG-new-event/") and key.endswith("AI_RESULTS.md")
+        for key in client.objects
+    )
+
+
+def test_s3_failure_does_not_fail_or_rerun_paid_ai_cycle(tmp_path: Path) -> None:
+    worker_config = config(tmp_path)
+    worker_config = WorkerConfig(
+        **{**worker_config.__dict__, "s3_enabled": True, "s3_bucket": "study-bucket"}
+    )
+    worker = PipelineWorker(worker_config)
+    worker.s3_archive = S3ResultArchive(
+        bucket="study-bucket",
+        region="us-west-2",
+        client=FakeS3Client(fail=True),
+    )
+    trigger = worker.config.outbox / "pending" / "trigger.json"
+    trigger.write_text(json.dumps(v5_payload()), encoding="utf-8")
+
+    first = worker.run_once()
+    assert first["succeeded"] == 1
+    job = worker.database.get("MSG-new-event")
+    assert job is not None and job["status"] == "SUCCEEDED"
+    cycle_dir = Path(job["cycle_dir"])
+    probe_count = len((cycle_dir / "probes.jsonl").read_text().splitlines())
+    assert not (cycle_dir / ".s3-uploaded.json").exists()
+
+    working_client = FakeS3Client()
+    worker.s3_archive = S3ResultArchive(
+        bucket="study-bucket",
+        region="us-west-2",
+        client=working_client,
+    )
+    worker._next_s3_retry_at = 0
+    second = worker.run_once()
+    assert second["processed"] == 0
+    assert second["s3"] == {"attempted": 1, "uploaded": 1, "failed": 0}
+    assert len((cycle_dir / "probes.jsonl").read_text().splitlines()) == probe_count
+    assert (cycle_dir / ".s3-uploaded.json").is_file()

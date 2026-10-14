@@ -7,8 +7,9 @@ put API keys in these files.
 ## Included configurations
 
 - `targets.mock.json` runs a free local test without contacting an AI provider.
-- `targets.study-v1.json` is the committed proposed study condition.
-- `targets.example.json` mirrors the study condition for local experimentation.
+- `targets.study-v1.json` preserves the original Sonnet study condition.
+- `targets.study-v2.json` is the current lower-cost Haiku condition.
+- `targets.example.json` mirrors v2 for local experimentation.
 - `targets.local.json` is the ignored working copy that each researcher may use
   for account-specific testing.
 
@@ -27,19 +28,17 @@ disabled:
 | Target ID | Provider | Model ID | Interface |
 | --- | --- | --- | --- |
 | `openai-gpt-5-4-nano-2026-03-17-no-search` | OpenAI | `gpt-5.4-nano-2026-03-17` | Responses API |
-| `anthropic-sonnet-5-5-no-search` | Anthropic | `claude-sonnet-5-5` | Messages API |
+| `anthropic-haiku-5-5-low-effort-no-search` | Anthropic | `claude-haiku-5-5` | Messages API |
 | `google-gemini-3-5-flash-lite-no-search` | Google | `gemini-3.5-flash-lite` | Interactions API |
 
 This is a low-cost API comparison, not an exact reproduction of free ChatGPT,
 Claude, or Gemini. Consumer products may use different routing, system prompts,
 tools, safety layers, personalization, and model versions.
 
-The OpenAI target is a dated snapshot. Anthropic documents Sonnet 5.5 as a
-fixed model ID with a longer expected lifecycle than Haiku 4.5. Google lists
-Flash-Lite as stable. Provider infrastructure may still change. If a successor
-is required, give it a new `target_id`, record the transition date, and
-preserve the old configuration so different models are never treated as one
-condition.
+The v2 condition intentionally chooses Haiku and a smaller output budget after
+the Sonnet condition consumed credits faster than expected. If a successor is
+required, give it a new `target_id`, record the transition date, and preserve
+the old configuration so different models are never treated as one condition.
 
 ## Gemini free tier
 
@@ -64,12 +63,13 @@ Each file is a JSON array. Every entry supports:
 | `interface` | Descriptive API label archived with the result. |
 | `browsing` | Whether the provider's supported search tool is requested. |
 | `max_output_tokens` | Positive integer ceiling passed to every provider. |
+| `effort` | Optional Anthropic effort level; v2 explicitly uses `low`. |
 | `enabled` | Whether this entry participates in a run. |
 
-The runner passes `model`, `browsing`, and `max_output_tokens` into each
-provider adapter. Other fields are preserved for identification and auditing.
-The study freezes output length at 2,048 tokens. Temperature and reasoning
-effort remain at each provider's API default and are documented as such.
+The runner passes `model`, `browsing`, `max_output_tokens`, and supported
+`effort` settings into provider adapters. Other fields are preserved for
+identification and auditing. Study v2 freezes output length at 1,024 tokens and
+Anthropic effort at `low`.
 
 ## Test one provider at a time
 
@@ -107,7 +107,7 @@ Instead, copy the entry, give it a distinct `target_id`, and change only
   "model": "gpt-5.4-nano-2026-03-17",
   "interface": "responses-api",
   "browsing": true,
-  "max_output_tokens": 2048,
+  "max_output_tokens": 1024,
   "enabled": true
 }
 ```

@@ -28,6 +28,11 @@ Disaster Monitor v5
         | JSON message
         v
 outbox/pending -> Pipeline Worker -> AI Probe Runner -> pipeline_data/results
+        |                                      |
+        +---------- same EVT folder -----------+
+                           |
+                           v
+                 private shared S3 archive
                        |
                        v
               pipeline_data/worker.db
@@ -45,6 +50,8 @@ outbox/pending -> Pipeline Worker -> AI Probe Runner -> pipeline_data/results
 6. A completely successful job moves to `outbox/completed/`.
 7. A failed job waits for exponential backoff and resumes only missing or
    failed probes. After eight attempts it moves to `outbox/failed/`.
+8. When S3 is enabled, ground truth and completed AI files upload beneath the
+   same `EVT-...` prefix. Upload retries never repeat completed AI probes.
 
 The worker probes these v5 actions:
 
@@ -117,7 +124,11 @@ Expected result:
 - One job reports `SUCCEEDED`.
 - Nine mock probes complete.
 - The trigger moves from `outbox/pending/` to `outbox/completed/`.
-- Results appear under `pipeline_data/results/YYYY-MM-DD/`.
+- Results appear under
+  `pipeline_data/results/YYYY/Month/Week/EVT-.../EVT-..._AI/runs/MSG-.../`.
+- Open the `AI_RESULTS.md` directly inside `EVT-..._AI/` first; use the
+  adjacent `responses.json` for compact analysis data. Exact historical cycles
+  remain under `runs/`.
 - Worker state appears in `pipeline_data/worker.db`.
 
 Inspect status at any time:
@@ -156,11 +167,11 @@ GEMINI_API_KEY=...
 
 Never put keys in JSON, source code, Git, screenshots, or collected results.
 
-The frozen study target file is committed without secrets:
+The current cost-controlled study target file is committed without secrets:
 
 ```bash
 python -m json.tool \
-  ai_probe_runner/config/targets.study-v1.json >/dev/null
+  ai_probe_runner/config/targets.study-v2.json >/dev/null
 ```
 
 It enables all three approved providers. A successful event runs nine questions
@@ -180,7 +191,7 @@ uv run --project pipeline_worker pipeline-worker \
   --outbox local_test/outbox \
   --state-db local_test/worker.db \
   --output local_test/results \
-  --targets ai_probe_runner/config/targets.study-v1.json \
+  --targets ai_probe_runner/config/targets.study-v2.json \
   once --max-jobs 1
 ```
 
@@ -194,7 +205,33 @@ Google currently offers a free tier for the selected Flash-Lite model, so the
 initial test does not require Google billing. Free-tier data handling and quota
 differ from paid usage; confirm the team's research-data policy before launch.
 
-## 5. Run the live ground-truth collector
+## 5. Configure the shared S3 archive
+
+S3 is optional for local development but is the primary shared archive for the
+study. Create one private, versioned bucket and configure both processes with
+the same values:
+
+```bash
+export S3_ARCHIVE_ENABLED=true
+export S3_BUCKET='YOUR-GLOBALLY-UNIQUE-BUCKET'
+export S3_PREFIX='disaster_monitor-v5/archive'
+export AWS_REGION='us-west-2'
+```
+
+Do not commit AWS credentials. For local use, configure a dedicated AWS
+identity with `aws configure`; on a VM, prefer an instance role. Follow the
+complete bucket, IAM, and no-cost mock verification instructions in
+[`deployment/S3_SETUP.md`](deployment/S3_SETUP.md).
+
+The shared structure is:
+
+```text
+s3://BUCKET/disaster_monitor-v5/archive/YYYY/Month/Week/EVT-.../
+  EVT-..._weather/     ground-truth report and JSON
+  EVT-..._AI/          latest readable results and all MSG-specific runs
+```
+
+## 6. Run the live ground-truth collector
 
 Set up v5 in its own environment:
 
@@ -221,13 +258,13 @@ first successful source sync so that startup does not generate hundreds of
 historical jobs. New meaningful changes after that sync enter
 `outbox/pending/`.
 
-## 6. Run the worker continuously
+## 7. Run the worker continuously
 
 Open a second terminal at the repository root:
 
 ```bash
 uv run --project pipeline_worker pipeline-worker \
-  --targets ai_probe_runner/config/targets.study-v1.json \
+  --targets ai_probe_runner/config/targets.study-v2.json \
   --poll-seconds 5 \
   run
 ```
@@ -304,6 +341,7 @@ The preferred format is Disaster Monitor v5 schema 3. It includes:
 - `disaster.type`
 - `disaster.location`
 - Source timestamps and provenance
+- Stable archive coordinates (`year`, `month`, `week`, and event prefix)
 
 The AI adapter and worker also support v2 `NEW_EVENT` and `ESCALATION` objects.
 To consume the older flat directory explicitly:
@@ -325,6 +363,8 @@ Every AI cycle archives:
 - Git commit and runtime
 - Provider-reported model and usage
 - Every successful or failed attempt
+- `AI_RESULTS.md`, the recommended human-readable view
+- `responses.json`, the compact analysis-friendly view
 
 The worker uses the v5 `message_id` as the cycle ID. If a cycle is interrupted,
 the same ID locates the existing cycle even after the calendar date changes.
@@ -345,22 +385,29 @@ Before leaving the pipeline unattended:
 5. Use one worker process. Do not run two workers with separate state databases.
 6. Use `systemd`, launchd, Docker Compose, or another supervisor to restart the
    collector and worker after a reboot.
-7. Upload completed result directories to S3 or another durable store before
-   deleting any local data.
+7. Enable and verify the shared S3 archive; confirm both `weather` and `AI`
+   folders appear beneath one event before relying on unattended collection.
 8. Monitor `DEAD` jobs and queue growth daily during the initial study.
 
 The v5 collector already includes health output, rotating logs, database
 backups, and a macOS launchd template. Start both services manually first; only
 enable automatic startup after the real-provider pilot succeeds.
 
-### Collector tiered storage (local week, then AWS)
+### AWS storage roles
 
-The collector keeps a rolling local window of one week (`LOCAL_RETENTION_DAYS`).
+S3 is the primary shared file archive and updates within seconds of local
+writes. It preserves readable ground-truth and AI files beneath the same event
+prefix. See [`deployment/S3_SETUP.md`](deployment/S3_SETUP.md).
+
+The following older DynamoDB feature remains optional and separate:
+
+When explicitly enabled, the collector keeps a rolling local window of one
+week (`LOCAL_RETENTION_DAYS`).
 Finished events older than that window are copied to an AWS DynamoDB table and
 only then deleted from SQLite and `archive/`, so the local disk never grows
 without bound. It is off by default; turn it on with `AWS_ARCHIVE_ENABLED=true`
 plus `AWS_REGION`/`AWS_DYNAMODB_TABLE` and normal boto3 credentials. See
-[`disaster_monitor-v5/README.md`](disaster_monitor-v5/README.md#tiered-storage-one-local-week-then-aws)
+[`disaster_monitor-v5/README.md`](disaster_monitor-v5/README.md#optional-secondary-tier-one-local-week-then-dynamodb)
 for details and the `python -m disaster_monitor.archive_cli` commands.
 
 ## Important current boundaries
@@ -388,12 +435,14 @@ for details and the `python -m disaster_monitor.archive_cli` commands.
 - [ ] Collector and worker run together for at least one supervised hour.
 - [ ] `pipeline-worker status` has no unexplained `DEAD` jobs.
 - [ ] Result and SQLite backup locations are confirmed.
+- [ ] One S3 test event contains adjacent `EVT-..._weather` and `EVT-..._AI` folders.
+- [ ] `AI_RESULTS.md` is readable in the AI folder and the exact `MSG-...` run is retained.
 - [ ] The team approves `STUDY_PROTOCOL.md` and the frozen study target file.
-- [ ] The clean merged commit is tagged `study-v1.0.0` and that tag is deployed.
+- [ ] The clean merged commit is tagged `study-v2.0.0` and that tag is deployed.
 - [ ] The team records the Git commit, target configuration, and collection start time.
 
 For details specific to the worker or provider configuration, see
 [`pipeline_worker/README.md`](pipeline_worker/README.md) and
 [`ai_probe_runner/README.md`](ai_probe_runner/README.md). The frozen research
-decisions are in [`STUDY_PROTOCOL.md`](STUDY_PROTOCOL.md), and unattended Linux
+decisions are in [`STUDY_PROTOCOL_V2.md`](STUDY_PROTOCOL_V2.md), and unattended Linux
 setup is in [`deployment/README.md`](deployment/README.md).

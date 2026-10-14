@@ -30,5 +30,12 @@ class Settings:
     aws_region: str = os.getenv('AWS_REGION', os.getenv('AWS_DEFAULT_REGION', 'us-east-1'))
     aws_dynamodb_table: str = os.getenv('AWS_DYNAMODB_TABLE', 'disaster_monitor_history')
     aws_archive_interval_hours: int = int(os.getenv('AWS_ARCHIVE_INTERVAL_HOURS', '24'))
+    # Primary shared research archive. This immediately mirrors newly written
+    # event snapshots to S3 and never removes the local working copy.
+    s3_archive_enabled: bool = os.getenv('S3_ARCHIVE_ENABLED', 'false').lower() in {'1','true','yes','on'}
+    s3_bucket: str = os.getenv('S3_BUCKET', '')
+    s3_prefix: str = os.getenv('S3_PREFIX', 'disaster_monitor-v5/archive')
+    s3_pending_path: str = os.getenv('S3_PENDING_PATH', 'data/s3_pending')
+    s3_sync_seconds: float = float(os.getenv('S3_SYNC_SECONDS', '5'))
 
 settings = Settings()
