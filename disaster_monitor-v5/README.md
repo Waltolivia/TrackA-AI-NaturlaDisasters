@@ -11,6 +11,7 @@ Always-on Python disaster monitor using **NWS** and **NASA EONET**. IPAWS has be
 - Suppresses downstream messages during each collector's first successful startup sync.
 - Sends durable one-time JSON jobs for meaningful live changes only.
 - Produces monthly human-readable indexes and detailed per-event text reports with unrestricted long NWS affected-area, description, instruction, and parameter sections.
+- Keeps a rolling local window and moves older finished events to an AWS DynamoDB archive (see [Tiered storage](#tiered-storage-one-local-week-then-aws)).
 - Maintains heartbeat health, rotating logs, SQLite backups, retry/backoff, and macOS launchd support.
 
 ## Downstream notification rules
@@ -36,9 +37,11 @@ Each job includes a unique `message_id`, stable `event_id`, disaster type/name/l
 ```text
 data/disaster_monitor.db        master/source-of-truth database
 data/health.json                heartbeat/source health
-archive/YYYY/MM/                human archive
-archive/YYYY/MM/*_Events.txt    monthly event index
-archive/YYYY/MM/events/*.txt    full individual event reports
+archive/YYYY/Month/             human archive
+archive/YYYY/Month/*_Events.txt monthly event index
+archive/YYYY/Month/<week>/events/*.txt
+                                full individual event reports
+                                (one Monday-Sunday week folder per event)
 outbox/pending/                 waiting downstream jobs
 outbox/processing/              claimed jobs
 outbox/completed/               successful jobs
@@ -47,11 +50,61 @@ logs/disaster_monitor.log       rotating runtime log
 backups/                        SQLite backups
 ```
 
-## Install and test
+## Tiered storage: one local week, then AWS
 
-From the project root:
+The monitor keeps a rolling local window (`LOCAL_RETENTION_DAYS`, one week by
+default). Finished events older than that window are copied to **Amazon
+DynamoDB** and only then removed from SQLite and `archive/`, so a network or
+credential problem can never lose data.
+
+DynamoDB is used because it is the simplest and cheapest AWS database for this
+workload: it is fully managed (no VPC, no security group, no connection string),
+it is billed `PAY_PER_REQUEST` so there is nothing to pay while the monitor is
+idle, and the write volume here (a few hundred small items per day) sits inside
+the AWS always-free tier.
+
+Only `ENDED`/`COMPLETE` events are eligible. An `ACTIVE` event is still
+receiving revisions and is never moved out of the local database. One DynamoDB
+table holds every row of an archived event (`pk = EVENT#<public_id>`,
+`sk = META | ALERT#… | LINK#… | REVIEW#… | REPORT`); the table is created
+automatically on first run.
+
+Enable it:
 
 ```bash
+export AWS_ARCHIVE_ENABLED=true
+export AWS_REGION=us-east-1              # or AWS_DEFAULT_REGION
+export AWS_DYNAMODB_TABLE=disaster_monitor_history
+export LOCAL_RETENTION_DAYS=7
+```
+
+Credentials come from the normal boto3 chain (`AWS_ACCESS_KEY_ID` /
+`AWS_SECRET_ACCESS_KEY`, an AWS profile, or an instance role). The IAM identity
+needs `dynamodb:DescribeTable`, `dynamodb:CreateTable` (first run only),
+`dynamodb:PutItem` on the archive table.
+
+Inspect or run the archive by hand:
+
+```bash
+python -m disaster_monitor.archive_cli status       # what is old enough
+python -m disaster_monitor.archive_cli run --dry-run
+python -m disaster_monitor.archive_cli run
+```
+
+`boto3` is only imported when archiving is enabled, so local-only operation
+does not require it.
+
+## Install and test
+
+Run every command below from the **`disaster_monitor-v5/`** directory. The
+`disaster_monitor` package lives here, so running
+`python -m disaster_monitor.main` from the repository root fails with
+`ModuleNotFoundError`. The monitor also writes `data/`, `archive/`, `outbox/`,
+`logs/`, and `backups/` relative to the current directory, so starting it from
+the wrong place scatters those folders.
+
+```bash
+cd disaster_monitor-v5
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -79,6 +132,12 @@ OUTBOX_PATH=outbox
 ARCHIVE_PATH=archive
 END_GRACE_MINUTES=30
 COLLECTION_GRACE_HOURS=24
+# Tiered storage (see "Tiered storage: one local week, then AWS")
+LOCAL_RETENTION_DAYS=7
+AWS_ARCHIVE_ENABLED=false
+AWS_REGION=us-east-1
+AWS_DYNAMODB_TABLE=disaster_monitor_history
+AWS_ARCHIVE_INTERVAL_HOURS=24
 ```
 
 ## Operational phase derivation
