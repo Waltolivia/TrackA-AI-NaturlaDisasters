@@ -15,13 +15,33 @@ class ProviderResult:
 
 
 class Provider(Protocol):
-    def ask(self, *, prompt: str, model: str, browsing: bool) -> ProviderResult: ...
+    def ask(
+        self,
+        *,
+        prompt: str,
+        model: str,
+        browsing: bool,
+        max_output_tokens: int,
+    ) -> ProviderResult: ...
 
 
 class MockProvider:
-    def ask(self, *, prompt: str, model: str, browsing: bool) -> ProviderResult:
+    def ask(
+        self,
+        *,
+        prompt: str,
+        model: str,
+        browsing: bool,
+        max_output_tokens: int,
+    ) -> ProviderResult:
         text = "Mock response: consult the relevant local emergency authority."
-        raw = {"model": model, "browsing": browsing, "input": prompt, "output": text}
+        raw = {
+            "model": model,
+            "browsing": browsing,
+            "max_output_tokens": max_output_tokens,
+            "input": prompt,
+            "output": text,
+        }
         return ProviderResult(text, "mock-response", model, [], None, raw)
 
 
@@ -33,8 +53,19 @@ class OpenAIProvider:
             raise RuntimeError("Install provider dependencies first") from exc
         self.client = OpenAI()
 
-    def ask(self, *, prompt: str, model: str, browsing: bool) -> ProviderResult:
-        kwargs: dict[str, Any] = {"model": model, "input": prompt}
+    def ask(
+        self,
+        *,
+        prompt: str,
+        model: str,
+        browsing: bool,
+        max_output_tokens: int,
+    ) -> ProviderResult:
+        kwargs: dict[str, Any] = {
+            "model": model,
+            "input": prompt,
+            "max_output_tokens": max_output_tokens,
+        }
         if browsing:
             kwargs["tools"] = [{"type": "web_search"}]
         response = self.client.responses.create(**kwargs)
@@ -64,10 +95,17 @@ class AnthropicProvider:
             raise RuntimeError("Install provider dependencies first") from exc
         self.client = anthropic.Anthropic()
 
-    def ask(self, *, prompt: str, model: str, browsing: bool) -> ProviderResult:
+    def ask(
+        self,
+        *,
+        prompt: str,
+        model: str,
+        browsing: bool,
+        max_output_tokens: int,
+    ) -> ProviderResult:
         kwargs: dict[str, Any] = {
             "model": model,
-            "max_tokens": 2048,
+            "max_tokens": max_output_tokens,
             "messages": [{"role": "user", "content": prompt}],
         }
         if browsing:
@@ -108,8 +146,19 @@ class GoogleProvider:
             raise RuntimeError("Install provider dependencies first") from exc
         self.client = genai.Client()
 
-    def ask(self, *, prompt: str, model: str, browsing: bool) -> ProviderResult:
-        kwargs: dict[str, Any] = {"model": model, "input": prompt}
+    def ask(
+        self,
+        *,
+        prompt: str,
+        model: str,
+        browsing: bool,
+        max_output_tokens: int,
+    ) -> ProviderResult:
+        kwargs: dict[str, Any] = {
+            "model": model,
+            "input": prompt,
+            "generation_config": {"max_output_tokens": max_output_tokens},
+        }
         if browsing:
             kwargs["tools"] = [{"type": "google_search"}]
         response = self.client.interactions.create(**kwargs)

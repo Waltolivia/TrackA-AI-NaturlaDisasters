@@ -9,6 +9,14 @@ from pipeline_worker.worker import PipelineWorker
 REPOSITORY_ROOT = Path(__file__).parents[2]
 
 
+def test_unattended_retry_defaults_cover_temporary_outages() -> None:
+    from pipeline_worker.config import default_config
+
+    defaults = default_config()
+    assert defaults.max_attempts == 8
+    assert defaults.retry_base_seconds == 60.0
+
+
 def v5_payload(action: str = "NEW_EVENT", event_type: str = "flash flood") -> dict:
     return {
         "schema_version": 3,

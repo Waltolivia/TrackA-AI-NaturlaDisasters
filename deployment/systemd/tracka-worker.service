@@ -1,0 +1,17 @@
+[Unit]
+Description=Track A AI probe pipeline worker
+Wants=network-online.target
+After=network-online.target tracka-collector.service
+
+[Service]
+Type=simple
+User=tracka
+Group=tracka
+WorkingDirectory=/opt/tracka
+EnvironmentFile=/etc/tracka/providers.env
+ExecStart=/opt/tracka/pipeline_worker/.venv/bin/pipeline-worker --targets /opt/tracka/ai_probe_runner/config/targets.study-v1.json --max-attempts 8 --retry-base-seconds 60 --poll-seconds 5 run
+Restart=on-failure
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target

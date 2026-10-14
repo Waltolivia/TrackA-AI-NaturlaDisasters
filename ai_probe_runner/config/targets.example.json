@@ -1,26 +1,29 @@
 [
   {
-    "target_id": "openai-luna-no-search",
+    "target_id": "openai-gpt-5-4-nano-2026-03-17-no-search",
     "provider": "openai",
-    "model": "gpt-5.6-luna",
+    "model": "gpt-5.4-nano-2026-03-17",
     "interface": "responses-api",
     "browsing": false,
+    "max_output_tokens": 2048,
     "enabled": true
   },
   {
-    "target_id": "anthropic-haiku-no-search",
+    "target_id": "anthropic-sonnet-5-5-no-search",
     "provider": "anthropic",
-    "model": "claude-haiku-4-5",
+    "model": "claude-sonnet-5-5",
     "interface": "messages-api",
     "browsing": false,
+    "max_output_tokens": 2048,
     "enabled": true
   },
   {
-    "target_id": "google-flash-lite-no-search",
+    "target_id": "google-gemini-3-5-flash-lite-no-search",
     "provider": "google",
     "model": "gemini-3.5-flash-lite",
     "interface": "interactions-api",
     "browsing": false,
+    "max_output_tokens": 2048,
     "enabled": true
   }
 ]

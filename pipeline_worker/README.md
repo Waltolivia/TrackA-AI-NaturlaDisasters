@@ -69,8 +69,9 @@ Global options go before the command:
 
 ```bash
 uv run --project pipeline_worker pipeline-worker \
-  --targets ai_probe_runner/config/targets.local.json \
-  --max-attempts 3 \
+  --targets ai_probe_runner/config/targets.study-v1.json \
+  --max-attempts 8 \
+  --retry-base-seconds 60 \
   --poll-seconds 5 \
   run
 ```
@@ -85,8 +86,8 @@ uv run --project pipeline_worker pipeline-worker \
 | `--question-bank-dir` | AI question banks | Versioned prompt templates |
 | `--output` | `pipeline_data/results` | AI cycle archive |
 | `--queue-layout` | `v5` | Use `flat` only for v2 |
-| `--max-attempts` | `3` | Attempts before `DEAD` |
-| `--retry-base-seconds` | `30` | Exponential retry base |
+| `--max-attempts` | `8` | Attempts before `DEAD` |
+| `--retry-base-seconds` | `60` | Exponential retry base |
 | `--lease-seconds` | `7200` | Crash-recovery claim lease |
 | `--job-timeout-seconds` | `7200` | Maximum AI subprocess time |
 | `--probe-delay-seconds` | `0` | Delay between provider calls |

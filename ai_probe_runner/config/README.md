@@ -7,8 +7,8 @@ put API keys in these files.
 ## Included configurations
 
 - `targets.mock.json` runs a free local test without contacting an AI provider.
-- `targets.example.json` contains the recommended inexpensive three-provider
-  baseline, reviewed on 2026-09-28.
+- `targets.study-v1.json` is the committed proposed study condition.
+- `targets.example.json` mirrors the study condition for local experimentation.
 - `targets.local.json` is the ignored working copy that each researcher may use
   for account-specific testing.
 
@@ -26,19 +26,20 @@ disabled:
 
 | Target ID | Provider | Model ID | Interface |
 | --- | --- | --- | --- |
-| `openai-luna-no-search` | OpenAI | `gpt-5.6-luna` | Responses API |
-| `anthropic-haiku-no-search` | Anthropic | `claude-haiku-4-5` | Messages API |
-| `google-flash-lite-no-search` | Google | `gemini-3.5-flash-lite` | Interactions API |
+| `openai-gpt-5-4-nano-2026-03-17-no-search` | OpenAI | `gpt-5.4-nano-2026-03-17` | Responses API |
+| `anthropic-sonnet-5-5-no-search` | Anthropic | `claude-sonnet-5-5` | Messages API |
+| `google-gemini-3-5-flash-lite-no-search` | Google | `gemini-3.5-flash-lite` | Interactions API |
 
 This is a low-cost API comparison, not an exact reproduction of free ChatGPT,
 Claude, or Gemini. Consumer products may use different routing, system prompts,
 tools, safety layers, personalization, and model versions.
 
-Haiku 4.5 is the team's cost-focused Anthropic condition. Anthropic currently
-lists its retirement as no sooner than October 15, 2026. Check the official
-model lifecycle before collection. If a successor is required, give it a new
-`target_id`, record the transition date, and preserve the old configuration so
-results from different models are never treated as one condition.
+The OpenAI target is a dated snapshot. Anthropic documents Sonnet 5.5 as a
+fixed model ID with a longer expected lifecycle than Haiku 4.5. Google lists
+Flash-Lite as stable. Provider infrastructure may still change. If a successor
+is required, give it a new `target_id`, record the transition date, and
+preserve the old configuration so different models are never treated as one
+condition.
 
 ## Gemini free tier
 
@@ -62,13 +63,13 @@ Each file is a JSON array. Every entry supports:
 | `model` | Exact model ID sent to the provider API. |
 | `interface` | Descriptive API label archived with the result. |
 | `browsing` | Whether the provider's supported search tool is requested. |
+| `max_output_tokens` | Positive integer ceiling passed to every provider. |
 | `enabled` | Whether this entry participates in a run. |
 
-The current runner passes `model` and `browsing` into the provider adapter. The
-other fields are preserved in every result for identification and auditability.
-The current target schema does **not** configure temperature, output length,
-reasoning effort, or retries. Adding any of those requires an explicit code and
-schema change; do not add unused JSON fields and assume they affect requests.
+The runner passes `model`, `browsing`, and `max_output_tokens` into each
+provider adapter. Other fields are preserved for identification and auditing.
+The study freezes output length at 2,048 tokens. Temperature and reasoning
+effort remain at each provider's API default and are documented as such.
 
 ## Test one provider at a time
 
@@ -101,11 +102,12 @@ Instead, copy the entry, give it a distinct `target_id`, and change only
 
 ```json
 {
-  "target_id": "openai-luna-with-search",
+  "target_id": "openai-gpt-5-4-nano-2026-03-17-with-search",
   "provider": "openai",
-  "model": "gpt-5.6-luna",
+  "model": "gpt-5.4-nano-2026-03-17",
   "interface": "responses-api",
   "browsing": true,
+  "max_output_tokens": 2048,
   "enabled": true
 }
 ```
