@@ -4,6 +4,19 @@ S3 is the primary off-machine archive for this project. The collector and AI
 worker use the same bucket and prefix, while local SQLite databases and files
 remain the recoverable working copy.
 
+## Who does what
+
+- **One bucket owner** completes sections 1 and 2 once, then sends teammates
+  the bucket name, region, prefix, and a safe way to obtain AWS access.
+- **Each computer or VM operator** completes section 3 once and loads the
+  shared settings whenever starting the collector or worker.
+- Nobody creates folders by hand. The programs create the year, month, week,
+  event, weather, AI, and run prefixes automatically.
+- Nobody makes the bucket public or commits AWS credentials.
+
+DynamoDB is not part of this setup and is not required. Its separate optional
+retention role is explained at the bottom of this page.
+
 ## Result layout
 
 ```text
@@ -36,7 +49,7 @@ exact collector change that caused one AI cycle. The short files directly in
 `EVT-..._AI/` show the latest completed cycle; immutable `runs/MSG-.../`
 folders preserve every cycle.
 
-## 1. Create the bucket
+## 1. Bucket owner: create the bucket
 
 The easiest setup is in the AWS Console:
 
@@ -48,14 +61,22 @@ The easiest setup is in the AWS Console:
 4. Leave **Block all public access** enabled.
 5. Enable **Bucket Versioning** so accidental overwrites can be recovered.
 6. Leave default encryption enabled with **SSE-S3**.
-7. Create the bucket. Do not add public website hosting or public bucket rules.
+7. Create the bucket. Do not enable public website hosting or public access.
 
-The application also requests SSE-S3 encryption on each upload.
+The application also requests SSE-S3 encryption on each upload. The bucket
+owner should send operators exactly these three non-secret values:
 
-## 2. Create uploader credentials
+```text
+S3_BUCKET=the-created-bucket-name
+S3_PREFIX=disaster_monitor-v5/archive
+AWS_REGION=us-west-2
+```
+
+## 2. Bucket owner: create uploader access
 
 For local testing, create a dedicated IAM user or role with programmatic
-access. Replace `YOUR_BUCKET` in this least-privilege policy:
+access. Replace both occurrences of `YOUR_BUCKET` in this least-privilege
+policy:
 
 ```json
 {
@@ -68,7 +89,10 @@ access. Replace `YOUR_BUCKET` in this least-privilege policy:
       "Resource": "arn:aws:s3:::YOUR_BUCKET",
       "Condition": {
         "StringLike": {
-          "s3:prefix": ["disaster_monitor-v5/archive/*"]
+          "s3:prefix": [
+            "disaster_monitor-v5/archive",
+            "disaster_monitor-v5/archive/*"
+          ]
         }
       }
     },
@@ -82,42 +106,67 @@ access. Replace `YOUR_BUCKET` in this least-privilege policy:
 }
 ```
 
-Team members who need to browse or download results should receive separate
-read permissions through their own AWS identities. Do not share the uploader's
-secret key in Git or place it in either repository `.env` file.
+Console path for a basic IAM-user setup:
 
-Install and configure the AWS CLI once on a development computer:
+1. Open **IAM → Policies → Create policy → JSON** and paste the policy above.
+2. Save it as `TrackAStudyS3Archive` and attach it to a dedicated user or role.
+3. For a local computer, create an access key for the CLI use case and deliver
+   it privately to that operator. Prefer one identity per person or machine so
+   access can be revoked without disrupting everyone.
+4. Never create or share access keys for the AWS root account.
+
+Team members who only browse or download results should receive their own
+read-only identity. Do not put an AWS secret key in Git,
+`ai_probe_runner/.env`, `deployment/local.env`, or a group text.
+
+On an EC2 VM, prefer an instance role with the policy above so no long-lived
+AWS secret is stored on disk.
+
+## 3. Each operator: configure one computer
+
+Install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+if `aws --version` does not work. Configure the dedicated identity once:
 
 ```bash
 aws configure
 aws sts get-caller-identity
 ```
 
-`boto3` automatically uses that AWS profile. On an EC2 VM, prefer an instance
-role with the policy above so no long-lived AWS secret is stored on disk.
+`boto3`, used by both Python processes, automatically uses this AWS profile.
 
-## 3. Configure both processes
-
-Use identical values in both terminals or both service environment files:
+From the repository root, create the ignored local settings file:
 
 ```bash
-export S3_ARCHIVE_ENABLED=true
-export S3_BUCKET='YOUR_BUCKET'
-export S3_PREFIX='disaster_monitor-v5/archive'
-export AWS_REGION='us-west-2'
+cp deployment/local.env.example deployment/local.env
 ```
 
-Optional retry timing:
+Edit `deployment/local.env`. Replace the bucket placeholder and contact email;
+leave the prefix and region equal to the bucket owner's values. Then load it:
 
 ```bash
-export S3_SYNC_SECONDS=5       # collector retry queue
-export S3_RETRY_SECONDS=60     # AI worker retry scan
+source deployment/local.env
 ```
+
+Run that `source` command in **every new terminal** opened at the repository
+root. From inside `disaster_monitor-v5/`, use
+`source ../deployment/local.env` instead. Shell variables from one terminal do
+not automatically appear in another.
+
+Verify the configuration before starting:
+
+```bash
+aws sts get-caller-identity
+printf '%s\n' "$S3_BUCKET" "$S3_PREFIX" "$AWS_REGION"
+aws s3 ls "s3://$S3_BUCKET/$S3_PREFIX/"
+```
+
+An empty final listing is okay for a new bucket. `AccessDenied`,
+`NoSuchBucket`, or a blank setting is not.
 
 For `systemd`, put the shared values in both `/etc/tracka/collector.env` and
 `/etc/tracka/providers.env`. Templates are under `deployment/systemd/`.
 
-## 4. Verify before using paid models
+## 4. Verify S3 without spending AI credits
 
 Run the automated fake-S3 tests first:
 
@@ -132,6 +181,7 @@ PYTHONPATH=disaster_monitor-v5 \
 Then use the mock AI target with the real bucket:
 
 ```bash
+source deployment/local.env
 mkdir -p local_test/outbox/{pending,processing,completed,failed}
 cp pipeline_worker/examples/v5.flash-flood.json \
   local_test/outbox/pending/s3-test.json
@@ -156,13 +206,17 @@ aws s3 ls \
 
 The live collector creates the adjacent `EVT-..._weather/` folder whenever it
 writes or updates a ground-truth event. Its local `data/s3_pending/` markers
-remain until all ground-truth objects upload successfully.
+remain until all ground-truth objects upload successfully. After this mock
+check, run the live collector and worker using sections 6 and 7 of the root
+[`README.md`](../README.md).
 
 ## Failure behavior
 
 - Local files are written before an S3 upload is attempted.
 - Collector uploads are queued in `disaster_monitor-v5/data/s3_pending/` and
   retried without losing the event.
+- At collector startup, current local events are queued for idempotent S3
+  reconciliation, so S3 can be enabled after collection has already begun.
 - A completed AI cycle gets `.s3-uploaded.json` only after all S3 objects are
   accepted.
 - Missing AI upload markers are retried independently of AI probing. An S3
@@ -170,14 +224,42 @@ remain until all ground-truth objects upload successfully.
 - Uploading deterministic keys is idempotent. Repeating an interrupted upload
   safely replaces the same current snapshot.
 
-## DynamoDB compatibility
+## Optional DynamoDB compatibility
 
-The teammate's DynamoDB tiered archive remains available through
-`AWS_ARCHIVE_ENABLED`. It is independent of S3 and is disabled by default.
-S3 should be enabled for the shared research files. DynamoDB may later be used
-as a searchable metadata index, but it is not required for this pipeline.
+The teammate's DynamoDB retention archive remains available through
+`DYNAMODB_ARCHIVE_ENABLED`; the old `AWS_ARCHIVE_ENABLED` name remains an
+alias. It is independent of S3 and disabled by default. It currently archives
+older **ground-truth rows only**; it is not the shared folder store, does not
+hold AI output, and is not required for this pipeline.
 
 If both are enabled, S3 updates immediately while DynamoDB only receives
 finished events after `LOCAL_RETENTION_DAYS` and may then remove their local
-SQLite/report data. Keep DynamoDB disabled during the initial S3 pilot unless
-the team explicitly wants that retention behavior.
+SQLite/report data. Automatic DynamoDB cleanup pauses while any ground-truth
+S3 marker is pending. Keep DynamoDB disabled during the initial S3 pilot unless
+the team explicitly wants that retention behavior and has added the separate
+DynamoDB IAM permissions documented in
+[`../disaster_monitor-v5/README.md`](../disaster_monitor-v5/README.md#optional-secondary-tier-one-local-week-then-dynamodb).
+
+Review candidates before enabling it:
+
+```bash
+cd disaster_monitor-v5
+source ../deployment/local.env
+.venv/bin/python -m disaster_monitor.archive_cli status
+.venv/bin/python -m disaster_monitor.archive_cli run --dry-run
+```
+
+Only after reviewing that output should the team set
+`DYNAMODB_ARCHIVE_ENABLED=true`. Startup logs contain a prominent warning when
+the deletion-capable retention archive is active.
+
+## Quick troubleshooting
+
+| Error or symptom | Check |
+| --- | --- |
+| `NoCredentialsError` | Run `aws configure` and then `aws sts get-caller-identity` |
+| `AccessDenied` | Confirm the IAM policy, account, bucket, and exact prefix |
+| `NoSuchBucket` | Confirm the globally unique bucket name and AWS account |
+| `S3_BUCKET is required` | Source `deployment/local.env` in this terminal |
+| AI folder is missing | Check the worker log and local exact run for `.s3-uploaded.json` |
+| Weather folder is missing | Check collector log and `disaster_monitor-v5/data/s3_pending/` |

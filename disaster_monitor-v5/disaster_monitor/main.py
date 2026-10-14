@@ -60,17 +60,25 @@ async def backup_worker():
         except Exception: log.exception('database backup failed')
         await asyncio.sleep(settings.backup_interval_hours*3600)
 
-async def archive_worker(db):
-    # Keep a rolling local window, then move older finished events to AWS.
-    if not settings.aws_archive_enabled:
-        log.info('aws archive disabled; local data is retained indefinitely'); return
+async def dynamodb_archive_worker(db,s3_archive=None):
+    # Keep a rolling local window, then move older finished events to DynamoDB.
+    if not settings.dynamodb_archive_enabled:
+        log.info('DynamoDB retention archive disabled; local ground-truth data is retained'); return
     archiver=AwsArchiver(table_name=settings.aws_dynamodb_table,region=settings.aws_region,retention_days=settings.local_retention_days)
     while True:
+        pending_s3 = s3_archive.pending_count() if s3_archive is not None else 0
+        if pending_s3:
+            log.warning(
+                'DynamoDB retention archive paused: %s ground-truth S3 upload(s) are pending',
+                pending_s3,
+            )
+            await asyncio.sleep(min(settings.aws_archive_interval_hours*3600,60))
+            continue
         try:
             result=await asyncio.to_thread(archiver.archive,db,archive_path=settings.archive_path)
-            if result['events_eligible'] or result['events_failed']: log.info('aws archive %s',result)
+            if result['events_eligible'] or result['events_failed']: log.info('DynamoDB retention archive %s',result)
         except asyncio.CancelledError: raise
-        except Exception: log.exception('aws archive failed')
+        except Exception: log.exception('DynamoDB retention archive failed')
         await asyncio.sleep(settings.aws_archive_interval_hours*3600)
 
 async def s3_worker(db,s3_archive):
@@ -90,14 +98,29 @@ async def main():
     if settings.s3_archive_enabled:
         if not settings.s3_bucket:raise RuntimeError('S3_ARCHIVE_ENABLED=true requires S3_BUCKET')
         s3_archive=S3EventArchive(bucket=settings.s3_bucket,region=settings.aws_region,prefix=settings.s3_prefix,pending_path=settings.s3_pending_path,archive_path=settings.archive_path)
+        if settings.s3_backfill_on_start:
+            backfill_count=s3_archive.schedule_existing(db)
+            log.info('S3 startup reconciliation queued local_events=%s',backfill_count)
     else:s3_archive=None
+    log.info(
+        'storage configuration s3_shared_archive=%s dynamodb_retention_archive=%s local_retention_days=%s',
+        'enabled' if s3_archive else 'disabled',
+        'enabled' if settings.dynamodb_archive_enabled else 'disabled',
+        settings.local_retention_days,
+    )
+    if settings.dynamodb_archive_enabled:
+        log.warning(
+            'DynamoDB retention archive is enabled: finished ground-truth events older than %s days '
+            'will be removed from local SQLite/report storage only after DynamoDB accepts them',
+            settings.local_retention_days,
+        )
     timeout=httpx.Timeout(settings.request_timeout_seconds)
     stop=asyncio.Event(); loop=asyncio.get_running_loop()
     for sig in (signal.SIGINT,signal.SIGTERM):
         try: loop.add_signal_handler(sig,stop.set)
         except NotImplementedError: pass
     async with httpx.AsyncClient(timeout=timeout,follow_redirects=True) as client:
-        tasks=[asyncio.create_task(worker('NWS',settings.nws_poll_seconds,lambda c:nws.fetch(c,settings.user_agent),db,prompter,client,health,s3_archive)),asyncio.create_task(worker('NASA_EONET',settings.eonet_poll_seconds,lambda c:eonet.fetch(c,settings.eonet_days),db,prompter,client,health,s3_archive)),asyncio.create_task(lifecycle_worker(db,prompter,s3_archive)),asyncio.create_task(heartbeat_worker(health)),asyncio.create_task(backup_worker()),asyncio.create_task(archive_worker(db)),asyncio.create_task(s3_worker(db,s3_archive))]
+        tasks=[asyncio.create_task(worker('NWS',settings.nws_poll_seconds,lambda c:nws.fetch(c,settings.user_agent),db,prompter,client,health,s3_archive)),asyncio.create_task(worker('NASA_EONET',settings.eonet_poll_seconds,lambda c:eonet.fetch(c,settings.eonet_days),db,prompter,client,health,s3_archive)),asyncio.create_task(lifecycle_worker(db,prompter,s3_archive)),asyncio.create_task(heartbeat_worker(health)),asyncio.create_task(backup_worker()),asyncio.create_task(dynamodb_archive_worker(db,s3_archive)),asyncio.create_task(s3_worker(db,s3_archive))]
         log.info('Disaster Monitor started')
         await stop.wait(); log.info('shutdown requested')
         for task in tasks: task.cancel()

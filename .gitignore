@@ -6,6 +6,7 @@ ai_probe_runner/.env
 ai_probe_runner/config/targets.local.json
 deployment/systemd/providers.env
 deployment/systemd/collector.env
+deployment/local.env
 legacy_collectors/disaster_monitor-v2/.venv/
 legacy_collectors/disaster_monitor-v2/data/
 legacy_collectors/disaster_monitor-v2/outbox/

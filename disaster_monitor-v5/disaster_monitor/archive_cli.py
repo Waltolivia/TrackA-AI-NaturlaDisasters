@@ -1,4 +1,4 @@
-"""Manually inspect or run the AWS tiered-storage archive.
+"""Manually inspect or run the optional DynamoDB retention archive.
 
     python -m disaster_monitor.archive_cli status
     python -m disaster_monitor.archive_cli run --dry-run
@@ -22,12 +22,12 @@ def build_archiver(retention_days=None):
 
 
 def parser():
-    ap = argparse.ArgumentParser(description='Show or run the AWS tiered-storage archive')
+    ap = argparse.ArgumentParser(description='Show or run the optional DynamoDB retention archive')
     sub = ap.add_subparsers(dest='cmd', required=True)
-    status = sub.add_parser('status', help='List finished events that are ready to move to AWS')
+    status = sub.add_parser('status', help='List finished events that are ready to move to DynamoDB')
     status.add_argument('--retention-days', type=int, default=None)
     status.add_argument('--limit', type=int, default=None)
-    run = sub.add_parser('run', help='Copy old data to AWS, then delete it locally')
+    run = sub.add_parser('run', help='Copy old ground truth to DynamoDB, then delete it locally')
     run.add_argument('--retention-days', type=int, default=None)
     run.add_argument('--limit', type=int, default=None)
     run.add_argument('--dry-run', action='store_true', help='Report what would move without writing to AWS')

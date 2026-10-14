@@ -85,7 +85,10 @@ export AWS_REGION='us-west-2'
 ```
 
 If an upload fails, its `data/s3_pending/` marker remains and is retried. This
-module never deletes local files.
+module never deletes local files. With `S3_BACKFILL_ON_START=true` (the
+default), starting the collector queues every event still present in local
+SQLite. This makes enabling S3 on an existing installation safe and
+idempotent.
 
 ## Optional secondary tier: one local week, then DynamoDB
 
@@ -108,16 +111,50 @@ automatically on first run.
 Enable it:
 
 ```bash
-export AWS_ARCHIVE_ENABLED=true
+export DYNAMODB_ARCHIVE_ENABLED=true
 export AWS_REGION=us-east-1              # or AWS_DEFAULT_REGION
 export AWS_DYNAMODB_TABLE=disaster_monitor_history
 export LOCAL_RETENTION_DAYS=7
 ```
 
+`AWS_ARCHIVE_ENABLED` remains a supported legacy alias so an existing
+deployment does not break. If both names are present,
+`DYNAMODB_ARCHIVE_ENABLED` wins. The recommended study configuration keeps
+this feature false and uses S3 plus the local database.
+
+When both S3 and DynamoDB are enabled, the automatic DynamoDB retention pass
+pauses while any ground-truth S3 marker is pending. This prevents local
+cleanup from outrunning the primary shared file archive.
+
 Credentials come from the normal boto3 chain (`AWS_ACCESS_KEY_ID` /
 `AWS_SECRET_ACCESS_KEY`, an AWS profile, or an instance role). The IAM identity
 needs `dynamodb:DescribeTable`, `dynamodb:CreateTable` (first run only),
 `dynamodb:PutItem` on the archive table.
+
+The S3-only policy does not grant these permissions. If the team deliberately
+enables DynamoDB, replace `ACCOUNT_ID` and region/table values in a separate
+policy like this:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["dynamodb:CreateTable"],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["dynamodb:DescribeTable", "dynamodb:PutItem"],
+      "Resource": "arn:aws:dynamodb:us-west-2:ACCOUNT_ID:table/disaster_monitor_history"
+    }
+  ]
+}
+```
+
+If an administrator creates the table first, omit `CreateTable` access. Use
+on-demand capacity with partition key `pk` (String) and sort key `sk` (String).
 
 Inspect or run the archive by hand:
 
@@ -170,7 +207,7 @@ END_GRACE_MINUTES=30
 COLLECTION_GRACE_HOURS=24
 # Optional secondary DynamoDB tier
 LOCAL_RETENTION_DAYS=7
-AWS_ARCHIVE_ENABLED=false
+DYNAMODB_ARCHIVE_ENABLED=false
 AWS_REGION=us-east-1
 AWS_DYNAMODB_TABLE=disaster_monitor_history
 AWS_ARCHIVE_INTERVAL_HOURS=24
@@ -180,6 +217,7 @@ S3_BUCKET=
 S3_PREFIX=disaster_monitor-v5/archive
 S3_PENDING_PATH=data/s3_pending
 S3_SYNC_SECONDS=5
+S3_BACKFILL_ON_START=true
 ```
 
 ## Operational phase derivation

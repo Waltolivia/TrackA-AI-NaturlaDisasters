@@ -1,5 +1,5 @@
 httpx>=0.27,<1
 pydantic>=2.7,<3
 pytest>=8,<10
-# AWS tiered-storage archive. Only used when AWS_ARCHIVE_ENABLED=true.
+# S3 shared archive and optional DynamoDB retention archive.
 boto3>=1.34,<2

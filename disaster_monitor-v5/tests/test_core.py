@@ -54,6 +54,14 @@ def test_health_and_sqlite_backup():
         b=backup_database(root/'data'/'x.db',root/'backups',14)
         assert b.exists() and b.stat().st_size>0
 
+def test_dynamodb_setting_prefers_clear_name_but_accepts_legacy_alias(monkeypatch):
+    from disaster_monitor.config import _enabled
+    monkeypatch.delenv('DYNAMODB_ARCHIVE_ENABLED',raising=False)
+    monkeypatch.setenv('AWS_ARCHIVE_ENABLED','true')
+    assert _enabled('DYNAMODB_ARCHIVE_ENABLED',legacy_name='AWS_ARCHIVE_ENABLED')
+    monkeypatch.setenv('DYNAMODB_ARCHIVE_ENABLED','false')
+    assert not _enabled('DYNAMODB_ARCHIVE_ENABLED',legacy_name='AWS_ARCHIVE_ENABLED')
+
 def test_durable_queue_and_archive_and_initial_suppression():
     from disaster_monitor.archive import event_report_path, render_event
     with tempfile.TemporaryDirectory() as d:
@@ -208,3 +216,14 @@ def test_ground_truth_snapshots_upload_immediately_to_shared_s3_event_folder():
             prefix+'archive_manifest.json',
         }
         assert all(obj['ServerSideEncryption']=='AES256' for obj in client.objects.values())
+
+def test_s3_startup_reconciliation_queues_existing_local_events():
+    from disaster_monitor.s3_archive import S3EventArchive
+    with tempfile.TemporaryDirectory() as d:
+        root=Path(d);db=Database(str(root/'x.db'));p=JsonPrompter(root/'out')
+        process(db,p,alert(),archive_path=root/'archive')
+        s3=S3EventArchive(bucket='study-bucket',region='us-west-2',pending_path=root/'pending',archive_path=root/'archive',client=_FakeS3Client())
+        assert s3.schedule_existing(db)==1
+        assert s3.pending_count()==1
+        assert s3.sync_pending(db)=={'attempted':1,'uploaded':1,'failed':0}
+        assert s3.pending_count()==0

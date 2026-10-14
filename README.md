@@ -19,6 +19,19 @@ and the AI probe runner.
 Only the first three modules participate in the current pipeline. Do not start
 a collector under `legacy_collectors/` for normal operation.
 
+### Recommended storage settings
+
+| Service | Role in this project | Recommended now |
+| --- | --- | --- |
+| Local SQLite/files | Live working copy and retry state | Always on |
+| Amazon S3 | Primary shared, human-readable ground-truth and AI archive | **On** for the study |
+| Amazon DynamoDB | Optional older ground-truth retention/cleanup tier | **Off** unless the team deliberately wants local deletion |
+
+S3 and DynamoDB do not compete for the same job. S3 stores the readable files
+for both halves of the study, immediately, beneath one `EVT-...` folder.
+DynamoDB contains only older ground-truth database records and never contains
+AI probe output. You do not need a DynamoDB table to run the pipeline.
+
 The modules communicate through versioned JSON. The worker does not import the
 ground-truth collector's database or matching code.
 
@@ -62,6 +75,34 @@ The worker probes these v5 actions:
 `EVENT_ENDED` is recorded and acknowledged without spending API credits.
 Unsupported hazards are also recorded as `SKIPPED`, not retried forever.
 
+## Already set up? Start the live pipeline
+
+Use exactly two terminals. Both commands assume each terminal starts at the
+repository root.
+
+**Terminal 1 — ground truth:**
+
+```bash
+source deployment/local.env
+cd disaster_monitor-v5
+.venv/bin/python -m disaster_monitor.main
+```
+
+**Terminal 2 — AI worker:**
+
+```bash
+source deployment/local.env
+uv run --project pipeline_worker pipeline-worker \
+  --targets ai_probe_runner/config/targets.study-v2.json \
+  --poll-seconds 5 \
+  run
+```
+
+Leave both running. Stop each with **Control+C**. View local readable output in
+`pipeline_data/results/.../EVT-.../EVT-..._AI/AI_RESULTS.md`, or browse the
+same event in the shared S3 bucket. If this is a new computer, complete the
+numbered setup below first.
+
 ## 1. Install uv
 
 This project uses [uv](https://docs.astral.sh/uv/) for Python environments and
@@ -91,6 +132,10 @@ uv sync --project pipeline_worker --extra dev
 
 That command installs the worker, local AI runner, and test tools into
 `pipeline_worker/.venv`. It is enough for the free mock pipeline test.
+
+If Terminal shows a warning that `VIRTUAL_ENV` points at another project,
+run `deactivate` once. The command still uses the correct uv environment, but
+deactivating removes the confusing warning.
 
 ## 3. Run the complete no-cost test
 
@@ -166,6 +211,7 @@ GEMINI_API_KEY=...
 ```
 
 Never put keys in JSON, source code, Git, screenshots, or collected results.
+The worker starts the AI runner for you; you do not need a third terminal.
 
 The current cost-controlled study target file is committed without secrets:
 
@@ -208,20 +254,37 @@ differ from paid usage; confirm the team's research-data policy before launch.
 ## 5. Configure the shared S3 archive
 
 S3 is optional for local development but is the primary shared archive for the
-study. Create one private, versioned bucket and configure both processes with
-the same values:
+study. Only one teammate should create the shared private bucket. Everyone
+running the pipeline receives the same bucket name, region, and prefix plus an
+authorized AWS identity.
+
+After the bucket owner completes
+[`deployment/S3_SETUP.md`](deployment/S3_SETUP.md), create your ignored local
+settings file from the repository root:
 
 ```bash
-export S3_ARCHIVE_ENABLED=true
-export S3_BUCKET='YOUR-GLOBALLY-UNIQUE-BUCKET'
-export S3_PREFIX='disaster_monitor-v5/archive'
-export AWS_REGION='us-west-2'
+cp deployment/local.env.example deployment/local.env
 ```
 
-Do not commit AWS credentials. For local use, configure a dedicated AWS
-identity with `aws configure`; on a VM, prefer an instance role. Follow the
-complete bucket, IAM, and no-cost mock verification instructions in
-[`deployment/S3_SETUP.md`](deployment/S3_SETUP.md).
+Edit only the placeholder email and shared bucket name, then load it in every
+new terminal that runs a pipeline process:
+
+```bash
+source deployment/local.env
+```
+
+Terminal windows do not share exported settings. If the collector and worker
+use two terminals, run the appropriate `source` command in both. Keep
+`DYNAMODB_ARCHIVE_ENABLED=false` for the initial study deployment.
+
+Do not put AWS keys in this file or in `ai_probe_runner/.env`. Configure a
+dedicated AWS identity once with `aws configure`; on an EC2 VM, use an instance
+role. Verify the current identity and bucket before starting:
+
+```bash
+aws sts get-caller-identity
+aws s3 ls "s3://$S3_BUCKET/$S3_PREFIX/"
+```
 
 The shared structure is:
 
@@ -241,10 +304,11 @@ uv venv --python 3.11
 uv pip install -r requirements.txt
 ```
 
-Set a descriptive NWS user agent with a real project contact:
+Load the shared settings. Because this terminal is now inside
+`disaster_monitor-v5/`, the file is one directory up:
 
 ```bash
-export NWS_USER_AGENT='BYU-TrackA-DisasterResearch/1.0 (contact@example.edu)'
+source ../deployment/local.env
 ```
 
 Start the collector:
@@ -263,6 +327,7 @@ historical jobs. New meaningful changes after that sync enter
 Open a second terminal at the repository root:
 
 ```bash
+source deployment/local.env
 uv run --project pipeline_worker pipeline-worker \
   --targets ai_probe_runner/config/targets.study-v2.json \
   --poll-seconds 5 \
@@ -405,10 +470,24 @@ When explicitly enabled, the collector keeps a rolling local window of one
 week (`LOCAL_RETENTION_DAYS`).
 Finished events older than that window are copied to an AWS DynamoDB table and
 only then deleted from SQLite and `archive/`, so the local disk never grows
-without bound. It is off by default; turn it on with `AWS_ARCHIVE_ENABLED=true`
-plus `AWS_REGION`/`AWS_DYNAMODB_TABLE` and normal boto3 credentials. See
+without bound. It is off by default; turn it on deliberately with
+`DYNAMODB_ARCHIVE_ENABLED=true` plus `AWS_REGION`/`AWS_DYNAMODB_TABLE` and
+normal boto3 credentials. The legacy name `AWS_ARCHIVE_ENABLED` is still
+accepted for existing deployments. See
 [`disaster_monitor-v5/README.md`](disaster_monitor-v5/README.md#optional-secondary-tier-one-local-week-then-dynamodb)
 for details and the `python -m disaster_monitor.archive_cli` commands.
+
+## Common setup problems
+
+| What you see | What it usually means | Fix |
+| --- | --- | --- |
+| `S3_BUCKET is required` | Settings were not loaded in this terminal | Run `source deployment/local.env` from the repository root |
+| `NoCredentialsError` | boto3 cannot find an AWS identity | Run `aws configure`, then `aws sts get-caller-identity` |
+| `AccessDenied` | The identity lacks access or the bucket/prefix differs | Compare the three S3 values with the team lead and check the IAM policy |
+| Worker shows no jobs | Initial collector sync is intentionally suppressed, or no alert changed | Use the synthetic mock procedure in section 3 to verify the connection |
+| Missing provider key | `.env` is absent or in the wrong folder | Confirm the exact path is `ai_probe_runner/.env` |
+| `VIRTUAL_ENV ... does not match` | A different virtual environment is active | Run `deactivate`, then rerun the uv command |
+| AI output exists locally but not in S3 | The upload is pending/retrying | Check worker logs and look for `.s3-uploaded.json` in the exact run folder |
 
 ## Important current boundaries
 

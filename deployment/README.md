@@ -15,6 +15,10 @@ Create and test the private shared bucket first by following
 [`S3_SETUP.md`](S3_SETUP.md). The collector and worker must use the same
 `S3_BUCKET`, `S3_PREFIX`, and `AWS_REGION` values.
 
+DynamoDB is not required. Leave `DYNAMODB_ARCHIVE_ENABLED=false` unless the
+team has separately approved removing old completed ground-truth rows from
+the VM after they are copied to DynamoDB.
+
 Change those paths if the host uses a different layout.
 
 ## 1. Install

@@ -93,6 +93,17 @@ class S3EventArchive:
         temporary.replace(target)
         return target
 
+    def schedule_existing(self, db) -> int:
+        """Queue current local events so enabling S3 also performs a backfill."""
+        event_ids = db.event_ids()
+        for event_id in event_ids:
+            self.schedule(event_id)
+        return len(event_ids)
+
+    def pending_count(self) -> int:
+        """Return the ground-truth snapshots still waiting for S3."""
+        return sum(1 for _ in self.pending_path.glob("event-*.json"))
+
     def sync_pending(self, db, *, limit: int | None = None) -> dict[str, int]:
         markers = sorted(self.pending_path.glob("event-*.json"))
         if limit is not None:

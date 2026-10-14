@@ -13,8 +13,8 @@ Why DynamoDB (simplest and cheapest AWS database for this workload):
   string or driver to configure,
 * ``PAY_PER_REQUEST`` (on-demand) billing -- no capacity planning and nothing
   to pay while the monitor is idle,
-* the write volume here is only a few hundred small items per day, which is
-  covered by the AWS always-free tier, so the cost is effectively zero.
+* the expected write volume is small, although the account owner must still
+  review current AWS pricing and configure a budget alert.
 
 Design
 ------
@@ -216,7 +216,7 @@ class AwsArchiver:
             except Exception as exc:  # noqa: BLE001 - one bad event must not stop the rest
                 failed += 1
                 last_error = f'{type(exc).__name__}: {exc}'
-                log.warning('aws archive failed for %s: %s', event['public_id'], last_error)
+                log.warning('DynamoDB retention archive failed for %s: %s', event['public_id'], last_error)
                 continue
 
             db.delete_event(event['id'])
@@ -240,7 +240,7 @@ class AwsArchiver:
             'last_error': last_error,
         }
         if archived or failed:
-            log.info('aws archive result=%s', result)
+            log.info('DynamoDB retention archive result=%s', result)
         return result
 
 
