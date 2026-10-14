@@ -44,12 +44,13 @@ def test_openai_receives_frozen_output_limit():
         model="gpt-test",
         browsing=False,
         max_output_tokens=2048,
+        effort=None,
     )
 
     assert recorder.kwargs["max_output_tokens"] == 2048
 
 
-def test_anthropic_receives_frozen_output_limit():
+def test_anthropic_receives_output_limit_and_effort():
     recorder = Recorder(
         FakeResponse(
             {
@@ -68,9 +69,11 @@ def test_anthropic_receives_frozen_output_limit():
         model="claude-test",
         browsing=False,
         max_output_tokens=2048,
+        effort="low",
     )
 
     assert recorder.kwargs["max_tokens"] == 2048
+    assert recorder.kwargs["output_config"] == {"effort": "low"}
 
 
 def test_google_receives_frozen_output_limit():
@@ -92,6 +95,7 @@ def test_google_receives_frozen_output_limit():
         model="gemini-test",
         browsing=False,
         max_output_tokens=2048,
+        effort=None,
     )
 
     assert recorder.kwargs["generation_config"] == {"max_output_tokens": 2048}

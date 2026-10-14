@@ -75,6 +75,14 @@ def test_v5_message_runs_once_and_is_acknowledged(tmp_path: Path) -> None:
     assert manifest["completed_probe_count"] == 9
     assert manifest["failed_probe_count"] == 0
     assert manifest["ground_truth_message_id"] == "MSG-new-event"
+    cycle_dir = Path(job["cycle_dir"])
+    assert cycle_dir.relative_to(tmp_path / "pipeline" / "results") == Path(
+        "2026/September/28/EVT-00000001/MSG-new-event"
+    )
+    assert (cycle_dir / "AI_RESULTS.md").is_file()
+    compact = json.loads((cycle_dir / "responses.json").read_text(encoding="utf-8"))
+    assert compact["message_id"] == "MSG-new-event"
+    assert len(compact["responses"]) == 9
 
     second = worker.run_once()
     assert second["processed"] == 0

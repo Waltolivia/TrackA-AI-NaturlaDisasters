@@ -108,9 +108,9 @@ uv run ai-probe-runner \
   --targets config/targets.mock.json
 ```
 
-Output is written under `data/YYYY-MM-DD/<cycle-id>/`. The `data/` directory is
-ignored by Git because collected research data should not be mixed with source
-code.
+Output is written under
+`data/YYYY/Month/DD/EVENT_ID/MESSAGE_ID/`. The `data/` directory is ignored by
+Git because collected research data should not be mixed with source code.
 
 ## API keys and real providers
 
@@ -137,14 +137,15 @@ Copy the example target configuration:
 cp config/targets.example.json config/targets.local.json
 ```
 
-`targets.study-v1.json` is the proposed frozen study baseline, reviewed on
-2026-09-28. `targets.example.json` currently mirrors it for local setup. The
-study file contains one fast, cost-conscious target from each provider:
+`targets.study-v1.json` preserves the original Sonnet condition.
+`targets.study-v2.json` is the current cost-controlled condition, and
+`targets.example.json` mirrors v2 for local setup. Do not mix v1 and v2
+responses as though they used the same model condition.
 
 | Provider | Model ID | Experimental condition |
 | --- | --- | --- |
 | OpenAI | `gpt-5.4-nano-2026-03-17` | No web search |
-| Anthropic | `claude-sonnet-5-5` | No web search |
+| Anthropic | `claude-haiku-5-5` at low effort | No web search |
 | Google | `gemini-3.5-flash-lite` | No web search |
 
 These models were selected to emphasize speed, cost, and broad API availability
@@ -152,10 +153,10 @@ rather than maximum benchmark performance. They are inexpensive API models, but
 they are **not guaranteed to be identical** to the models, system prompts, or
 tools used in the providers' free consumer chat products.
 
-Each target has an explicit 2,048-token output ceiling. OpenAI uses a dated
-snapshot; Anthropic documents Sonnet 5.5 as a fixed model ID; and Google lists
-Flash-Lite as stable. Provider serving infrastructure can still change, so the
-runner archives the requested and resolved model information for every probe.
+Each v2 target has an explicit 1,024-token output ceiling. The Haiku target also
+sets `effort` to `low` to control reasoning cost. Provider serving
+infrastructure can still change, so the runner archives the requested and
+resolved model information for every probe.
 
 The initial baseline deliberately disables browsing. Browsing changes the
 information available to a model and may add tool-use charges, so search-enabled
@@ -174,7 +175,7 @@ Run a real pilot:
 ```bash
 uv run ai-probe-runner \
   --trigger examples/trigger.flash-flood.json \
-  --targets config/targets.study-v1.json \
+  --targets config/targets.study-v2.json \
   --delay-seconds 1 \
   --fail-on-probe-error
 ```
@@ -187,8 +188,9 @@ than assuming that the run succeeded because the command exited.
 
 `--fail-on-probe-error` makes the process exit with status 1 if any provider
 request fails. Use it for scripts and future automation. Without the flag,
-provider failures are still saved in `probes.jsonl`, but the CLI completes so a
-researcher can inspect partial results.
+provider failures are still saved in `probes.jsonl`, `responses.json`, and
+`AI_RESULTS.md`, but the CLI completes so a researcher can inspect partial
+results.
 
 ## Trigger contract from Disaster Monitor
 
@@ -313,8 +315,18 @@ research-protocol changes that should be committed and documented.
 
 ## Output and reproducibility
 
-Each cycle contains:
+New cycles use this event-linked layout:
 
+```text
+data/YYYY/Month/DD/EVENT_ID/MESSAGE_ID/
+```
+
+The integrated worker uses `pipeline_data/results` instead of `data` as the
+root. Each cycle contains:
+
+- `AI_RESULTS.md`: easiest human-readable view, grouped by provider.
+- `responses.json`: compact valid JSON containing the latest result for each
+  question/target pair.
 - `manifest.json`: cycle timing, counts, hashes, runtime, and Git commit.
 - `trigger.raw.json`: exact object received from the collector or manual caller.
 - `trigger.json`: normalized trigger used to select and render questions.
@@ -326,6 +338,12 @@ Errors are retained as data instead of being silently discarded. Pass `--resume`
 with the same cycle ID to retry only failed or missing question/target pairs.
 Resume is rejected if the trigger, target file, question banks, or expected
 probe count changed. Without `--resume`, existing cycles are never overwritten.
+
+`trigger.raw.json` is the exact queue object from Disaster Monitor, so its
+`message_id` and `event_id` provide the direct link back to ground truth.
+`responses.json` deliberately omits most timestamps, UUIDs, usage objects, and
+raw metadata; those details remain in `probes.jsonl`, `manifest.json`, and
+`raw/`.
 
 ## Known boundary before wiring
 
@@ -350,7 +368,8 @@ upload remains a deployment responsibility.
 - Existing cycle directory: choose a new explicit manual `cycle_id`; the runner
   refuses to overwrite collected data unless `--resume` is supplied with
   identical research inputs.
-- Some probes failed but the command continued: inspect `probes.jsonl`, or run
+- Some probes failed but the command continued: inspect `AI_RESULTS.md` first,
+  then `probes.jsonl` for attempt details, or run
   with `--fail-on-probe-error` for a nonzero automation exit status.
 
 ## Team test checklist
@@ -358,7 +377,8 @@ upload remains a deployment responsibility.
 1. Run `uv run pytest`.
 2. Run the example trigger with `targets.mock.json`.
 3. Confirm the manifest reports all expected probes completed.
-4. Inspect `trigger.raw.json`, `trigger.json`, `questions.json`, and `probes.jsonl`.
+4. Inspect `AI_RESULTS.md`, `responses.json`, and `trigger.raw.json`; use
+   `probes.jsonl` only when attempt-level detail is needed.
 5. Copy `targets.example.json` to ignored `targets.local.json`.
 6. Run one provider at a time by disabling the other local targets.
 7. Run all three baseline targets and verify the expected/completed/failed counts.

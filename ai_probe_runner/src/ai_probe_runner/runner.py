@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import platform
 import re
 import subprocess
@@ -15,6 +16,7 @@ from .providers import make_provider
 from .questions import build_questions, normalize_trigger
 
 SCHEMA_VERSION = "1.2"
+HUMAN_OUTPUT_SCHEMA_VERSION = "1.0"
 REQUIRED_TARGET_FIELDS = {
     "target_id",
     "provider",
@@ -26,6 +28,8 @@ REQUIRED_TARGET_FIELDS = {
 }
 KNOWN_PROVIDERS = {"anthropic", "google", "mock", "openai"}
 CYCLE_ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
+EFFORT_LEVELS = {"low", "medium", "high", "xhigh", "max"}
+log = logging.getLogger("ai-probe-runner")
 
 
 def utc_now() -> str:
@@ -77,7 +81,7 @@ def run_cycle(
 
     run_started_at = utc_now()
     cycle_dir, existing = _resolve_cycle_dir(
-        output_dir, cycle_id, run_started_at, resume
+        output_dir, cycle_id, run_started_at, trigger, resume
     )
     raw_dir = cycle_dir / "raw"
     records_path = cycle_dir / "probes.jsonl"
@@ -161,6 +165,24 @@ def run_cycle(
     attempts = _attempt_counts(records)
     _refresh_manifest_counts(manifest, latest)
     _write_json(manifest_path, manifest)
+    _write_readable_outputs(cycle_dir, manifest, trigger, latest)
+
+    total = len(questions) * len(targets)
+    completed_so_far = manifest["completed_probe_count"]
+    log.info(
+        "cycle started id=%s event=%s action=%s hazard=%s area=%s",
+        cycle_id,
+        trigger.get("event_id") or "unassigned-event",
+        trigger.get("trigger") or trigger.get("action") or "manual",
+        trigger["hazard_family"],
+        trigger["area"],
+    )
+    log.info(
+        "output directory: %s (%s of %s probes already complete)",
+        cycle_dir,
+        completed_so_far,
+        total,
+    )
 
     for target in targets:
         remaining = [
@@ -169,7 +191,19 @@ def run_cycle(
             if latest.get(_probe_key(target, question), {}).get("status") != "success"
         ]
         if not remaining:
+            log.info(
+                "target already complete provider=%s model=%s",
+                target["provider"],
+                target["model"],
+            )
             continue
+
+        log.info(
+            "target started provider=%s model=%s remaining_questions=%s",
+            target["provider"],
+            target["model"],
+            len(remaining),
+        )
 
         try:
             provider = make_provider(target["provider"])
@@ -183,6 +217,18 @@ def run_cycle(
             attempt = attempts.get(probe_key, 0) + 1
             probe_id = str(uuid.uuid4())
             started_clock = time.monotonic()
+            ordinal = (
+                manifest["completed_probe_count"]
+                + manifest["failed_probe_count"]
+                + 1
+            )
+            log.info(
+                "probe %s/%s started provider=%s question=%s",
+                ordinal,
+                total,
+                target["provider"],
+                question["question_id"],
+            )
             record: dict[str, Any] = {
                 "schema_version": SCHEMA_VERSION,
                 "cycle_id": cycle_id,
@@ -211,6 +257,7 @@ def run_cycle(
                     model=target["model"],
                     browsing=target.get("browsing", False),
                     max_output_tokens=target["max_output_tokens"],
+                    effort=target.get("effort"),
                 )
                 raw_name = f"{probe_id}.json"
                 _write_json(raw_dir / raw_name, result.raw)
@@ -228,6 +275,14 @@ def run_cycle(
                         "error": None,
                     }
                 )
+                log.info(
+                    "probe %s/%s completed provider=%s question=%s latency_ms=%s",
+                    ordinal,
+                    total,
+                    target["provider"],
+                    question["question_id"],
+                    record["latency_ms"],
+                )
             except Exception as exc:
                 record.update(
                     {
@@ -243,6 +298,15 @@ def run_cycle(
                         "error": {"type": type(exc).__name__, "message": str(exc)},
                     }
                 )
+                log.error(
+                    "probe %s/%s failed provider=%s question=%s error=%s: %s",
+                    ordinal,
+                    total,
+                    target["provider"],
+                    question["question_id"],
+                    type(exc).__name__,
+                    exc,
+                )
 
             with records_path.open("a", encoding="utf-8") as handle:
                 handle.write(json.dumps(record, ensure_ascii=False) + "\n")
@@ -251,6 +315,7 @@ def run_cycle(
             attempts[probe_key] = attempt
             _refresh_manifest_counts(manifest, latest)
             _write_json(manifest_path, manifest)
+            _write_readable_outputs(cycle_dir, manifest, trigger, latest)
             if delay_seconds:
                 time.sleep(delay_seconds)
 
@@ -260,7 +325,22 @@ def run_cycle(
         "complete" if manifest["failed_probe_count"] == 0 else "partial"
     )
     _write_json(manifest_path, manifest)
-    return {"cycle_dir": str(cycle_dir), **manifest}
+    _write_readable_outputs(cycle_dir, manifest, trigger, latest)
+    log.info(
+        "cycle finished id=%s status=%s completed=%s failed=%s",
+        cycle_id,
+        manifest["cycle_status"],
+        manifest["completed_probe_count"],
+        manifest["failed_probe_count"],
+    )
+    log.info("human-readable results: %s", cycle_dir / "AI_RESULTS.md")
+    log.info("compact JSON results: %s", cycle_dir / "responses.json")
+    return {
+        "cycle_dir": str(cycle_dir),
+        "readable_results": str(cycle_dir / "AI_RESULTS.md"),
+        "compact_results": str(cycle_dir / "responses.json"),
+        **manifest,
+    }
 
 
 def load_targets(path: Path) -> list[dict[str, Any]]:
@@ -293,6 +373,18 @@ def load_targets(path: Path) -> list[dict[str, Any]]:
                 f"Target {target['target_id']!r} max_output_tokens "
                 "must be a positive integer"
             )
+        effort = target.get("effort")
+        if effort is not None:
+            if target["provider"] != "anthropic":
+                raise ValueError(
+                    f"Target {target['target_id']!r} effort is currently supported "
+                    "only for Anthropic targets"
+                )
+            if effort not in EFFORT_LEVELS:
+                allowed = ", ".join(sorted(EFFORT_LEVELS))
+                raise ValueError(
+                    f"Target {target['target_id']!r} effort must be one of: {allowed}"
+                )
         ids.append(str(target["target_id"]))
         if target["enabled"]:
             enabled.append(target)
@@ -305,9 +397,13 @@ def load_targets(path: Path) -> list[dict[str, Any]]:
 
 
 def _resolve_cycle_dir(
-    output_dir: Path, cycle_id: str, started_at: str, resume: bool
+    output_dir: Path,
+    cycle_id: str,
+    started_at: str,
+    trigger: dict[str, Any],
+    resume: bool,
 ) -> tuple[Path, bool]:
-    matches = sorted(path for path in output_dir.glob(f"*/{cycle_id}") if path.is_dir())
+    matches = sorted(path for path in output_dir.rglob(cycle_id) if path.is_dir())
     if len(matches) > 1:
         raise ValueError(f"Multiple cycle directories found for {cycle_id!r}")
     if matches:
@@ -316,7 +412,152 @@ def _resolve_cycle_dir(
                 f"Cycle {cycle_id!r} already exists; pass --resume to continue it"
             )
         return matches[0], True
-    return output_dir / started_at[:10] / cycle_id, False
+    archive_time = _archive_datetime(trigger, started_at)
+    event_id = _safe_path_segment(trigger.get("event_id") or "unassigned-event")
+    return (
+        output_dir
+        / f"{archive_time.year:04d}"
+        / archive_time.strftime("%B")
+        / f"{archive_time.day:02d}"
+        / event_id
+        / cycle_id,
+        False,
+    )
+
+
+def _archive_datetime(trigger: dict[str, Any], fallback: str) -> datetime:
+    for value in (
+        trigger.get("timestamp"),
+        trigger.get("sent_at"),
+        trigger.get("generated_at"),
+        fallback,
+    ):
+        if not value:
+            continue
+        try:
+            parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc)
+    return datetime.now(timezone.utc)
+
+
+def _safe_path_segment(value: Any) -> str:
+    safe = re.sub(r"[^A-Za-z0-9._-]+", "-", str(value)).strip("-.")
+    return safe[:128] or "unassigned-event"
+
+
+def _write_readable_outputs(
+    cycle_dir: Path,
+    manifest: dict[str, Any],
+    trigger: dict[str, Any],
+    latest: dict[str, dict[str, Any]],
+) -> None:
+    records = sorted(
+        latest.values(),
+        key=lambda record: (
+            str(record.get("target", {}).get("provider", "")),
+            str(record.get("target", {}).get("target_id", "")),
+            str(record.get("question", {}).get("question_id", "")),
+        ),
+    )
+    compact_responses = [_compact_response(record) for record in records]
+    compact = {
+        "schema_version": HUMAN_OUTPUT_SCHEMA_VERSION,
+        "cycle_id": manifest["cycle_id"],
+        "event_id": trigger.get("event_id"),
+        "message_id": trigger.get("message_id"),
+        "action": trigger.get("trigger") or trigger.get("action"),
+        "hazard_family": trigger.get("hazard_family"),
+        "event": trigger.get("event"),
+        "area": trigger.get("area"),
+        "source": trigger.get("source"),
+        "source_id": trigger.get("source_id"),
+        "source_timestamp": trigger.get("timestamp"),
+        "exact_trigger_file": "trigger.raw.json",
+        "completed_probe_count": manifest["completed_probe_count"],
+        "failed_probe_count": manifest["failed_probe_count"],
+        "responses": compact_responses,
+    }
+    _write_json(cycle_dir / "responses.json", compact)
+    _write_text(cycle_dir / "AI_RESULTS.md", _render_markdown_results(compact))
+
+
+def _compact_response(record: dict[str, Any]) -> dict[str, Any]:
+    target = record.get("target") or {}
+    question = record.get("question") or {}
+    error = record.get("error") or None
+    return {
+        "provider": target.get("provider"),
+        "target_id": target.get("target_id"),
+        "requested_model": target.get("model"),
+        "resolved_model": record.get("resolved_model"),
+        "question_id": question.get("question_id"),
+        "category": question.get("category"),
+        "prompt": question.get("prompt"),
+        "status": record.get("status"),
+        "response": record.get("response_text"),
+        "error": error.get("message") if isinstance(error, dict) else error,
+    }
+
+
+def _render_markdown_results(results: dict[str, Any]) -> str:
+    lines = [
+        "# AI Probe Results",
+        "",
+        f"- **Event ID:** {results.get('event_id') or 'N/A'}",
+        f"- **Trigger message:** {results.get('message_id') or results['cycle_id']}",
+        f"- **Action:** {results.get('action') or 'manual'}",
+        f"- **Hazard:** {results.get('hazard_family') or 'N/A'}",
+        f"- **Event:** {results.get('event') or 'N/A'}",
+        f"- **Area:** {results.get('area') or 'N/A'}",
+        f"- **Official source:** {results.get('source') or 'N/A'} "
+        f"({results.get('source_id') or 'N/A'})",
+        f"- **Source time:** {results.get('source_timestamp') or 'N/A'}",
+        f"- **Probe status:** {results['completed_probe_count']} completed, "
+        f"{results['failed_probe_count']} failed",
+        "- **Exact ground-truth trigger:** [`trigger.raw.json`](trigger.raw.json)",
+        "- **Compact machine-readable results:** [`responses.json`](responses.json)",
+        "",
+        "---",
+        "",
+    ]
+    current_target: tuple[Any, Any, Any] | None = None
+    for response in results["responses"]:
+        target = (
+            response.get("provider"),
+            response.get("target_id"),
+            response.get("resolved_model") or response.get("requested_model"),
+        )
+        if target != current_target:
+            current_target = target
+            lines.extend(
+                [
+                    f"## {target[0]} — {target[2]}",
+                    "",
+                    f"Target: `{target[1]}`",
+                    "",
+                ]
+            )
+        lines.extend(
+            [
+                f"### {response.get('question_id')} — {response.get('category')}",
+                "",
+                "**Prompt**",
+                "",
+                str(response.get("prompt") or "N/A"),
+                "",
+                "**Response**",
+                "",
+                str(response.get("response") or response.get("error") or "No response"),
+                "",
+                "---",
+                "",
+            ]
+        )
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def _verify_resume(
@@ -423,4 +664,11 @@ def _write_json(path: Path, data: Any) -> None:
         json.dumps(data, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
+    temporary.replace(path)
+
+
+def _write_text(path: Path, data: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(data, encoding="utf-8")
     temporary.replace(path)

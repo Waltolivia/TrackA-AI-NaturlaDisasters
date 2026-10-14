@@ -1,6 +1,6 @@
 # Unattended Linux deployment
 
-These templates run the frozen collector and worker continuously on a BYU VM,
+These templates run the approved collector and worker continuously on a BYU VM,
 small cloud VM, or Raspberry Pi using `systemd`. Test both commands manually
 before enabling automatic startup.
 
@@ -24,7 +24,7 @@ sudo -u tracka git clone \
   https://github.com/Waltolivia/TrackA-AI-NaturlaDisasters.git \
   /opt/tracka
 cd /opt/tracka
-sudo -u tracka git checkout study-v1.0.0
+sudo -u tracka git checkout study-v2.0.0
 
 sudo -u tracka uv sync --project pipeline_worker --extra providers
 cd disaster_monitor-v5
@@ -32,7 +32,9 @@ sudo -u tracka uv venv --python 3.11
 sudo -u tracka uv pip install -r requirements.txt
 ```
 
-Do not deploy `study-v1.0.0` until the team has created that tag.
+Do not deploy `study-v2.0.0` until the team has reviewed the v2 transition and
+created that tag. If the tag has not been created, test the exact candidate
+commit manually and record its SHA instead of deploying a moving branch.
 
 ## 2. Install secrets and settings
 
@@ -75,3 +77,7 @@ Check daily during the initial study:
 
 Use exactly one worker service. Running multiple workers with separate state
 databases can duplicate paid probes.
+
+For the proposed private off-machine archive and unified event-prefix design,
+see [`S3_RESULTS_PLAN.md`](S3_RESULTS_PLAN.md). S3 upload is intentionally not
+part of the live worker yet.

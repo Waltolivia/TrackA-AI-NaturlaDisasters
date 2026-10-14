@@ -210,6 +210,14 @@ class PipelineWorker:
         )
         if not inserted:
             self._ack_duplicate(job_id, path)
+        else:
+            log.info(
+                "queued AI job job_id=%s event_id=%s action=%s trigger=%s",
+                job_id,
+                normalized.get("event_id") or "unassigned-event",
+                normalized_type,
+                path,
+            )
         return "discovered" if inserted else "duplicate"
 
     def _job_id(self, payload: dict[str, Any], digest: str) -> str:
@@ -227,6 +235,12 @@ class PipelineWorker:
     def _process_job(self, job: dict[str, Any]) -> bool:
         job_id = str(job["job_id"])
         path = Path(str(job["trigger_path"]))
+        log.info(
+            "starting AI job job_id=%s event_id=%s action=%s",
+            job_id,
+            job.get("event_id") or "unassigned-event",
+            job.get("trigger_type") or "unknown",
+        )
         try:
             claimed_path = self._claim_queue_file(path)
             if claimed_path != path:
@@ -257,9 +271,12 @@ class PipelineWorker:
                 stderr=_bounded(result.stderr),
             )
             log.info(
-                "job succeeded job_id=%s cycle=%s",
+                "AI job succeeded job_id=%s completed=%s/%s results=%s readable=%s",
                 job_id,
+                result.summary["completed_probe_count"],
+                result.summary["expected_probe_count"],
                 result.summary["cycle_dir"],
+                result.summary.get("readable_results") or "AI_RESULTS.md",
             )
             return True
 
@@ -324,6 +341,9 @@ class PipelineWorker:
                     f"AI probe cycle exceeded {self.config.job_timeout_seconds} seconds"
                 ),
             )
+
+        for line in completed.stderr.splitlines():
+            log.info("AI progress job_id=%s %s", job_id, line)
 
         try:
             summary = json.loads(completed.stdout)

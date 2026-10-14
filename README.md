@@ -117,7 +117,8 @@ Expected result:
 - One job reports `SUCCEEDED`.
 - Nine mock probes complete.
 - The trigger moves from `outbox/pending/` to `outbox/completed/`.
-- Results appear under `pipeline_data/results/YYYY-MM-DD/`.
+- Results appear under
+  `pipeline_data/results/YYYY/Month/DD/EVENT_ID/MESSAGE_ID/`.
 - Worker state appears in `pipeline_data/worker.db`.
 
 Inspect status at any time:
@@ -156,11 +157,11 @@ GEMINI_API_KEY=...
 
 Never put keys in JSON, source code, Git, screenshots, or collected results.
 
-The frozen study target file is committed without secrets:
+The current cost-controlled study target file is committed without secrets:
 
 ```bash
 python -m json.tool \
-  ai_probe_runner/config/targets.study-v1.json >/dev/null
+  ai_probe_runner/config/targets.study-v2.json >/dev/null
 ```
 
 It enables all three approved providers. A successful event runs nine questions
@@ -180,15 +181,18 @@ uv run --project pipeline_worker pipeline-worker \
   --outbox local_test/outbox \
   --state-db local_test/worker.db \
   --output local_test/results \
-  --targets ai_probe_runner/config/targets.study-v1.json \
+  --targets ai_probe_runner/config/targets.study-v2.json \
   once --max-jobs 1
 ```
 
 Expect `expected_probe_count` and `completed_probe_count` to both be 27, with
-`failed_probe_count` equal to zero. Inspect the manifest and `probes.jsonl` for
-all three providers. The worker reports success only when every expected probe
-completed. To troubleshoot one account, temporarily disable the other targets
-in an ignored `targets.local.json`; do not change the committed study file.
+`failed_probe_count` equal to zero. Open the printed `readable_results` path, or
+find `AI_RESULTS.md` under `local_test/results/`, to review all prompts and
+answers. `responses.json` is compact valid JSON for analysis. The append-only
+`probes.jsonl` and `raw/` directory remain available for auditing and retries.
+The worker reports success only when every expected probe completed. To
+troubleshoot one account, temporarily disable the other targets in an ignored
+`targets.local.json`; do not change the committed study file.
 
 Google currently offers a free tier for the selected Flash-Lite model, so the
 initial test does not require Google billing. Free-tier data handling and quota
@@ -227,7 +231,7 @@ Open a second terminal at the repository root:
 
 ```bash
 uv run --project pipeline_worker pipeline-worker \
-  --targets ai_probe_runner/config/targets.study-v1.json \
+  --targets ai_probe_runner/config/targets.study-v2.json \
   --poll-seconds 5 \
   run
 ```
@@ -238,6 +242,36 @@ events manually.
 
 For a no-cost live collector test, omit `--targets`; the worker will continue
 using `targets.mock.json`.
+
+## Finding AI results
+
+Every new AI cycle has a direct, traceable path:
+
+```text
+pipeline_data/results/
+└── 2026/
+    └── October/
+        └── 14/
+            └── EVT-00000001/
+                └── MSG-example/
+                    ├── AI_RESULTS.md
+                    ├── responses.json
+                    ├── trigger.raw.json
+                    ├── trigger.json
+                    ├── manifest.json
+                    ├── probes.jsonl
+                    └── raw/
+```
+
+Start with `AI_RESULTS.md`. It groups questions and answers by provider and
+links back to the exact ground-truth message. Use `responses.json` when a normal
+JSON file is needed. `probes.jsonl` is intentionally JSON Lines: it preserves
+every retry attempt and is mainly an audit/recovery file, not the easiest file
+for manual review.
+
+The worker prints the exact cycle and readable-results paths after each job.
+Run `uv run --project pipeline_worker pipeline-worker status` to find the cycle
+path again later.
 
 ## Worker commands
 

@@ -69,7 +69,7 @@ Global options go before the command:
 
 ```bash
 uv run --project pipeline_worker pipeline-worker \
-  --targets ai_probe_runner/config/targets.study-v1.json \
+  --targets ai_probe_runner/config/targets.study-v2.json \
   --max-attempts 8 \
   --retry-base-seconds 60 \
   --poll-seconds 5 \
@@ -84,7 +84,7 @@ uv run --project pipeline_worker pipeline-worker \
 | `--state-db` | `pipeline_data/worker.db` | Durable worker ledger |
 | `--targets` | mock targets | AI experimental conditions |
 | `--question-bank-dir` | AI question banks | Versioned prompt templates |
-| `--output` | `pipeline_data/results` | AI cycle archive |
+| `--output` | `pipeline_data/results` | AI archive organized by year/month/day/event/message |
 | `--queue-layout` | `v5` | Use `flat` only for v2 |
 | `--max-attempts` | `8` | Attempts before `DEAD` |
 | `--retry-base-seconds` | `60` | Exponential retry base |
@@ -105,7 +105,10 @@ module's local `.env` file to load normally.
 - Successful question/target pairs are skipped during a resumed cycle.
 - Changed triggers, question banks, or target configurations cannot be resumed
   into an older cycle.
-- Original error records remain in `probes.jsonl` for research auditing.
+- Start human review with `AI_RESULTS.md`; use compact `responses.json` for
+  normal JSON tooling.
+- Original error and retry records remain in `probes.jsonl` for research
+  auditing.
 
 Do not run two workers against the same outbox with separate worker databases.
 For the initial deployment, use one worker process and one persistent database.

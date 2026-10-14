@@ -10,11 +10,11 @@ from ai_probe_runner.runner import load_targets, run_cycle
 from ai_probe_runner import cli
 
 
-def test_example_targets_are_three_provider_no_search_baseline() -> None:
+def test_example_targets_are_three_provider_v2_no_search_baseline() -> None:
     config_path = Path(__file__).parents[1] / "config" / "targets.example.json"
     targets = json.loads(config_path.read_text(encoding="utf-8"))
     study_targets = json.loads(
-        (config_path.parent / "targets.study-v1.json").read_text(encoding="utf-8")
+        (config_path.parent / "targets.study-v2.json").read_text(encoding="utf-8")
     )
 
     assert {
@@ -23,13 +23,23 @@ def test_example_targets_are_three_provider_no_search_baseline() -> None:
         if target.get("enabled", True)
     } == {
         ("openai", "gpt-5.4-nano-2026-03-17", False),
-        ("anthropic", "claude-sonnet-5-5", False),
+        ("anthropic", "claude-haiku-5-5", False),
         ("google", "gemini-3.5-flash-lite", False),
     }
     assert all(target.get("target_id") for target in targets)
     assert all(target.get("interface") for target in targets)
-    assert all(target.get("max_output_tokens") == 2048 for target in targets)
+    assert all(target.get("max_output_tokens") == 1024 for target in targets)
+    anthropic = next(target for target in targets if target["provider"] == "anthropic")
+    assert anthropic["effort"] == "low"
     assert targets == study_targets
+
+
+def test_study_v1_target_file_is_preserved() -> None:
+    config_path = Path(__file__).parents[1] / "config" / "targets.study-v1.json"
+    targets = json.loads(config_path.read_text(encoding="utf-8"))
+    anthropic = next(target for target in targets if target["provider"] == "anthropic")
+    assert anthropic["model"] == "claude-sonnet-5-5"
+    assert anthropic["max_output_tokens"] == 2048
 
 
 def write_banks(bank_dir: Path) -> None:
@@ -265,12 +275,15 @@ def test_mock_cycle_archives_trigger_questions_and_responses(tmp_path: Path) -> 
     )
     trigger = {
         "cycle_id": "shared-cycle",
+        "message_id": "MSG-shared-cycle",
+        "event_id": "EVT-00000001",
         "source": "NWS",
         "source_id": "alert-1",
         "version_hash": "v1",
         "hazard_family": "flood",
         "event": "Flash Flood Warning",
         "area": "Test County",
+        "timestamp": "2026-09-28T12:00:00Z",
     }
 
     result = run_cycle(
@@ -292,6 +305,18 @@ def test_mock_cycle_archives_trigger_questions_and_responses(tmp_path: Path) -> 
     assert (cycle_dir / "trigger.raw.json").is_file()
     assert (cycle_dir / "trigger.json").is_file()
     assert (cycle_dir / "questions.json").is_file()
+    assert cycle_dir.relative_to(tmp_path / "data") == Path(
+        "2026/September/28/EVT-00000001/shared-cycle"
+    )
+    compact = json.loads((cycle_dir / "responses.json").read_text())
+    assert compact["event_id"] == "EVT-00000001"
+    assert compact["message_id"] == "MSG-shared-cycle"
+    assert len(compact["responses"]) == 2
+    assert "request_started_at" not in compact["responses"][0]
+    readable = (cycle_dir / "AI_RESULTS.md").read_text()
+    assert "# AI Probe Results" in readable
+    assert "EVT-00000001" in readable
+    assert "Mock response" in readable
     assert all(record["status"] == "success" for record in records)
 
 
@@ -330,7 +355,7 @@ def test_resume_retries_only_failed_probes(
             raise TimeoutError("temporary provider failure")
 
     class SuccessfulProvider:
-        def ask(self, *, prompt, model, browsing, max_output_tokens):
+        def ask(self, *, prompt, model, browsing, max_output_tokens, effort=None):
             return ProviderResult(
                 text="Recovered",
                 response_id="response-1",
@@ -353,6 +378,12 @@ def test_resume_retries_only_failed_probes(
     assert first["completed_probe_count"] == 0
     assert first["failed_probe_count"] == 2
 
+    # Existing v1 cycles used data/YYYY-MM-DD/CYCLE_ID. Moving the fixture into
+    # that layout verifies that v2 can still locate and resume old archives.
+    old_layout = tmp_path / "data" / "2026-09-28" / "resume-cycle"
+    old_layout.parent.mkdir(parents=True)
+    Path(first["cycle_dir"]).replace(old_layout)
+
     monkeypatch.setattr(
         "ai_probe_runner.runner.make_provider", lambda name: SuccessfulProvider()
     )
@@ -365,6 +396,7 @@ def test_resume_retries_only_failed_probes(
         resume=True,
     )
     records_path = Path(second["cycle_dir"]) / "probes.jsonl"
+    assert Path(second["cycle_dir"]) == old_layout
     records = [json.loads(line) for line in records_path.read_text().splitlines()]
     assert second["completed_probe_count"] == 2
     assert second["failed_probe_count"] == 0
@@ -433,6 +465,29 @@ def test_target_config_requires_positive_output_limit(tmp_path: Path) -> None:
         encoding="utf-8",
     )
     with pytest.raises(ValueError, match="positive integer"):
+        load_targets(targets)
+
+
+def test_target_config_rejects_invalid_effort(tmp_path: Path) -> None:
+    targets = tmp_path / "targets.json"
+    targets.write_text(
+        json.dumps(
+            [
+                {
+                    "target_id": "anthropic-test",
+                    "provider": "anthropic",
+                    "model": "claude-haiku-5-5",
+                    "interface": "messages-api",
+                    "browsing": False,
+                    "max_output_tokens": 1024,
+                    "effort": "tiny",
+                    "enabled": True,
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="effort must be one of"):
         load_targets(targets)
 
 
