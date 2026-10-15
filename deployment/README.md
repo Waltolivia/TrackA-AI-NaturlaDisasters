@@ -11,6 +11,14 @@ The examples assume:
 - provider secrets: `/etc/tracka/providers.env`
 - collector settings: `/etc/tracka/collector.env`
 
+Create and test the private shared bucket first by following
+[`S3_SETUP.md`](S3_SETUP.md). The collector and worker must use the same
+`S3_BUCKET`, `S3_PREFIX`, and `AWS_REGION` values.
+
+DynamoDB is not required. Leave `DYNAMODB_ARCHIVE_ENABLED=false` unless the
+team has separately approved removing old completed ground-truth rows from
+the VM after they are copied to DynamoDB.
+
 Change those paths if the host uses a different layout.
 
 ## 1. Install
@@ -24,7 +32,7 @@ sudo -u tracka git clone \
   https://github.com/Waltolivia/TrackA-AI-NaturlaDisasters.git \
   /opt/tracka
 cd /opt/tracka
-sudo -u tracka git checkout study-v1.0.0
+sudo -u tracka git checkout study-v2.0.0
 
 sudo -u tracka uv sync --project pipeline_worker --extra providers
 cd disaster_monitor-v5
@@ -32,7 +40,7 @@ sudo -u tracka uv venv --python 3.11
 sudo -u tracka uv pip install -r requirements.txt
 ```
 
-Do not deploy `study-v1.0.0` until the team has created that tag.
+Do not deploy `study-v2.0.0` until the team has approved and created that tag.
 
 ## 2. Install secrets and settings
 
@@ -46,6 +54,11 @@ sudo chown root:root /etc/tracka/providers.env /etc/tracka/collector.env
 ```
 
 Never commit either completed environment file.
+
+On an EC2 VM, attach an IAM instance role with the S3 uploader policy instead
+of putting `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in these files. On a
+BYU or other non-AWS VM, configure a dedicated least-privilege AWS identity for
+the `tracka` service account.
 
 ## 3. Install services
 
@@ -72,6 +85,7 @@ Check daily during the initial study:
 - The worker has no unexplained `DEAD` jobs.
 - Disk space, provider balances, and Google free-tier quota remain available.
 - Databases and completed results reached the off-machine backup destination.
+- Recent events contain adjacent weather and AI folders in the S3 bucket.
 
 Use exactly one worker service. Running multiple workers with separate state
 databases can duplicate paid probes.

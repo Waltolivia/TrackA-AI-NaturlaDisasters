@@ -155,6 +155,35 @@ def _event_folder(event, root="archive"):
     return week_folder / "events"
 
 
+def event_archive_location(event):
+    """Return the stable, storage-neutral archive location for one event.
+
+    The event's opening time is authoritative. Downstream consumers receive
+    this location in the queue message so a long-running event is never filed
+    under the week in which an AI probe happened.
+    """
+
+    opened = _dt(event["opened_at"])
+    event_id = str(event["public_id"])
+    if opened:
+        year = f"{opened.year:04d}"
+        month = opened.strftime("%B")
+        week = _week_folder_name(opened)
+    else:
+        year = "unknown"
+        month = "Unknown"
+        week = "Unknown_Dates"
+
+    relative_prefix = "/".join((year, month, week, event_id))
+    return {
+        "year": year,
+        "month": month,
+        "week": week,
+        "event_id": event_id,
+        "relative_prefix": relative_prefix,
+    }
+
+
 def event_report_path(event, root="archive"):
     """
     Return the on-disk path of one event's detailed report without

@@ -1,6 +1,7 @@
 import json, shutil, uuid
 from pathlib import Path
 from datetime import datetime,timezone
+from ..archive import event_archive_location
 
 class JsonPrompter:
     """Durable filesystem queue. Consumers claim pending messages, then ack/fail them."""
@@ -18,7 +19,8 @@ class JsonPrompter:
         payload={'schema_version':3,'message_id':f'MSG-{uuid.uuid4().hex}','action':trigger,'event_id':event['public_id'],
           'disaster':{'type':event['canonical_type'],'name':_event_name(event,title),'location':get('area_desc',event['area_desc'])},
           'severity':get('severity',event['severity']),'status':event['operational_phase'],'event_lifecycle':event['status'],'source':get('source'),
-          'source_alert_id':get('source_id'),'sent_at':get('sent_at'),'generated_at':stamp.isoformat(),'headline':title}
+          'source_alert_id':get('source_id'),'sent_at':get('sent_at'),'generated_at':stamp.isoformat(),'headline':title,
+          'archive':event_archive_location(event)}
         if extra:payload['details']=extra
         target=self.root/'pending'/f'{stamp.strftime("%Y%m%dT%H%M%S.%fZ")}_{event["public_id"]}_{trigger}_{payload["message_id"]}.json'
         tmp=target.with_suffix('.tmp');tmp.write_text(json.dumps(payload,indent=2,ensure_ascii=False),encoding='utf-8');tmp.replace(target);return target

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import uuid
 from pathlib import Path
 from typing import Any
@@ -54,6 +55,10 @@ def parser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(levelname)s %(name)s %(message)s",
+    )
     load_dotenv()
     args = parser().parse_args()
     if args.trigger:

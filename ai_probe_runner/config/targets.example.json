@@ -5,16 +5,17 @@
     "model": "gpt-5.4-nano-2026-03-17",
     "interface": "responses-api",
     "browsing": false,
-    "max_output_tokens": 2048,
+    "max_output_tokens": 1024,
     "enabled": true
   },
   {
-    "target_id": "anthropic-sonnet-5-5-no-search",
+    "target_id": "anthropic-haiku-5-5-low-effort-no-search",
     "provider": "anthropic",
-    "model": "claude-sonnet-5-5",
+    "model": "claude-haiku-5-5",
     "interface": "messages-api",
     "browsing": false,
-    "max_output_tokens": 2048,
+    "max_output_tokens": 1024,
+    "effort": "low",
     "enabled": true
   },
   {
@@ -23,7 +24,7 @@
     "model": "gemini-3.5-flash-lite",
     "interface": "interactions-api",
     "browsing": false,
-    "max_output_tokens": 2048,
+    "max_output_tokens": 1024,
     "enabled": true
   }
 ]

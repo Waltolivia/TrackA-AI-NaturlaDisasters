@@ -73,6 +73,32 @@ def test_anthropic_receives_frozen_output_limit():
     assert recorder.kwargs["max_tokens"] == 2048
 
 
+def test_anthropic_receives_explicit_low_effort():
+    recorder = Recorder(
+        FakeResponse(
+            {
+                "id": "anthropic-1",
+                "model": "claude-haiku-test",
+                "content": [{"type": "text", "text": "Test response"}],
+                "usage": {},
+            }
+        )
+    )
+    provider = AnthropicProvider.__new__(AnthropicProvider)
+    provider.client = type("Client", (), {"messages": recorder})()
+
+    provider.ask(
+        prompt="test",
+        model="claude-haiku-test",
+        browsing=False,
+        max_output_tokens=1024,
+        effort="low",
+    )
+
+    assert recorder.kwargs["max_tokens"] == 1024
+    assert recorder.kwargs["output_config"] == {"effort": "low"}
+
+
 def test_google_receives_frozen_output_limit():
     recorder = Recorder(
         FakeResponse(

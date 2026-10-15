@@ -61,6 +61,9 @@ class Database:
         with self.connect() as db:db.execute("UPDATE events SET severity=?,area_desc=?,last_seen_at=?,operational_phase=COALESCE(?,operational_phase),status=CASE WHEN status='ENDED' THEN 'ACTIVE' ELSE status END,ended_at=CASE WHEN status='ENDED' THEN NULL ELSE ended_at END WHERE id=?",(severity,area_desc,now,operational_phase,event_id))
     def get_event(self,event_id):
         with self.connect() as db:return db.execute('SELECT * FROM events WHERE id=?',(event_id,)).fetchone()
+    def event_ids(self):
+        """Return all current local event IDs for storage reconciliation."""
+        with self.connect() as db:return [row['id'] for row in db.execute('SELECT id FROM events ORDER BY id')]
     def latest_geometry(self,event_id):
         with self.connect() as db:
             r=db.execute('SELECT geometry_json FROM alerts WHERE event_id=? AND geometry_json IS NOT NULL ORDER BY id DESC LIMIT 1',(event_id,)).fetchone()

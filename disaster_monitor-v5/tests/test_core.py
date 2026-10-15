@@ -54,6 +54,14 @@ def test_health_and_sqlite_backup():
         b=backup_database(root/'data'/'x.db',root/'backups',14)
         assert b.exists() and b.stat().st_size>0
 
+def test_dynamodb_setting_prefers_clear_name_but_accepts_legacy_alias(monkeypatch):
+    from disaster_monitor.config import _enabled
+    monkeypatch.delenv('DYNAMODB_ARCHIVE_ENABLED',raising=False)
+    monkeypatch.setenv('AWS_ARCHIVE_ENABLED','true')
+    assert _enabled('DYNAMODB_ARCHIVE_ENABLED',legacy_name='AWS_ARCHIVE_ENABLED')
+    monkeypatch.setenv('DYNAMODB_ARCHIVE_ENABLED','false')
+    assert not _enabled('DYNAMODB_ARCHIVE_ENABLED',legacy_name='AWS_ARCHIVE_ENABLED')
+
 def test_durable_queue_and_archive_and_initial_suppression():
     from disaster_monitor.archive import event_report_path, render_event
     with tempfile.TemporaryDirectory() as d:
@@ -69,6 +77,9 @@ def test_durable_queue_and_archive_and_initial_suppression():
         assert 'EVENT HISTORY' in reports[0].read_text()
         assert process(db,p,alert('a2','Extreme','Confirmed flash flooding',['a1']),archive_path=root/'archive')=='SEVERITY_CHANGED'
         pending=list((root/'out'/'pending').glob('*.json'));assert len(pending)==1
+        payload=json.loads(pending[0].read_text())
+        from disaster_monitor.archive import event_archive_location
+        assert payload['archive']==event_archive_location(db.get_event(1))
         processing=p.claim(pending[0]);assert processing.parent.name=='processing'
         completed=p.ack(processing);assert completed.parent.name=='completed'
 
@@ -133,6 +144,10 @@ class _FakeResource:
     def __init__(self):self.table=_FakeTable();self.requested=[]
     def Table(self,name):self.requested.append(name);return self.table
 
+class _FakeS3Client:
+    def __init__(self):self.objects={}
+    def put_object(self,**kwargs):self.objects[kwargs['Key']]=kwargs
+
 def _finished_event(db,p,root):
     """Create one event, end it, and let collection complete."""
     process(db,p,alert(),archive_path=root/'archive')
@@ -177,3 +192,38 @@ def test_active_events_are_never_archived():
         result=archiver.archive(db,archive_path=root/'archive',now=datetime.now(timezone.utc)+timedelta(days=30),create_table=False)
         assert result['events_eligible']==0 and not resource.table.items
         assert db.get_event(1) is not None
+
+def test_ground_truth_snapshots_upload_immediately_to_shared_s3_event_folder():
+    from disaster_monitor.s3_archive import S3EventArchive
+    with tempfile.TemporaryDirectory() as d:
+        root=Path(d);db=Database(str(root/'x.db'));p=JsonPrompter(root/'out')
+        client=_FakeS3Client()
+        s3=S3EventArchive(bucket='study-bucket',region='us-west-2',prefix='disaster_monitor-v5/archive',pending_path=root/'pending',archive_path=root/'archive',client=client)
+
+        process(db,p,alert(),archive_path=root/'archive',s3_archive=s3)
+        assert list((root/'pending').glob('event-*.json'))
+
+        result=s3.sync_pending(db)
+        assert result=={'attempted':1,'uploaded':1,'failed':0}
+        assert not list((root/'pending').glob('event-*.json'))
+        from disaster_monitor.archive import event_archive_location
+        location=event_archive_location(db.get_event(1))
+        prefix=f'disaster_monitor-v5/archive/{location["relative_prefix"]}/EVT-00000001_weather/'
+        assert set(client.objects)=={
+            prefix+'EVENT_REPORT.txt',
+            prefix+'event.json',
+            prefix+'alerts.json',
+            prefix+'archive_manifest.json',
+        }
+        assert all(obj['ServerSideEncryption']=='AES256' for obj in client.objects.values())
+
+def test_s3_startup_reconciliation_queues_existing_local_events():
+    from disaster_monitor.s3_archive import S3EventArchive
+    with tempfile.TemporaryDirectory() as d:
+        root=Path(d);db=Database(str(root/'x.db'));p=JsonPrompter(root/'out')
+        process(db,p,alert(),archive_path=root/'archive')
+        s3=S3EventArchive(bucket='study-bucket',region='us-west-2',pending_path=root/'pending',archive_path=root/'archive',client=_FakeS3Client())
+        assert s3.schedule_existing(db)==1
+        assert s3.pending_count()==1
+        assert s3.sync_pending(db)=={'attempted':1,'uploaded':1,'failed':0}
+        assert s3.pending_count()==0

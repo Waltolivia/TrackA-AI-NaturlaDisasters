@@ -29,6 +29,19 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--lease-seconds", type=int, default=7200)
     result.add_argument("--job-timeout-seconds", type=int, default=7200)
     result.add_argument("--probe-delay-seconds", type=float, default=0.0)
+    result.add_argument(
+        "--s3",
+        dest="s3_enabled",
+        action=argparse.BooleanOptionalAction,
+        default=defaults.s3_enabled,
+        help="Upload ground-truth-linked AI results to S3",
+    )
+    result.add_argument("--s3-bucket", default=defaults.s3_bucket)
+    result.add_argument("--s3-prefix", default=defaults.s3_prefix)
+    result.add_argument("--aws-region", default=defaults.aws_region)
+    result.add_argument(
+        "--s3-retry-seconds", type=float, default=defaults.s3_retry_seconds
+    )
     subcommands = result.add_subparsers(dest="command", required=True)
     once = subcommands.add_parser("once", help="Scan and process ready jobs, then exit")
     once.add_argument("--max-jobs", type=int)
@@ -60,6 +73,11 @@ def main() -> None:
         lease_seconds=args.lease_seconds,
         job_timeout_seconds=args.job_timeout_seconds,
         probe_delay_seconds=args.probe_delay_seconds,
+        s3_enabled=args.s3_enabled,
+        s3_bucket=args.s3_bucket,
+        s3_prefix=args.s3_prefix,
+        aws_region=args.aws_region,
+        s3_retry_seconds=args.s3_retry_seconds,
     )
     worker = PipelineWorker(config)
 
