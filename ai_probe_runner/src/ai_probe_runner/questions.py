@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -25,6 +26,7 @@ HAZARD_TERMS = {
     "tornado": ("tornado", "tornadoes"),
     "tropical_cyclone": (
         "hurricane",
+        "typhoon",
         "tropical cyclone",
         "tropical storm",
     ),
@@ -35,6 +37,25 @@ HAZARD_TERMS = {
         "red flag",
     ),
 }
+
+HAZARD_ALIASES = {
+    "earthquakes": "earthquake",
+    "floods": "flood",
+    "landslides": "landslide",
+    "tornadoes": "tornado",
+    "tsunamis": "tsunami",
+    "typhoon": "tropical_cyclone",
+    "typhoons": "tropical_cyclone",
+    "volcanoes": "volcano",
+    "wildfires": "wildfire",
+}
+
+COORDINATE_LOCATION = re.compile(
+    r"^coordinates\s*=\s*\[\s*"
+    r"(?P<longitude>-?\d+(?:\.\d+)?)\s*,\s*"
+    r"(?P<latitude>-?\d+(?:\.\d+)?)\s*\]\s*$",
+    re.IGNORECASE,
+)
 
 
 class StrictValues(dict[str, str]):
@@ -164,11 +185,18 @@ def normalize_trigger(trigger: dict[str, Any]) -> dict[str, Any]:
     )
     if missing:
         raise ValueError(f"Trigger is missing required fields: {', '.join(missing)}")
+    normalized["location_kind"] = (
+        "coordinates"
+        if COORDINATE_LOCATION.fullmatch(str(normalized["area"]))
+        else "named"
+    )
+    normalized["location_context"] = location_context(str(normalized["area"]))
     return normalized
 
 
 def hazard_family_for(event_type: str, headline: str = "") -> str:
     direct = event_type.strip().lower().replace("-", "_").replace(" ", "_")
+    direct = HAZARD_ALIASES.get(direct, direct)
     if direct in SUPPORTED_HAZARD_FAMILIES:
         return direct
 
@@ -177,10 +205,22 @@ def hazard_family_for(event_type: str, headline: str = "") -> str:
         if any(term in searchable for term in terms):
             return family
 
-    supported = ", ".join(sorted(SUPPORTED_HAZARD_FAMILIES))
-    raise ValueError(
-        f"Unsupported disaster-monitor event_type {event_type!r}. "
-        f"Supported AI question-bank families: {supported}"
+    # The collector has already applied the project's natural-disaster filter.
+    # Preserve an unfamiliar canonical family so it can receive the general
+    # question bank instead of silently losing a research observation.  The
+    # slug also prevents an event type from becoming an unsafe file path.
+    fallback = re.sub(r"[^a-z0-9]+", "_", direct).strip("_")
+    return fallback or "other_natural_disaster"
+
+
+def location_context(area: str) -> str:
+    """Render EONET longitude/latitude without requiring reverse geocoding."""
+    match = COORDINATE_LOCATION.fullmatch(area.strip())
+    if not match:
+        return area
+    return (
+        f"longitude {match.group('longitude')}, latitude {match.group('latitude')} "
+        "(the collector supplied coordinates but no place name)"
     )
 
 
@@ -190,13 +230,13 @@ def build_questions(
     trigger = normalize_trigger(trigger)
 
     hazard_family = str(trigger["hazard_family"])
-    bank_paths = [
-        bank_dir / "general.json",
-        bank_dir / "hazards" / f"{hazard_family}.json",
-    ]
-    missing_banks = [str(path) for path in bank_paths if not path.is_file()]
-    if missing_banks:
-        raise ValueError(f"Question bank not found: {', '.join(missing_banks)}")
+    general_path = bank_dir / "general.json"
+    if not general_path.is_file():
+        raise ValueError(f"Question bank not found: {general_path}")
+    hazard_path = bank_dir / "hazards" / f"{hazard_family}.json"
+    bank_paths = [general_path]
+    if hazard_path.is_file():
+        bank_paths.append(hazard_path)
 
     values = StrictValues(
         {
@@ -205,6 +245,9 @@ def build_questions(
         }
     )
     questions: list[dict[str, Any]] = []
+    trigger_type = str(
+        trigger.get("trigger") or trigger.get("action") or "NEW_EVENT"
+    )
     for bank_path in bank_paths:
         bank = json.loads(bank_path.read_text(encoding="utf-8"))
         if not isinstance(bank, list):
@@ -219,8 +262,21 @@ def build_questions(
                     f"Question in {bank_path} is missing fields: {', '.join(missing)}"
                 )
             question = dict(template)
+            trigger_types = question.pop("trigger_types", None)
+            if trigger_types is not None:
+                if not isinstance(trigger_types, list) or not all(
+                    isinstance(value, str) for value in trigger_types
+                ):
+                    raise ValueError(
+                        f"Question trigger_types must be a list of strings: {bank_path}"
+                    )
+                if trigger_type not in trigger_types:
+                    continue
             question["prompt"] = str(question.pop("template")).format_map(values)
             question["hazard_family"] = hazard_family
+            question["question_bank_scope"] = (
+                "general" if bank_path == general_path else "hazard_specific"
+            )
             question["ground_truth_source"] = trigger["source"]
             question["ground_truth_source_id"] = trigger["source_id"]
             questions.append(question)
@@ -228,4 +284,8 @@ def build_questions(
     ids = [question.get("question_id") for question in questions]
     if None in ids or len(ids) != len(set(ids)):
         raise ValueError("Question IDs must exist and be unique across selected banks")
+    if not questions:
+        raise ValueError(
+            f"No questions apply to trigger type {trigger_type!r} in {bank_dir}"
+        )
     return questions, bank_paths

@@ -190,6 +190,7 @@ uv run --project pipeline_worker pipeline-worker \
   --outbox local_test/outbox \
   --state-db local_test/worker.db \
   --output local_test/results \
+  --question-bank-dir ai_probe_runner/config/question_banks_v3 \
   --s3 \
   --s3-bucket "$S3_BUCKET" \
   --aws-region "$AWS_REGION" \

@@ -38,14 +38,16 @@ are not moved; the SQLite ledger prevents them from being executed repeatedly.
 | `RUNNING` | Claimed with a time-limited lease |
 | `RETRY` | Failed temporarily and waiting for exponential backoff |
 | `SUCCEEDED` | AI manifest reports every expected probe succeeded |
-| `SKIPPED` | Lifecycle message or unsupported research hazard |
+| `SKIPPED` | Non-probe lifecycle message such as `EVENT_ENDED` |
 | `INVALID` | File is not valid trigger JSON |
 | `DEAD` | Retry budget was exhausted; manual review is required |
 
 The default worker accepts v5 `NEW_EVENT`, `STATUS_CHANGED`, and
 `SEVERITY_CHANGED` messages. It acknowledges `EVENT_ENDED` without calling an
-AI provider. Coordinate-only locations are skipped until reviewed enrichment is
-available. The AI adapter also accepts v2 `NEW_EVENT` and `ESCALATION`.
+AI provider. Coordinate-only locations are passed through with an explicit
+longitude/latitude label. Collector-approved hazards without a specific bank
+receive general questions. The AI adapter also accepts v2 `NEW_EVENT` and
+`ESCALATION`.
 
 ## Commands
 
@@ -69,7 +71,8 @@ Global options go before the command:
 
 ```bash
 uv run --project pipeline_worker pipeline-worker \
-  --targets ai_probe_runner/config/targets.study-v2.json \
+  --targets ai_probe_runner/config/targets.study-v3-search.json \
+  --question-bank-dir ai_probe_runner/config/question_banks_v3 \
   --max-attempts 8 \
   --retry-base-seconds 60 \
   --poll-seconds 5 \

@@ -28,6 +28,10 @@ ai_probe_runner/
       README.md
       general.json
       hazards/
+    question_banks_v3/
+      README.md
+      general.json
+      hazards/
     README.md
     targets.mock.json
     targets.example.json
@@ -96,7 +100,8 @@ Run a no-cost mock cycle from the example trigger:
 ```bash
 uv run ai-probe-runner \
   --trigger examples/trigger.flash-flood.json \
-  --targets config/targets.mock.json
+  --targets config/targets.mock.json \
+  --question-bank-dir config/question_banks_v3
 ```
 
 You can also test without creating a trigger file:
@@ -106,7 +111,8 @@ uv run ai-probe-runner \
   --hazard-family flood \
   --event "Flash Flood Warning" \
   --area "Salt Lake County, Utah" \
-  --targets config/targets.mock.json
+  --targets config/targets.mock.json \
+  --question-bank-dir config/question_banks_v3
 ```
 
 Integrated output is written under
@@ -133,37 +139,38 @@ GEMINI_API_KEY=...
 The runner loads `.env` automatically. Never put keys in target JSON and never
 commit `.env`; it is ignored by Git.
 
-Copy the example target configuration:
+Copy the active target configuration for isolated local testing:
 
 ```bash
-cp config/targets.example.json config/targets.local.json
+cp config/targets.study-v3-search.json config/targets.local.json
 ```
 
-`targets.study-v1.json` preserves the original Sonnet baseline.
-`targets.study-v2.json` is the current cost-controlled condition, and
-`targets.example.json` mirrors v2 for local setup:
+`targets.study-v1.json` preserves the original Sonnet baseline and
+`targets.study-v2.json` preserves the lower-cost no-search condition. The
+current condition is `targets.study-v3-search.json`:
 
 | Provider | Model ID | Experimental condition |
 | --- | --- | --- |
-| OpenAI | `gpt-5.4-nano-2026-03-17` | No web search |
-| Anthropic | `claude-haiku-5-5` | No web search; low effort |
-| Google | `gemini-3.5-flash-lite` | No web search |
+| OpenAI | `gpt-5.4-nano-2026-03-17` | Live search; one tool-call cap |
+| Anthropic | `claude-haiku-5-5` | Live search; one-search cap; low effort |
+| Google | `gemini-3.5-flash-lite` | Live Google Search grounding |
 
 These models were selected to emphasize speed, cost, and broad API availability
 rather than maximum benchmark performance. They are inexpensive API models, but
 they are **not guaranteed to be identical** to the models, system prompts, or
 tools used in the providers' free consumer chat products.
 
-Each v2 target has an explicit 1,024-token output ceiling. The Anthropic target
-also requests low effort. The runner archives both requested and resolved model
-information for every probe.
+Each V3 target has an explicit 640-token output ceiling. Anthropic also requests
+low effort. Every V3 prompt asks for one focused search; OpenAI and Anthropic
+receive an API-level cap of one search/tool call. Gemini does not expose the
+same cap in this integration and may execute multiple queries. The runner saves
+the requested and resolved model, citations, provider usage, and recorded
+search-call count for every probe.
 
-The initial baseline deliberately disables browsing. Browsing changes the
-information available to a model and may add tool-use charges, so search-enabled
-probes should be introduced later as a separately named experimental condition,
-not silently added to these targets. See `config/README.md` for every target
-field, isolated-provider testing, model lifecycle guidance, and the procedure for
-adding a search condition.
+V2 and V3 are different experimental conditions. Preserve both configurations
+and never combine their responses as though only the date changed. See
+`config/README.md` for target fields, billing notes, and isolated-provider
+testing.
 
 Verify that every configured model is available to the team's API account.
 Model availability and names can change. Disable unavailable or unapproved
@@ -175,14 +182,16 @@ Run a real pilot:
 ```bash
 uv run ai-probe-runner \
   --trigger examples/trigger.flash-flood.json \
-  --targets config/targets.study-v2.json \
+  --targets config/targets.study-v3-search.json \
+  --question-bank-dir config/question_banks_v3 \
   --delay-seconds 1 \
   --fail-on-probe-error
 ```
 
-The example event currently renders five general questions and four flood
-questions. With the three enabled baseline targets, a successful flood pilot
-therefore expects `9 questions x 3 targets = 27 probes`. Check the printed
+The example new flood event renders two general questions and one flood
+question. With three targets, a successful V3 pilot expects
+`3 questions x 3 targets = 9 probes`. A status/severity update renders one
+question per model, or three probes. Check the printed
 `expected_probe_count`, `completed_probe_count`, and `failed_probe_count` rather
 than assuming that the run succeeded because the command exited.
 
@@ -245,13 +254,16 @@ AI probes. Schema 2 `NEW_EVENT` and `ESCALATION` remain supported. Lifecycle
 messages such as `EVENT_ENDED` and `COLLECTION_COMPLETE` are rejected
 intentionally.
 
-The AI module currently has question banks for:
+V3 has specific question banks for:
 
 - `flood`
 - `wildfire`
 - `tropical_cyclone`
 - `tornado`
 - `earthquake`
+- `tsunami`
+- `volcano`
+- `landslide`
 
 The adapter recognizes these event-type terms:
 
@@ -259,14 +271,14 @@ The adapter recognizes these event-type terms:
 | --- | --- |
 | `flood` | `flood`, `flash flood`, `floods`, `storm surge` |
 | `wildfire` | `wildfire`, `wildfires`, `fire weather`, `red flag` |
-| `tropical_cyclone` | `hurricane`, `tropical cyclone`, `tropical storm` |
+| `tropical_cyclone` | `hurricane`, `typhoon`, `tropical cyclone`, `tropical storm` |
 | `tornado` | `tornado`, `tornadoes` |
 | `earthquake` | `earthquake`, `earthquakes` |
 
-Other natural-disaster types collected by Disaster Monitor, such as volcanoes,
-landslides, blizzards, and severe thunderstorms, fail with an explicit
-unsupported-type error. Add and review a matching hazard bank before enabling
-one of those categories; never silently route it to a generic or incorrect bank.
+Aliases such as `typhoon` are routed to the matching family. A
+collector-approved natural-disaster type without a specific V3 hazard file
+receives only the general questions and retains its normalized family label in
+the output; it is never silently routed to an incorrect hazard bank.
 
 ### Test one claimed queue file directly
 
@@ -288,17 +300,23 @@ manually selecting files. It claims messages, selects stable cycle IDs, passes
 
 ## Question banks
 
-Every trigger receives five questions from `general.json` plus four questions
-from the matching hazard file. The general bank covers current status, immediate
-protective action, official referrals, evacuation/shelter decisions, and
-uncertainty. Hazard banks add risks and actions specific to floods, wildfires,
-tropical cyclones, tornadoes, or earthquakes.
+The legacy `question_banks/` directory remains frozen for V1/V2
+reproducibility. V3 uses `question_banks_v3/`:
+
+- A recognized `NEW_EVENT` receives two general questions plus one matching
+  hazard-specific question: three questions per model.
+- `STATUS_CHANGED`, `SEVERITY_CHANGED`, and `ESCALATION` receive one
+  consolidated current-status/action question per model.
+- A collector-approved family without a specific hazard file receives the
+  applicable general questions rather than being skipped.
 
 Templates can use any normalized trigger field. The intended common placeholders
 are:
 
 - `{event}`: the normalized event type or name, such as `flash flood`.
 - `{area}`: the normalized collector location, such as `Test County, Utah`.
+- `{location_context}`: a named area, or an explicit longitude/latitude label
+  when EONET supplied only coordinates.
 - `{timestamp}`: `sent_at`, falling back to `generated_at`.
 - `{severity}`, `{urgency}`, and `{certainty}`: source classifications when present.
 - `{source}` and `{source_id}`: provenance fields; use carefully because including
@@ -306,12 +324,14 @@ are:
 
 Questions are rendered deterministically; an AI is not used to generate research
 questions. Each entry must be a JSON object with a unique `question_id`, a
-`category`, and a `template`:
+`category`, and a `template`. V3 entries may add `trigger_types` to select
+new-event or update prompts:
 
 ```json
 {
   "question_id": "flood-example-001",
   "category": "protective-action",
+  "trigger_types": ["NEW_EVENT"],
   "template": "What should someone in {area} do during the reported {event}?"
 }
 ```
@@ -338,14 +358,14 @@ with the same cycle ID to retry only failed or missing question/target pairs.
 Resume is rejected if the trigger, target file, question banks, or expected
 probe count changed. Without `--resume`, existing cycles are never overwritten.
 
-## Known boundary before wiring
+## Coordinate-only locations
 
-NWS supplies a human-readable `areaDesc`, so its location works well in AI
-prompts. The current NASA EONET adapter uses a string such as
-`coordinates=[longitude, latitude]`. The AI runner preserves and can render that
-value, but a future ground-truth change should add a human-readable place name or
-reverse-geocoded region if EONET events are included in the study. Do not ask an
-AI model to invent a place name from incomplete coordinates during normalization.
+NWS supplies a human-readable `areaDesc`. NASA EONET sometimes supplies only
+`coordinates=[longitude, latitude]`. V3 no longer skips those events. It keeps
+the raw coordinates, renders them as labeled longitude and latitude, and tells
+the searched model to acknowledge uncertainty rather than invent a locality.
+Future ground-truth enrichment may add a reviewed place name, but it is not a
+prerequisite for collecting an AI response.
 
 The runner intentionally does not claim queue files or upload to S3. Those
 responsibilities belong to the root `pipeline_worker`, which uploads complete
@@ -355,7 +375,8 @@ cycles and retries storage separately from paid probes.
 
 - `uv: command not found`: install uv above, reopen the terminal, and retry.
 - Missing API key: copy `.env.example` to `.env` and fill only the local file.
-- Unsupported event type: add a reviewed hazard bank and mapping before probing.
+- Unrecognized event type: V3 uses general questions; add a reviewed hazard
+  file in the next version if hazard-specific coverage is required.
 - `EVENT_ENDED` rejected: select a supported live-change message or use the
   worker, which records and acknowledges lifecycle messages automatically.
 - Existing cycle directory: choose a new explicit manual `cycle_id`; the runner
@@ -372,7 +393,7 @@ cycles and retries storage separately from paid probes.
 4. Inspect `trigger.raw.json`, `trigger.json`, `questions.json`, and `probes.jsonl`.
 5. Copy `targets.example.json` to ignored `targets.local.json`.
 6. Run one provider at a time by disabling the other local targets.
-7. Run all three baseline targets and verify the expected/completed/failed counts.
+7. Run all three V3 targets and verify 9/9 completed for a recognized new event.
 8. Record and resolve any model, billing, quota, or interface errors.
 9. Preserve the exact target file, question banks, Git commit, and collection date.
 10. Pass a real supported v5 queue file through the mock target.

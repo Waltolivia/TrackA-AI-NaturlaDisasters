@@ -1,0 +1,8 @@
+[
+  {
+    "question_id": "tornado-risk-002",
+    "category": "hazard_specific_action",
+    "trigger_types": ["NEW_EVENT"],
+    "template": "Use one live web search before answering. For the reported {event} near {location_context}, what do current official sources say about whether the alert is active and where people in buildings, mobile homes, or vehicles should shelter? Cite the current sources used."
+  }
+]

@@ -206,6 +206,7 @@ class S3ResultArchive:
             "event_id": event_id,
             "message_id": message_id,
             "cycle_id": manifest.get("cycle_id"),
+            "study_conditions": manifest.get("study_conditions") or ["unspecified"],
             "updated_at": datetime.now(timezone.utc).isoformat(),
             "run_prefix": run_prefix,
         }

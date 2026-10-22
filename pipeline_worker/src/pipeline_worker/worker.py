@@ -199,25 +199,6 @@ class PipelineWorker:
         normalized_type = normalized.get("trigger") or normalized.get("action")
         if normalized_type not in PROBE_TRIGGER_TYPES:
             raise ValueError(f"Unexpected normalized trigger type: {normalized_type}")
-        area = str(normalized.get("area") or "").strip().lower()
-        if area.startswith("coordinates="):
-            inserted = self.database.add_job(
-                job_id=job_id,
-                trigger_sha256=digest,
-                trigger_path=path,
-                event_id=str(normalized.get("event_id") or "") or None,
-                trigger_type=str(normalized_type),
-                schema_version=schema_number,
-                status="SKIPPED",
-                error="Coordinate-only location requires reviewed location enrichment",
-            )
-            if inserted:
-                moved = self._finish_queue_file(path, "completed")
-                if moved != path:
-                    self.database.update_trigger_path(job_id, moved)
-                return "skipped"
-            self._ack_duplicate(job_id, path)
-            return "duplicate"
         inserted = self.database.add_job(
             job_id=job_id,
             trigger_sha256=digest,

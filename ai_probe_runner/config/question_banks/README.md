@@ -1,5 +1,9 @@
 # Question banks
 
+This directory is the frozen V1/V2 no-search bank retained for reproducing
+older cycles. The active reduced live-search condition is in
+`../question_banks_v3/`; do not edit this directory to change V3 behavior.
+
 The runner combines `general.json` with exactly one file from `hazards/`. The
 v2 trigger adapter chooses that hazard file from the collected `event_type` and
 headline. It never asks an AI model to invent or select research questions.

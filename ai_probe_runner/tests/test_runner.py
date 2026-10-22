@@ -213,6 +213,7 @@ def test_v5_ended_message_does_not_start_ai_probes() -> None:
         ("Red Flag Warning", "wildfire"),
         ("Hurricane Warning", "tropical_cyclone"),
         ("Tropical Storm Watch", "tropical_cyclone"),
+        ("Typhoon Warning", "tropical_cyclone"),
         ("Tornado Warning", "tornado"),
         ("Earthquakes", "earthquake"),
     ],
@@ -232,7 +233,7 @@ def test_v2_event_terms_select_expected_bank(event_type: str, family: str) -> No
     assert normalized["hazard_family"] == family
 
 
-def test_unsupported_v2_hazard_has_actionable_error() -> None:
+def test_unbanked_v2_hazard_is_preserved_for_general_questions() -> None:
     trigger = {
         "schema_version": 2,
         "trigger": "NEW_EVENT",
@@ -242,8 +243,8 @@ def test_unsupported_v2_hazard_has_actionable_error() -> None:
         "source": "NASA_EONET",
         "source_alert_id": "eonet-1",
     }
-    with pytest.raises(ValueError, match="Unsupported disaster-monitor event_type"):
-        normalize_trigger(trigger)
+    normalized = normalize_trigger(trigger)
+    assert normalized["hazard_family"] == "volcano"
 
 
 def test_mock_cycle_archives_trigger_questions_and_responses(tmp_path: Path) -> None:
@@ -389,7 +390,7 @@ def test_resume_retries_only_failed_probes(
     assert len(records_path.read_text().splitlines()) == 4
 
 
-def test_unknown_hazard_requires_a_bank(tmp_path: Path) -> None:
+def test_unknown_hazard_uses_general_bank(tmp_path: Path) -> None:
     bank_dir = tmp_path / "banks"
     write_banks(bank_dir)
     trigger = {
@@ -399,8 +400,56 @@ def test_unknown_hazard_requires_a_bank(tmp_path: Path) -> None:
         "event": "Unknown Warning",
         "area": "Test County",
     }
-    with pytest.raises(ValueError, match="Unsupported disaster-monitor event_type"):
-        build_questions(trigger, bank_dir)
+    questions, paths = build_questions(trigger, bank_dir)
+    assert [question["question_id"] for question in questions] == ["general"]
+    assert paths == [bank_dir / "general.json"]
+
+
+def test_coordinate_location_is_rendered_for_prompts() -> None:
+    normalized = normalize_trigger(
+        {
+            "schema_version": 3,
+            "message_id": "MSG-coordinates",
+            "action": "NEW_EVENT",
+            "event_id": "EVT-00000001",
+            "disaster": {
+                "type": "wildfires",
+                "name": "Example Fire",
+                "location": "coordinates=[-111.9, 40.7]",
+            },
+        }
+    )
+    assert normalized["location_kind"] == "coordinates"
+    assert normalized["location_context"] == (
+        "longitude -111.9, latitude 40.7 "
+        "(the collector supplied coordinates but no place name)"
+    )
+
+
+def test_v3_question_schedule_reduces_calls() -> None:
+    bank_dir = Path(__file__).parents[1] / "config" / "question_banks_v3"
+    new_event = normalize_trigger(
+        {
+            "schema_version": 3,
+            "message_id": "MSG-new",
+            "action": "NEW_EVENT",
+            "event_id": "EVT-00000001",
+            "disaster": {
+                "type": "typhoon",
+                "name": "Typhoon Example",
+                "location": "coordinates=[140.0, 20.0]",
+            },
+        }
+    )
+    questions, _ = build_questions(new_event, bank_dir)
+    assert new_event["hazard_family"] == "tropical_cyclone"
+    assert len(questions) == 3
+
+    update = dict(new_event, action="STATUS_CHANGED", trigger="STATUS_CHANGED")
+    questions, _ = build_questions(update, bank_dir)
+    assert [question["question_id"] for question in questions] == [
+        "general-change-001"
+    ]
 
 
 def test_target_config_requires_unique_ids_and_enabled_target(tmp_path: Path) -> None:
