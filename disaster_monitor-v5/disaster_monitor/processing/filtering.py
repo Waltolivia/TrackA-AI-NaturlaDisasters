@@ -16,6 +16,7 @@ NWS_KEEP_TERMS = {
     "flash flood emergency",
     "flood warning",
     "flood emergency",
+    "tornado",
 
     "tsunami warning",
     "tsunami watch",
@@ -35,7 +36,6 @@ NWS_KEEP_TERMS = {
 NWS_REJECT_TERMS = {
     "severe thunderstorm",
     "severe storm",
-    "tornado",
 
     "coastal flood",
     "coastal flooding",
@@ -86,8 +86,7 @@ EONET_KEEP_CATEGORIES = {
     "earthquakes",
     "volcanoes",
     "floods",
-    "landslides",
-    "wildfires",
+    "landslides"
 }
 
 
