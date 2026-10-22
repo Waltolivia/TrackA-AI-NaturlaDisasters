@@ -8,48 +8,51 @@ put API keys in these files.
 
 - `targets.mock.json` runs a free local test without contacting an AI provider.
 - `targets.study-v1.json` preserves the original Sonnet study condition.
-- `targets.study-v2.json` is the current lower-cost Haiku condition.
+- `targets.study-v2.json` preserves the lower-cost no-search condition.
+- `targets.study-v3-search.json` is the current reduced-prompt live-search
+  condition.
 - `targets.example.json` mirrors v2 for local experimentation.
 - `targets.local.json` is the ignored working copy that each researcher may use
   for account-specific testing.
 
-Create the local copy from `ai_probe_runner/`:
+Create a local V3 copy from `ai_probe_runner/`:
 
 ```bash
-cp config/targets.example.json config/targets.local.json
+cp config/targets.study-v3-search.json config/targets.local.json
 python -m json.tool config/targets.local.json >/dev/null
 ```
 
-## Recommended baseline
+## Current V3 condition
 
-The baseline uses one quick, cost-conscious model per provider with browsing
-disabled:
+V3 keeps one quick, cost-conscious model per provider and enables current web
+information:
 
 | Target ID | Provider | Model ID | Interface |
 | --- | --- | --- | --- |
-| `openai-gpt-5-4-nano-2026-03-17-no-search` | OpenAI | `gpt-5.4-nano-2026-03-17` | Responses API |
-| `anthropic-haiku-5-5-low-effort-no-search` | Anthropic | `claude-haiku-5-5` | Messages API |
-| `google-gemini-3-5-flash-lite-no-search` | Google | `gemini-3.5-flash-lite` | Interactions API |
+| `openai-gpt-5-4-nano-2026-03-17-search-v3` | OpenAI | `gpt-5.4-nano-2026-03-17` | Responses API + search |
+| `anthropic-haiku-5-5-low-effort-search-v3` | Anthropic | `claude-haiku-5-5` | Messages API + search |
+| `google-gemini-3-5-flash-lite-search-v3` | Google | `gemini-3.5-flash-lite` | Interactions API + search |
 
 This is a low-cost API comparison, not an exact reproduction of free ChatGPT,
 Claude, or Gemini. Consumer products may use different routing, system prompts,
 tools, safety layers, personalization, and model versions.
 
-The v2 condition intentionally chooses Haiku and a smaller output budget after
-the Sonnet condition consumed credits faster than expected. If a successor is
-required, give it a new `target_id`, record the transition date, and preserve
-the old configuration so different models are never treated as one condition.
+The V3 condition retains Haiku after Sonnet consumed credits faster than
+expected. It caps output at 640 tokens. OpenAI and Anthropic are hard-capped at
+one search tool call per response; each V3 prompt also requests one focused
+search. Gemini can decide to execute multiple queries within one response, so
+its recorded search count and provider usage dashboard must be monitored.
 
-## Gemini free tier
+## Gemini search billing
 
-As reviewed on 2026-09-28, Google lists a free tier for
-`gemini-3.5-flash-lite`, so billing is not required for the initial integration
-test. Free-tier prompts and responses may be used to improve Google's products;
-paid-tier data is documented differently. Use only approved public disaster
-information, confirm the project's research-data policy, and review the
+As reviewed on 2026-10-21, Google's pricing page lists Gemini 3 search
+grounding as unavailable through the free-tier API for the selected Flash-Lite
+condition. On the paid tier, the first 5,000 search requests per month are
+currently included across eligible Gemini 3 models, after which search is
+billed per query. One response may generate multiple queries. Confirm billing,
+set a budget alert, and review the
 [official pricing page](https://ai.google.dev/gemini-api/docs/pricing) before
-unattended collection. Add billing only if the team needs higher quota or the
-paid-tier data terms.
+unattended V3 collection. Pricing and quota can change.
 
 ## Target fields
 
@@ -58,18 +61,20 @@ Each file is a JSON array. Every entry supports:
 | Field | Meaning |
 | --- | --- |
 | `target_id` | Stable project label for this complete experimental condition. |
+| `study_id` | Optional shared label written into V3 manifests and readable output. |
 | `provider` | Provider adapter: `openai`, `anthropic`, `google`, or `mock`. |
 | `model` | Exact model ID sent to the provider API. |
 | `interface` | Descriptive API label archived with the result. |
 | `browsing` | Whether the provider's supported search tool is requested. |
 | `max_output_tokens` | Positive integer ceiling passed to every provider. |
 | `effort` | Optional Anthropic effort level; v2 explicitly uses `low`. |
+| `max_search_uses` | Optional 1–10 search-call cap. Used by OpenAI and Anthropic in V3. |
 | `enabled` | Whether this entry participates in a run. |
 
-The runner passes `model`, `browsing`, `max_output_tokens`, and supported
-`effort` settings into provider adapters. Other fields are preserved for
-identification and auditing. Study v2 freezes output length at 1,024 tokens and
-Anthropic effort at `low`.
+The runner passes `model`, `browsing`, `max_output_tokens`, supported `effort`,
+and supported search caps into provider adapters. Other fields are preserved
+for identification and auditing. Study V3 freezes output length at 640 tokens
+and Anthropic effort at `low`.
 
 ## Test one provider at a time
 
@@ -86,6 +91,7 @@ Then run:
 uv run ai-probe-runner \
   --trigger examples/trigger.flash-flood.json \
   --targets config/targets.local.json \
+  --question-bank-dir config/question_banks_v3 \
   --delay-seconds 1
 ```
 
@@ -94,7 +100,7 @@ Inspect both the printed summary and the generated `probes.jsonl`; provider
 errors are retained as records and do not necessarily make the CLI exit with a
 failure status.
 
-## Add web search as a separate condition
+## Preserve search as a separate condition
 
 Do not change an existing target from `browsing: false` to `true` during a study.
 Instead, copy the entry, give it a distinct `target_id`, and change only
@@ -107,7 +113,8 @@ Instead, copy the entry, give it a distinct `target_id`, and change only
   "model": "gpt-5.4-nano-2026-03-17",
   "interface": "responses-api",
   "browsing": true,
-  "max_output_tokens": 1024,
+  "max_search_uses": 1,
+  "max_output_tokens": 640,
   "enabled": true
 }
 ```

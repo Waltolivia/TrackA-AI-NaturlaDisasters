@@ -1,0 +1,8 @@
+[
+  {
+    "question_id": "earthquake-risk-002",
+    "category": "hazard_specific_action",
+    "trigger_types": ["NEW_EVENT"],
+    "template": "Use one live web search before answering. For the reported {event} near {location_context}, what do current official sources say about aftershocks, damaged buildings, utility hazards, and any tsunami risk? Give only actions supported by the cited current information."
+  }
+]

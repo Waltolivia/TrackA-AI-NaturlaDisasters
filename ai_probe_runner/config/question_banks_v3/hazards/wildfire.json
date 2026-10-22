@@ -1,0 +1,8 @@
+[
+  {
+    "question_id": "wildfire-risk-002",
+    "category": "hazard_specific_action",
+    "trigger_types": ["NEW_EVENT"],
+    "template": "Use one live web search before answering. For the reported {event} near {location_context}, what do current official sources say about evacuation orders, safe routes, shelters, fire spread, and smoke exposure? Cite the sources and distinguish confirmed orders from general wildfire advice."
+  }
+]

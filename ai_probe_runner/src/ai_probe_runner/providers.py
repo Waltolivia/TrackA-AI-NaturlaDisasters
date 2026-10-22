@@ -12,6 +12,7 @@ class ProviderResult:
     citations: list[dict[str, Any]]
     usage: dict[str, Any] | None
     raw: dict[str, Any]
+    search_count: int = 0
 
 
 class Provider(Protocol):
@@ -23,6 +24,7 @@ class Provider(Protocol):
         browsing: bool,
         max_output_tokens: int,
         effort: str | None = None,
+        max_search_uses: int | None = None,
     ) -> ProviderResult: ...
 
 
@@ -35,6 +37,7 @@ class MockProvider:
         browsing: bool,
         max_output_tokens: int,
         effort: str | None = None,
+        max_search_uses: int | None = None,
     ) -> ProviderResult:
         text = "Mock response: consult the relevant local emergency authority."
         raw = {
@@ -42,10 +45,19 @@ class MockProvider:
             "browsing": browsing,
             "max_output_tokens": max_output_tokens,
             "effort": effort,
+            "max_search_uses": max_search_uses,
             "input": prompt,
             "output": text,
         }
-        return ProviderResult(text, "mock-response", model, [], None, raw)
+        return ProviderResult(
+            text=text,
+            response_id="mock-response",
+            resolved_model=model,
+            citations=[],
+            usage=None,
+            raw=raw,
+            search_count=0,
+        )
 
 
 class OpenAIProvider:
@@ -64,6 +76,7 @@ class OpenAIProvider:
         browsing: bool,
         max_output_tokens: int,
         effort: str | None = None,
+        max_search_uses: int | None = None,
     ) -> ProviderResult:
         kwargs: dict[str, Any] = {
             "model": model,
@@ -72,6 +85,8 @@ class OpenAIProvider:
         }
         if browsing:
             kwargs["tools"] = [{"type": "web_search"}]
+            if max_search_uses is not None:
+                kwargs["max_tool_calls"] = max_search_uses
         response = self.client.responses.create(**kwargs)
         raw = response.model_dump(mode="json")
         citations = [
@@ -82,12 +97,17 @@ class OpenAIProvider:
             if annotation.get("type") == "url_citation"
         ]
         return ProviderResult(
-            response.output_text,
-            raw.get("id"),
-            raw.get("model"),
-            citations,
-            raw.get("usage"),
-            raw,
+            text=response.output_text,
+            response_id=raw.get("id"),
+            resolved_model=raw.get("model"),
+            citations=citations,
+            usage=raw.get("usage"),
+            raw=raw,
+            search_count=sum(
+                1
+                for item in raw.get("output", [])
+                if item.get("type") == "web_search_call"
+            ),
         )
 
 
@@ -107,6 +127,7 @@ class AnthropicProvider:
         browsing: bool,
         max_output_tokens: int,
         effort: str | None = None,
+        max_search_uses: int | None = None,
     ) -> ProviderResult:
         kwargs: dict[str, Any] = {
             "model": model,
@@ -118,7 +139,7 @@ class AnthropicProvider:
                 {
                     "type": "web_search_20250305",
                     "name": "web_search",
-                    "max_uses": 5,
+                    "max_uses": max_search_uses or 1,
                 }
             ]
         if effort:
@@ -136,12 +157,18 @@ class AnthropicProvider:
             for citation in block.get("citations") or []
         ]
         return ProviderResult(
-            text,
-            raw.get("id"),
-            raw.get("model"),
-            citations,
-            raw.get("usage"),
-            raw,
+            text=text,
+            response_id=raw.get("id"),
+            resolved_model=raw.get("model"),
+            citations=citations,
+            usage=raw.get("usage"),
+            raw=raw,
+            search_count=sum(
+                1
+                for block in raw.get("content", [])
+                if block.get("type") == "server_tool_use"
+                and block.get("name") == "web_search"
+            ),
         )
 
 
@@ -161,6 +188,7 @@ class GoogleProvider:
         browsing: bool,
         max_output_tokens: int,
         effort: str | None = None,
+        max_search_uses: int | None = None,
     ) -> ProviderResult:
         kwargs: dict[str, Any] = {
             "model": model,
@@ -179,12 +207,17 @@ class GoogleProvider:
             if annotation.get("type") == "url_citation"
         ]
         return ProviderResult(
-            response.output_text,
-            raw.get("id"),
-            raw.get("model") or model,
-            citations,
-            raw.get("usage"),
-            raw,
+            text=response.output_text,
+            response_id=raw.get("id"),
+            resolved_model=raw.get("model") or model,
+            citations=citations,
+            usage=raw.get("usage"),
+            raw=raw,
+            search_count=sum(
+                1
+                for step in raw.get("steps", [])
+                if step.get("type") == "google_search_call"
+            ),
         )
 
 

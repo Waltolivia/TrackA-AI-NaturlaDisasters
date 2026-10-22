@@ -109,7 +109,7 @@ def test_lifecycle_message_is_skipped_and_acknowledged(tmp_path: Path) -> None:
     assert (worker.config.outbox / "completed" / "ended.json").is_file()
 
 
-def test_unsupported_hazard_is_skipped_without_retries(tmp_path: Path) -> None:
+def test_unbanked_hazard_runs_general_questions(tmp_path: Path) -> None:
     worker = PipelineWorker(config(tmp_path))
     trigger = worker.config.outbox / "pending" / "volcano.json"
     payload = v5_payload(event_type="volcano")
@@ -118,11 +118,11 @@ def test_unsupported_hazard_is_skipped_without_retries(tmp_path: Path) -> None:
 
     result = worker.run_once()
 
-    assert result["processed"] == 0
-    assert result["discovery"]["skipped"] == 1
+    assert result["processed"] == 1
+    assert result["succeeded"] == 1
     job = worker.database.get("MSG-new-event")
     assert job is not None
-    assert "Unsupported" in job["last_error"]
+    assert job["status"] == "SUCCEEDED"
 
 
 def test_invalid_json_is_moved_to_failed(tmp_path: Path) -> None:
@@ -138,7 +138,7 @@ def test_invalid_json_is_moved_to_failed(tmp_path: Path) -> None:
     assert (worker.config.outbox / "failed" / "broken.json").is_file()
 
 
-def test_coordinate_only_eonet_location_is_skipped(tmp_path: Path) -> None:
+def test_coordinate_only_eonet_location_is_probed(tmp_path: Path) -> None:
     worker = PipelineWorker(config(tmp_path))
     trigger = worker.config.outbox / "pending" / "eonet.json"
     payload = v5_payload(event_type="wildfires")
@@ -150,11 +150,15 @@ def test_coordinate_only_eonet_location_is_skipped(tmp_path: Path) -> None:
 
     result = worker.run_once()
 
-    assert result["processed"] == 0
-    assert result["discovery"]["skipped"] == 1
+    assert result["processed"] == 1
+    assert result["succeeded"] == 1
     job = worker.database.get("MSG-eonet")
     assert job is not None
-    assert "Coordinate-only" in job["last_error"]
+    assert job["status"] == "SUCCEEDED"
+    trigger_data = json.loads(
+        (Path(job["cycle_dir"]) / "trigger.json").read_text(encoding="utf-8")
+    )
+    assert trigger_data["location_kind"] == "coordinates"
 
 
 def test_flat_v2_outbox_remains_supported(tmp_path: Path) -> None:

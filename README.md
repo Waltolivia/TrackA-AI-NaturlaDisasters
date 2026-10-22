@@ -58,8 +58,10 @@ outbox/pending -> Pipeline Worker -> AI Probe Runner -> pipeline_data/results
 3. A meaningful live change is atomically written to `outbox/pending/`.
 4. The worker records the unique `message_id` in SQLite and moves the file to
    `outbox/processing/`.
-5. The AI runner combines five general questions with four matching hazard
-   questions and calls every enabled target.
+5. Under study V3, the AI runner asks two general and one hazard-specific
+   live-search question for a new recognized event. Meaningful updates use one
+   consolidated question. Every rendered question runs against all three
+   enabled targets.
 6. A completely successful job moves to `outbox/completed/`.
 7. A failed job waits for exponential backoff and resumes only missing or
    failed probes. After eight attempts it moves to `outbox/failed/`.
@@ -73,7 +75,9 @@ The worker probes these v5 actions:
 - `SEVERITY_CHANGED`
 
 `EVENT_ENDED` is recorded and acknowledged without spending API credits.
-Unsupported hazards are also recorded as `SKIPPED`, not retried forever.
+Filtered natural-disaster types without a specific hazard bank receive the
+general questions instead of being skipped. Coordinate-only EONET locations
+are passed through as labeled longitude/latitude values.
 
 ## Already set up? Start the live pipeline
 
@@ -93,7 +97,8 @@ cd disaster_monitor-v5
 ```bash
 source deployment/local.env
 uv run --project pipeline_worker pipeline-worker \
-  --targets ai_probe_runner/config/targets.study-v2.json \
+  --targets ai_probe_runner/config/targets.study-v3-search.json \
+  --question-bank-dir ai_probe_runner/config/question_banks_v3 \
   --poll-seconds 5 \
   run
 ```
@@ -161,13 +166,15 @@ cp pipeline_worker/examples/v5.flash-flood.json \
 Run the worker once. Its default target is the free local mock:
 
 ```bash
-uv run --project pipeline_worker pipeline-worker once
+uv run --project pipeline_worker pipeline-worker \
+  --question-bank-dir ai_probe_runner/config/question_banks_v3 \
+  once
 ```
 
 Expected result:
 
 - One job reports `SUCCEEDED`.
-- Nine mock probes complete.
+- Three mock probes complete for the recognized new flood event.
 - The trigger moves from `outbox/pending/` to `outbox/completed/`.
 - Results appear under
   `pipeline_data/results/YYYY/Month/Week/EVT-.../EVT-..._AI/runs/MSG-.../`.
@@ -213,16 +220,19 @@ GEMINI_API_KEY=...
 Never put keys in JSON, source code, Git, screenshots, or collected results.
 The worker starts the AI runner for you; you do not need a third terminal.
 
-The current cost-controlled study target file is committed without secrets:
+The current live-search study target file is committed without secrets:
 
 ```bash
 python -m json.tool \
-  ai_probe_runner/config/targets.study-v2.json >/dev/null
+  ai_probe_runner/config/targets.study-v3-search.json >/dev/null
 ```
 
-It enables all three approved providers. A successful event runs nine questions
-against three models, for 27 probes. Use an ignored, isolated test queue so a
-previous mock run cannot suppress the fixture as a duplicate:
+It enables the three low-cost providers, live search, a 640-token output
+ceiling, and a one-search cap where the provider API exposes one. A recognized
+new event runs three questions against three models, for 9 probes. A status,
+severity, or escalation update runs one question against three models, for 3
+probes. Use an ignored, isolated test queue so a previous mock run cannot
+suppress the fixture as a duplicate:
 
 ```bash
 mkdir -p local_test/outbox/{pending,processing,completed,failed}
@@ -237,19 +247,22 @@ uv run --project pipeline_worker pipeline-worker \
   --outbox local_test/outbox \
   --state-db local_test/worker.db \
   --output local_test/results \
-  --targets ai_probe_runner/config/targets.study-v2.json \
+  --targets ai_probe_runner/config/targets.study-v3-search.json \
+  --question-bank-dir ai_probe_runner/config/question_banks_v3 \
   once --max-jobs 1
 ```
 
-Expect `expected_probe_count` and `completed_probe_count` to both be 27, with
+Expect `expected_probe_count` and `completed_probe_count` to both be 9, with
 `failed_probe_count` equal to zero. Inspect the manifest and `probes.jsonl` for
-all three providers. The worker reports success only when every expected probe
-completed. To troubleshoot one account, temporarily disable the other targets
-in an ignored `targets.local.json`; do not change the committed study file.
+all three providers. `responses.json` and `AI_RESULTS.md` also show whether a
+search call was recorded and retain citations. The worker reports success only
+when every expected probe completed. To troubleshoot one account, temporarily
+disable the other targets in an ignored `targets.local.json`; do not change the
+committed study file.
 
-Google currently offers a free tier for the selected Flash-Lite model, so the
-initial test does not require Google billing. Free-tier data handling and quota
-differ from paid usage; confirm the team's research-data policy before launch.
+Google's API may perform more than one billable query inside one grounded
+response even though the prompt asks for one focused search. Monitor its usage
+dashboard as well as provider token balances during the pilot.
 
 ## 5. Configure the shared S3 archive
 
@@ -329,7 +342,8 @@ Open a second terminal at the repository root:
 ```bash
 source deployment/local.env
 uv run --project pipeline_worker pipeline-worker \
-  --targets ai_probe_runner/config/targets.study-v2.json \
+  --targets ai_probe_runner/config/targets.study-v3-search.json \
+  --question-bank-dir ai_probe_runner/config/question_banks_v3 \
   --poll-seconds 5 \
   run
 ```
@@ -388,7 +402,7 @@ question/target pairs that already succeeded are not called again.
 | `RUNNING` | Job has an active time-limited lease |
 | `RETRY` | Temporary failure waiting for backoff |
 | `SUCCEEDED` | Every expected AI probe succeeded |
-| `SKIPPED` | Non-probe action or unsupported hazard |
+| `SKIPPED` | Non-probe lifecycle action such as `EVENT_ENDED` |
 | `INVALID` | Malformed JSON |
 | `DEAD` | Manual review required |
 
@@ -427,6 +441,7 @@ Every AI cycle archives:
 - Target and question-bank hashes
 - Git commit and runtime
 - Provider-reported model and usage
+- Whether live search was requested and how many search calls were recorded
 - Every successful or failed attempt
 - `AI_RESULTS.md`, the recommended human-readable view
 - `responses.json`, the compact analysis-friendly view
@@ -439,6 +454,31 @@ probe count are unchanged. It then calls only failed or missing probe pairs.
 Changing a target file or question bank during a retry is rejected. This avoids
 mixing different research conditions inside one cycle.
 
+## Safe V2 to V3 rollout
+
+V2 no-search results remain valid historical data. Do not delete them or reuse
+their `message_id` folders. Before deploying V3 on the one authoritative host:
+
+1. Stop the collector and worker cleanly with **Control+C**.
+2. Run `pipeline-worker status --limit 50` using the existing checkout. Do not
+   switch configurations while a job is `RUNNING` or `RETRY`; let the V2 worker
+   finish it first.
+3. Back up `disaster_monitor-v5/data/disaster_monitor.db`,
+   `disaster_monitor-v5/outbox/`, `pipeline_data/worker.db`, and
+   `pipeline_data/results/` while the processes are stopped.
+4. Pull the merged V3 commit and rerun
+   `uv sync --project pipeline_worker --extra dev --extra providers`.
+5. Run the automated tests and one isolated V3 mock/provider pilot.
+6. Restart the same collector database and worker database with the V3 command
+   above. Do **not** create a fresh clone with empty databases as a second live
+   collector.
+
+SQLite continues the existing `EVT-...` sequence, while UUID-based
+`message_id` values create new immutable AI run folders. S3 keeps prior
+`runs/MSG-.../` data. Only the convenience files directly inside
+`EVT-..._AI/` advance to the latest completed run; bucket versioning keeps
+earlier object versions recoverable.
+
 ## Preparing for 24/7 use
 
 Before leaving the pipeline unattended:
@@ -448,6 +488,7 @@ Before leaving the pipeline unattended:
 3. Put the repository and `pipeline_data/` on persistent storage.
 4. Back up `pipeline_data/worker.db`, AI results, and the collector database.
 5. Use one worker process. Do not run two workers with separate state databases.
+   Also run only one authoritative collector against the shared S3 prefix.
 6. Use `systemd`, launchd, Docker Compose, or another supervisor to restart the
    collector and worker after a reboot.
 7. Enable and verify the shared S3 archive; confirm both `weather` and `AI`
@@ -491,13 +532,14 @@ for details and the `python -m disaster_monitor.archive_cli` commands.
 
 ## Important current boundaries
 
-- EONET sometimes provides coordinates instead of a human-readable place. The
-  worker records coordinate-only jobs as `SKIPPED` until location enrichment is
-  reviewed, preventing unrealistic location prompts.
+- EONET sometimes provides coordinates instead of a human-readable place. V3
+  sends those events through, labels longitude and latitude explicitly, and
+  tells models not to invent a place-name match.
 - NWS is the authoritative alert trigger. EONET is supplemental discovery
   metadata and is not treated as authoritative spatial or temporal ground truth.
-- The pipeline currently probes flood, wildfire, tropical cyclone, tornado,
-  and earthquake events.
+- V3 has specific banks for flood, wildfire, tropical cyclone, tornado,
+  earthquake, tsunami, volcano, and landslide events. Other collector-approved
+  natural disasters receive the general bank.
 - Provider SDK errors are retained in research output. Temporary job failures
   retry with exponential backoff, up to eight attempts by default.
 - v5 files are atomically written before they appear in `pending/`. A future
@@ -507,7 +549,7 @@ for details and the `python -m disaster_monitor.archive_cli` commands.
 ## Wednesday readiness checklist
 
 - [ ] All three test commands pass.
-- [ ] Synthetic v5 message completes nine mock probes.
+- [ ] Synthetic v5 message completes three V3 mock probes.
 - [ ] Duplicate synthetic message does not create another cycle.
 - [ ] One real provider completes one event successfully.
 - [ ] All approved providers complete one event successfully.
@@ -516,12 +558,12 @@ for details and the `python -m disaster_monitor.archive_cli` commands.
 - [ ] Result and SQLite backup locations are confirmed.
 - [ ] One S3 test event contains adjacent `EVT-..._weather` and `EVT-..._AI` folders.
 - [ ] `AI_RESULTS.md` is readable in the AI folder and the exact `MSG-...` run is retained.
-- [ ] The team approves `STUDY_PROTOCOL.md` and the frozen study target file.
-- [ ] The clean merged commit is tagged `study-v2.0.0` and that tag is deployed.
+- [ ] The team approves `STUDY_PROTOCOL_V3.md` and the frozen V3 target file.
+- [ ] The clean merged commit is tagged `study-v3.0.0` and that tag is deployed.
 - [ ] The team records the Git commit, target configuration, and collection start time.
 
 For details specific to the worker or provider configuration, see
 [`pipeline_worker/README.md`](pipeline_worker/README.md) and
 [`ai_probe_runner/README.md`](ai_probe_runner/README.md). The frozen research
-decisions are in [`STUDY_PROTOCOL_V2.md`](STUDY_PROTOCOL_V2.md), and unattended Linux
+decisions are in [`STUDY_PROTOCOL_V3.md`](STUDY_PROTOCOL_V3.md), and unattended Linux
 setup is in [`deployment/README.md`](deployment/README.md).

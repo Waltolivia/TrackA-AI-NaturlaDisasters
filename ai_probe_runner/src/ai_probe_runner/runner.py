@@ -15,8 +15,8 @@ from typing import Any
 from .providers import make_provider
 from .questions import build_questions, normalize_trigger
 
-SCHEMA_VERSION = "1.2"
-HUMAN_OUTPUT_SCHEMA_VERSION = "1.0"
+SCHEMA_VERSION = "1.3"
+HUMAN_OUTPUT_SCHEMA_VERSION = "1.1"
 REQUIRED_TARGET_FIELDS = {
     "target_id",
     "provider",
@@ -119,6 +119,15 @@ def run_cycle(
         manifest["cycle_last_resumed_at"] = run_started_at
         manifest["run_attempt_count"] = int(manifest.get("run_attempt_count", 1)) + 1
         manifest["last_git_commit"] = git_commit()
+        manifest.setdefault(
+            "study_conditions",
+            sorted(
+                {
+                    str(target.get("study_id") or "unspecified")
+                    for target in targets
+                }
+            ),
+        )
         _write_json(cycle_dir / "trigger.raw.json", raw_trigger)
         _write_json(cycle_dir / "trigger.json", trigger)
         _write_json(cycle_dir / "questions.json", questions)
@@ -148,6 +157,12 @@ def run_cycle(
             "pending_probe_count": len(questions) * len(targets),
             "cycle_status": "running",
             "hazard_family": trigger["hazard_family"],
+            "study_conditions": sorted(
+                {
+                    str(target.get("study_id") or "unspecified")
+                    for target in targets
+                }
+            ),
             "ground_truth_message_id": trigger.get("message_id"),
             "ground_truth_event_id": trigger.get("event_id"),
             "ground_truth_trigger": trigger.get("trigger") or trigger.get("action"),
@@ -257,6 +272,8 @@ def run_cycle(
                 )
                 if target.get("effort") is not None:
                     ask_kwargs["effort"] = target["effort"]
+                if target.get("max_search_uses") is not None:
+                    ask_kwargs["max_search_uses"] = target["max_search_uses"]
                 result = provider.ask(**ask_kwargs)
                 raw_name = f"{probe_id}.json"
                 _write_json(raw_dir / raw_name, result.raw)
@@ -270,6 +287,9 @@ def run_cycle(
                         "resolved_model": result.resolved_model,
                         "citations": result.citations,
                         "usage": result.usage,
+                        "search_requested": bool(target.get("browsing")),
+                        "search_count": result.search_count,
+                        "search_used": result.search_count > 0,
                         "raw_response_path": f"raw/{raw_name}",
                         "error": None,
                     }
@@ -293,6 +313,9 @@ def run_cycle(
                         "resolved_model": None,
                         "citations": [],
                         "usage": None,
+                        "search_requested": bool(target.get("browsing")),
+                        "search_count": None,
+                        "search_used": None,
                         "raw_response_path": None,
                         "error": {"type": type(exc).__name__, "message": str(exc)},
                     }
@@ -383,6 +406,26 @@ def load_targets(path: Path) -> list[dict[str, Any]]:
                 allowed = ", ".join(sorted(EFFORT_LEVELS))
                 raise ValueError(
                     f"Target {target['target_id']!r} effort must be one of: {allowed}"
+                )
+        max_search_uses = target.get("max_search_uses")
+        if max_search_uses is not None:
+            if not target["browsing"]:
+                raise ValueError(
+                    f"Target {target['target_id']!r} max_search_uses requires browsing"
+                )
+            if target["provider"] not in {"anthropic", "openai"}:
+                raise ValueError(
+                    f"Target {target['target_id']!r} provider does not expose "
+                    "a supported max_search_uses control"
+                )
+            if (
+                not isinstance(max_search_uses, int)
+                or isinstance(max_search_uses, bool)
+                or not 1 <= max_search_uses <= 10
+            ):
+                raise ValueError(
+                    f"Target {target['target_id']!r} max_search_uses "
+                    "must be an integer from 1 through 10"
                 )
         ids.append(str(target["target_id"]))
         if target["enabled"]:
@@ -496,6 +539,7 @@ def _write_readable_outputs(
         "message_id": trigger.get("message_id"),
         "action": trigger.get("trigger") or trigger.get("action"),
         "hazard_family": trigger.get("hazard_family"),
+        "study_conditions": manifest.get("study_conditions") or ["unspecified"],
         "event": trigger.get("event"),
         "area": trigger.get("area"),
         "source": trigger.get("source"),
@@ -523,6 +567,10 @@ def _compact_response(record: dict[str, Any]) -> dict[str, Any]:
         "category": question.get("category"),
         "prompt": question.get("prompt"),
         "status": record.get("status"),
+        "search_requested": record.get("search_requested"),
+        "search_used": record.get("search_used"),
+        "search_count": record.get("search_count"),
+        "citations": record.get("citations") or [],
         "response": record.get("response_text"),
         "error": error.get("message") if isinstance(error, dict) else error,
     }
@@ -550,6 +598,7 @@ def _write_latest_convenience_files(
             "cycle_id": manifest.get("cycle_id"),
             "message_id": manifest.get("ground_truth_message_id"),
             "cycle_completed_at": manifest.get("cycle_completed_at"),
+            "study_conditions": manifest.get("study_conditions") or ["unspecified"],
             "run_directory": f"runs/{cycle_dir.name}",
         },
     )
@@ -563,6 +612,7 @@ def _render_markdown_results(results: dict[str, Any]) -> str:
         f"- **Trigger message:** {results.get('message_id') or results['cycle_id']}",
         f"- **Action:** {results.get('action') or 'manual'}",
         f"- **Hazard:** {results.get('hazard_family') or 'N/A'}",
+        f"- **Study condition:** {', '.join(results.get('study_conditions') or [])}",
         f"- **Event:** {results.get('event') or 'N/A'}",
         f"- **Area:** {results.get('area') or 'N/A'}",
         f"- **Official source:** {results.get('source') or 'N/A'} "
@@ -601,6 +651,8 @@ def _render_markdown_results(results: dict[str, Any]) -> str:
                 "",
                 str(response.get("prompt") or "N/A"),
                 "",
+                f"**Live search:** {_search_summary(response)}",
+                "",
                 "**Response**",
                 "",
                 str(response.get("response") or response.get("error") or "No response"),
@@ -610,6 +662,15 @@ def _render_markdown_results(results: dict[str, Any]) -> str:
             ]
         )
     return "\n".join(lines).rstrip() + "\n"
+
+
+def _search_summary(response: dict[str, Any]) -> str:
+    if not response.get("search_requested"):
+        return "not requested"
+    count = response.get("search_count")
+    if response.get("search_used"):
+        return f"used ({count} search call{'s' if count != 1 else ''} recorded)"
+    return "requested; no search call was recorded"
 
 
 def _verify_resume(

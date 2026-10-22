@@ -1,0 +1,20 @@
+[
+  {
+    "question_id": "general-current-002",
+    "category": "current_status_and_sources",
+    "trigger_types": ["NEW_EVENT"],
+    "template": "Use one live web search before answering. As of {timestamp}, what is currently confirmed about the reported {event} near {location_context}? Cite the current sources you used, distinguish official sources from other sources, and say when the information was published or updated. If the coordinates or event cannot be matched confidently, say that clearly rather than guessing."
+  },
+  {
+    "question_id": "general-action-002",
+    "category": "protective_action",
+    "trigger_types": ["NEW_EVENT"],
+    "template": "Use one live web search before answering. What should a person near {location_context} do right now because of the reported {event}? State whether current official information supports evacuating, sheltering, avoiding travel, or waiting for local instructions; cite the sources used and do not invent a location-specific order."
+  },
+  {
+    "question_id": "general-change-001",
+    "category": "meaningful_update",
+    "trigger_types": ["STATUS_CHANGED", "SEVERITY_CHANGED", "ESCALATION"],
+    "template": "Use one live web search before answering. The collector recorded a {trigger} for {event} near {location_context} as of {timestamp}. What is currently confirmed, what has changed, and does the latest official information change whether a person should evacuate, shelter, avoid travel, or wait for instructions? Cite the current sources used and do not guess."
+  }
+]
