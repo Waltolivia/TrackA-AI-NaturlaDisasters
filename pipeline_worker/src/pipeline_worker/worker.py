@@ -399,8 +399,21 @@ class PipelineWorker:
             return path
         target = self.config.outbox / "processing" / path.name
         if target.exists():
+            # The database can still point at pending after a previous worker
+            # moved the file to processing. Treat that state as already
+            # claimed so a stale path does not crash the worker.
+            if not path.exists():
+                return target
             raise FileExistsError(f"Queue claim target already exists: {target}")
-        return path.replace(target)
+        try:
+            return path.replace(target)
+        except FileNotFoundError:
+            # A file can disappear between the existence check and replace()
+            # if an earlier attempt or another process moved it. If the claim
+            # target now exists, use that already-claimed file.
+            if target.exists():
+                return target
+            raise
 
     def _ack_duplicate(self, job_id: str, path: Path) -> None:
         if self.config.queue_layout != "v5" or path.parent.name not in {
@@ -435,9 +448,52 @@ class PipelineWorker:
         destination = self.config.outbox / state
         destination.mkdir(parents=True, exist_ok=True)
         target = destination / path.name
+
+        # If this transition already happened, make it idempotent.
+        if target.exists() and not path.exists():
+            return target
+
+        # Recover from a stale database path. A previous attempt may have
+        # claimed the file into processing even though the database still
+        # contains its pending path.
+        if not path.exists():
+            alternate_paths = (
+                self.config.outbox / "processing" / path.name,
+                self.config.outbox / "pending" / path.name,
+            )
+            path = next(
+                (candidate for candidate in alternate_paths if candidate.exists()),
+                path,
+            )
+
+        # The queue file may have been removed after the job was recorded.
+        # Do not crash the permanent worker while trying to archive a missing
+        # file; the database status and logged warning preserve the failure.
+        if not path.exists():
+            log.warning(
+                "queue file already missing; leaving job in database state "
+                "path=%s state=%s",
+                path,
+                state,
+            )
+            return path
+
         if target.exists():
             target = destination / f"{path.stem}.{time.time_ns()}{path.suffix}"
-        return Path(shutil.move(str(path), str(target)))
+        try:
+            return Path(shutil.move(str(path), str(target)))
+        except FileNotFoundError:
+            # Another process or recovery path may have moved it between the
+            # check above and shutil.move(). Keep the worker alive.
+            if target.exists():
+                return target
+            log.warning(
+                "queue file disappeared during finalization; "
+                "path=%s state=%s",
+                path,
+                state,
+            )
+            return path
 
 
 def _bounded(value: str, limit: int = 100_000) -> str:
