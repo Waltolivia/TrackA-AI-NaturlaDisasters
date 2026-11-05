@@ -41,6 +41,16 @@ are not moved; the SQLite ledger prevents them from being executed repeatedly.
 | `SKIPPED` | Non-probe lifecycle message such as `EVENT_ENDED` |
 | `INVALID` | File is not valid trigger JSON |
 | `DEAD` | Retry budget was exhausted; manual review is required |
+| `STALE` | Trigger JSON is missing everywhere; recreate the identical trigger to resume |
+
+The continuous worker reconciles unfinished jobs once at startup. You can also
+run `pipeline-worker reconcile` manually. Reconciliation only updates SQLite and
+never invokes AI providers or deletes queue files. A trigger found in
+`processing/` resumes there; one found in `completed/` or `failed/` updates the
+ledger to match. A trigger missing from every queue state becomes `STALE` rather
+than consuming retry attempts. `STALE` jobs cannot be manually retried while the
+payload is absent. Restore the identical JSON file to `pending/` or
+`processing/`, then rerun reconciliation or discovery to restore the job.
 
 The default worker accepts v5 `NEW_EVENT`, `STATUS_CHANGED`, and
 `SEVERITY_CHANGED` messages. It acknowledges `EVENT_ENDED` without calling an
@@ -57,6 +67,7 @@ Run commands from the repository root:
 uv run --project pipeline_worker pipeline-worker once
 uv run --project pipeline_worker pipeline-worker run
 uv run --project pipeline_worker pipeline-worker status
+uv run --project pipeline_worker pipeline-worker reconcile
 uv run --project pipeline_worker pipeline-worker retry MSG-example
 ```
 
@@ -103,6 +114,39 @@ uv run --project pipeline_worker pipeline-worker \
 Paths are resolved against the repository root, not the terminal's current
 directory. The AI subprocess runs from `ai_probe_runner/`, allowing that
 module's local `.env` file to load normally.
+
+Before `once` or `run`, the worker verifies that the AI project directory,
+targets file, and selected question bank's `general.json` exist. A configuration
+error exits before queue discovery, so it cannot consume retry attempts or turn
+queued jobs `DEAD`. The `status` and `reconcile` commands remain available while
+the runner configuration is being corrected.
+
+## Troubleshooting runner failures
+
+A `Question bank not found: .../general.json` error is a configuration or
+checkout problem, not a provider failure. Confirm that the selected directory
+contains `general.json` and its `hazards/` subdirectory. For study V3, select it
+explicitly:
+
+```bash
+uv run --project pipeline_worker pipeline-worker \
+  --targets ai_probe_runner/config/targets.study-v3-search.json \
+  --question-bank-dir ai_probe_runner/config/question_banks_v3 \
+  run
+```
+
+A Google `429`, `RESOURCE_EXHAUSTED`, or `Too Many Requests` response means the
+API key was recognized but its project has no currently available quota. Wait
+for the quota reset, review AI Studio usage/billing, or provide a key for a
+Google project with available quota. After correcting quota, retry the job with
+the **same targets file**; completed provider/question pairs are not called
+again. Disabling Google or changing models changes the targets hash and cannot
+be used to resume an existing cycle. Make such a change only for future cycles
+when the study design no longer requires all three providers.
+
+If a failed runner produces no JSON summary, the worker now reports the final
+runner exception in `last_error` instead of masking it with a JSON parse error.
+The complete traceback remains in `last_stderr`.
 
 ## Reliability model
 

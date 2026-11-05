@@ -119,6 +119,46 @@ class JobDatabase:
                 (str(path), job_id),
             )
 
+    def reconcile_status(
+        self, job_id: str, *, status: str, error: str | None
+    ) -> None:
+        if status not in {"SUCCEEDED", "DEAD", "STALE"}:
+            raise ValueError(f"Unsupported reconciled job status: {status}")
+        now = timestamp()
+        with self.connect() as connection:
+            connection.execute(
+                """
+                UPDATE jobs SET status=?, available_at=?, lease_until=NULL,
+                    completed_at=?, last_error=?
+                WHERE job_id=?
+                """,
+                (status, now, now, error, job_id),
+            )
+
+    def restore_stale(self, job_id: str, path: Path) -> bool:
+        with self.connect() as connection:
+            cursor = connection.execute(
+                """
+                UPDATE jobs SET status='PENDING', trigger_path=?, attempt_count=0,
+                    available_at=?, lease_until=NULL, completed_at=NULL,
+                    last_error=NULL
+                WHERE job_id=? AND status='STALE'
+                """,
+                (str(path), timestamp(), job_id),
+            )
+            return cursor.rowcount == 1
+
+    def jobs_for_reconciliation(self) -> list[dict[str, Any]]:
+        with self.connect() as connection:
+            rows = connection.execute(
+                """
+                SELECT * FROM jobs
+                WHERE status IN ('PENDING','RETRY','DEAD','STALE')
+                ORDER BY discovered_at, job_id
+                """
+            ).fetchall()
+            return [dict(row) for row in rows]
+
     def claim_next(
         self, max_attempts: int, lease_seconds: int
     ) -> dict[str, Any] | None:

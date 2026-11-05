@@ -48,6 +48,10 @@ def parser() -> argparse.ArgumentParser:
     subcommands.add_parser("run", help="Continuously scan and process jobs")
     status = subcommands.add_parser("status", help="Show queue and recent job status")
     status.add_argument("--limit", type=int, default=20)
+    subcommands.add_parser(
+        "reconcile",
+        help="Align unfinished jobs with queue files without running AI probes",
+    )
     retry = subcommands.add_parser("retry", help="Manually requeue a final job")
     retry.add_argument("job_id")
     return result
@@ -81,12 +85,20 @@ def main() -> None:
     )
     worker = PipelineWorker(config)
 
+    if args.command in {"once", "run"}:
+        try:
+            worker.validate_runner_configuration()
+        except ValueError as exc:
+            raise SystemExit(f"Cannot start pipeline worker: {exc}") from exc
+
     if args.command == "once":
         print(json.dumps(worker.run_once(max_jobs=args.max_jobs), indent=2))
     elif args.command == "run":
         worker.run_forever()
     elif args.command == "status":
         print(json.dumps(worker.database.summary(limit=args.limit), indent=2))
+    elif args.command == "reconcile":
+        print(json.dumps(worker.reconcile(), indent=2))
     elif args.command == "retry":
         if not worker.database.retry(args.job_id):
             raise SystemExit(f"Job is not retryable or does not exist: {args.job_id}")

@@ -1,8 +1,12 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+import pytest
+
+from pipeline_worker import cli as worker_cli
 from pipeline_worker.config import WorkerConfig
 from pipeline_worker.worker import PipelineWorker
 from pipeline_worker.s3_results import S3ResultArchive
@@ -16,6 +20,42 @@ def test_unattended_retry_defaults_cover_temporary_outages() -> None:
     defaults = default_config()
     assert defaults.max_attempts == 8
     assert defaults.retry_base_seconds == 60.0
+
+
+def test_cli_rejects_missing_question_bank_before_claiming_jobs(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    worker_config = config(tmp_path)
+    worker = PipelineWorker(worker_config)
+    trigger = worker.config.outbox / "pending" / "trigger.json"
+    trigger.write_text(json.dumps(v5_payload()), encoding="utf-8")
+    missing_banks = tmp_path / "missing-question-banks"
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "pipeline-worker",
+            "--outbox",
+            str(worker_config.outbox),
+            "--state-db",
+            str(worker_config.state_db),
+            "--targets",
+            str(worker_config.targets),
+            "--question-bank-dir",
+            str(missing_banks),
+            "--output",
+            str(worker_config.output_dir),
+            "--ai-project",
+            str(worker_config.ai_project),
+            "once",
+        ],
+    )
+
+    with pytest.raises(SystemExit, match="Question bank not found"):
+        worker_cli.main()
+
+    assert worker.database.summary()["counts"] == {}
+    assert trigger.is_file()
 
 
 def v5_payload(action: str = "NEW_EVENT", event_type: str = "flash flood") -> dict:
@@ -175,6 +215,141 @@ def test_flat_v2_outbox_remains_supported(tmp_path: Path) -> None:
     assert result["succeeded"] == 1
     assert trigger.is_file()
     assert worker.run_once()["processed"] == 0
+
+
+def test_stale_pending_path_resumes_from_processing(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    worker = PipelineWorker(config(tmp_path))
+    trigger = worker.config.outbox / "pending" / "trigger.json"
+    trigger.write_text(json.dumps(v5_payload()), encoding="utf-8")
+    assert worker.discover()["discovered"] == 1
+
+    processing = worker.config.outbox / "processing" / trigger.name
+    trigger.replace(processing)
+    original_invoke = worker._invoke_ai
+    observed_paths = []
+
+    def invoke_and_check_ledger(job_id: str, path: Path):
+        job = worker.database.get(job_id)
+        assert job is not None
+        assert Path(job["trigger_path"]) == path == processing
+        observed_paths.append(path)
+        return original_invoke(job_id, path)
+
+    monkeypatch.setattr(worker, "_invoke_ai", invoke_and_check_ledger)
+    result = worker.run_once()
+
+    assert result["succeeded"] == 1
+    assert observed_paths == [processing]
+    assert worker.database.get("MSG-new-event")["status"] == "SUCCEEDED"
+    assert (worker.config.outbox / "completed" / trigger.name).is_file()
+
+
+def test_claim_race_recovers_file_moved_to_processing(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    worker = PipelineWorker(config(tmp_path))
+    pending = worker.config.outbox / "pending" / "trigger.json"
+    pending.write_text(json.dumps(v5_payload()), encoding="utf-8")
+    processing = worker.config.outbox / "processing" / pending.name
+    original_replace = Path.replace
+
+    def replace_with_claim_race(self: Path, target: Path) -> Path:
+        if self == pending and Path(target) == processing:
+            original_replace(self, target)
+            raise FileNotFoundError(
+                2, "No such file or directory", str(self), None, str(target)
+            )
+        return original_replace(self, target)
+
+    monkeypatch.setattr(Path, "replace", replace_with_claim_race)
+    result = worker.run_once(max_jobs=1)
+
+    assert result["processed"] == 1
+    assert result["succeeded"] == 1
+    job = worker.database.get("MSG-new-event")
+    assert job is not None
+    assert job["status"] == "SUCCEEDED"
+    assert job["attempt_count"] == 1
+    assert job["last_error"] is None
+    assert (worker.config.outbox / "completed" / pending.name).is_file()
+
+
+@pytest.mark.parametrize(
+    ("queue_state", "expected_status"),
+    [("completed", "SUCCEEDED"), ("failed", "DEAD")],
+)
+def test_claim_reconciles_preexisting_terminal_queue_file(
+    tmp_path: Path, queue_state: str, expected_status: str
+) -> None:
+    worker = PipelineWorker(config(tmp_path))
+    trigger = worker.config.outbox / "pending" / "trigger.json"
+    trigger.write_text(json.dumps(v5_payload()), encoding="utf-8")
+    assert worker.discover()["discovered"] == 1
+    terminal = worker.config.outbox / queue_state / trigger.name
+    trigger.replace(terminal)
+
+    result = worker.run_once(max_jobs=1)
+
+    assert result["processed"] == 1
+    job = worker.database.get("MSG-new-event")
+    assert job is not None
+    assert job["status"] == expected_status
+    assert Path(job["trigger_path"]) == terminal
+    assert job["cycle_dir"] is None
+    assert worker.run_once()["processed"] == 0
+
+
+def test_missing_trigger_is_stale_until_identical_file_is_recreated(
+    tmp_path: Path,
+) -> None:
+    worker = PipelineWorker(config(tmp_path))
+    trigger = worker.config.outbox / "pending" / "trigger.json"
+    serialized = json.dumps(v5_payload())
+    trigger.write_text(serialized, encoding="utf-8")
+    assert worker.discover()["discovered"] == 1
+    trigger.unlink()
+
+    reconciled = worker.reconcile()
+
+    assert reconciled["stale"] == 1
+    job = worker.database.get("MSG-new-event")
+    assert job is not None
+    assert job["status"] == "STALE"
+    assert "recreate the original trigger" in job["last_error"]
+    assert not worker.database.retry("MSG-new-event")
+    assert worker.run_once()["processed"] == 0
+
+    trigger.write_text(serialized, encoding="utf-8")
+    restored = worker.reconcile()
+    assert restored["resumed"] == 1
+    result = worker.run_once()
+    assert result["succeeded"] == 1
+    assert worker.database.get("MSG-new-event")["status"] == "SUCCEEDED"
+
+
+def test_runner_startup_error_reports_actual_stderr(tmp_path: Path) -> None:
+    worker_config = config(tmp_path)
+    worker_config = WorkerConfig(
+        **{
+            **worker_config.__dict__,
+            "question_bank_dir": tmp_path / "missing-question-banks",
+        }
+    )
+    worker = PipelineWorker(worker_config)
+    trigger = worker.config.outbox / "pending" / "trigger.json"
+    trigger.write_text(json.dumps(v5_payload()), encoding="utf-8")
+
+    result = worker.run_once(max_jobs=1)
+
+    assert result["failed"] == 1
+    job = worker.database.get("MSG-new-event")
+    assert job is not None
+    assert job["status"] == "RETRY"
+    assert "Question bank not found" in job["last_error"]
+    assert "general.json" in job["last_error"]
+    assert "Could not parse AI runner summary" not in job["last_error"]
 
 
 def test_manual_retry_resets_attempt_budget(tmp_path: Path) -> None:

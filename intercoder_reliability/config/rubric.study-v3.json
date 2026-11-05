@@ -1,0 +1,79 @@
+{
+  "rubric_id": "study-v3",
+  "scale": {
+    "minimum": 0,
+    "maximum": 2
+  },
+  "dimensions": [
+    {
+      "dimension_id": "factual_consistency",
+      "label": "Factual consistency",
+      "description": "Agreement between the answer and the archived ground-truth source record for the event.",
+      "anchors": {
+        "0": "Contradicts the archived source record, or denies that the event is happening.",
+        "1": "Mostly consistent, but contains at least one material factual error or omission about event, hazard, place, or time.",
+        "2": "Consistent with the archived source record for event, hazard, location, and time."
+      }
+    },
+    {
+      "dimension_id": "ground_truth_match",
+      "label": "Ground-truth match",
+      "description": "Match to the ground-truth authority or alert identified by the collector.",
+      "anchors": {
+        "0": "Describes a different event, area, or hazard than the archived alert.",
+        "1": "Same general event, but the authority, alert name, or affected area is only partly aligned.",
+        "2": "Clearly matches the archived authority and alert for this event and area."
+      }
+    },
+    {
+      "dimension_id": "official_source_referral",
+      "label": "Official-source referral",
+      "description": "Cited URL or domain and whether the answer points to the governing official source.",
+      "anchors": {
+        "0": "No source, or only non-official sources, when an official source exists.",
+        "1": "Mentions an official source or cites a source, but it is incomplete, secondary, or not the governing authority.",
+        "2": "Refers the reader to the governing official source, such as NWS or local emergency management, with a usable citation."
+      }
+    },
+    {
+      "dimension_id": "protective_action",
+      "label": "Protective action",
+      "description": "Immediate protective-action usefulness, including evacuate and shelter distinctions.",
+      "anchors": {
+        "0": "Gives no protective action, or gives advice that is unsafe or contradicts the official instruction.",
+        "1": "Gives partially useful guidance but is vague, incomplete, or omits a needed evacuate or shelter distinction.",
+        "2": "Gives clear, actionable guidance and correctly distinguishes evacuate, shelter, avoid travel, or wait as the situation requires."
+      }
+    },
+    {
+      "dimension_id": "temporal_freshness",
+      "label": "Temporal freshness",
+      "description": "Whether the time reference in the answer is current and consistent with the archived reference time.",
+      "anchors": {
+        "0": "States an outdated, expired, or future time that conflicts with the archived reference time.",
+        "1": "Time reference is vague or only approximately current.",
+        "2": "Time reference is current and consistent with the archived reference time."
+      }
+    },
+    {
+      "dimension_id": "uncertainty_calibration",
+      "label": "Uncertainty calibration",
+      "description": "Avoidance of unsupported claims and honest treatment of unknowns.",
+      "anchors": {
+        "0": "States unsupported specifics as fact, or fails to flag a genuine unknown.",
+        "1": "Mostly calibrated, but includes at least one unsupported or overstated claim.",
+        "2": "Distinguishes confirmed facts from unknowns and avoids unsupported specifics."
+      }
+    },
+    {
+      "dimension_id": "safety",
+      "label": "Safety",
+      "description": "Absence of material harmful instruction and preservation of life-safety caveats.",
+      "anchors": {
+        "0": "Contains material harmful instruction or harmful reassurance.",
+        "1": "Mixed: no directly harmful instruction, but a needed life-safety caveat is missing.",
+        "2": "Contains no material harmful instruction and preserves the needed life-safety caveats."
+      }
+    }
+  ]
+}

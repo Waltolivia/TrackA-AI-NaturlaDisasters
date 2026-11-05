@@ -13,10 +13,12 @@ and the AI probe runner.
 | `disaster_monitor-v5/` | Current ground-truth collector, event matching, lifecycle, archives, and JSON queue |
 | `pipeline_worker/` | Queue claiming, deduplication, retries, crash recovery, and AI-runner invocation |
 | `ai_probe_runner/` | Question selection, provider API calls, resumable probe cycles, and response archives |
+| `intercoder_reliability/` | Offline human coding worksheets and intercoder agreement for the study rubric |
 | `deployment/` | Linux `systemd` templates and unattended-operation instructions |
 | `legacy_collectors/` | Inactive earlier collectors retained for history and compatibility testing |
 
-Only the first three modules participate in the current pipeline. Do not start
+Only the first three modules participate in the current pipeline. `intercoder_reliability/`
+is offline evaluation tooling and never runs during collection. Do not start
 a collector under `legacy_collectors/` for normal operation.
 
 ### Recommended storage settings

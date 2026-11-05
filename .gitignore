@@ -1,5 +1,6 @@
 pipeline_data/
 local_test/
+/coding/
 /archive/
 pipeline_worker/.venv/
 ai_probe_runner/.env

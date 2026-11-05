@@ -26,6 +26,14 @@ NON_PROBE_ACTIONS = {
 }
 
 
+class QueueFileMissingError(FileNotFoundError):
+    def __init__(self, path: Path):
+        super().__init__(
+            f"Trigger JSON is missing from every queue location "
+            f"(last known path: {path}); recreate the original trigger before retrying"
+        )
+
+
 @dataclass(frozen=True)
 class InvocationResult:
     success: bool
@@ -57,11 +65,82 @@ class PipelineWorker:
         else:
             self.config.outbox.mkdir(parents=True, exist_ok=True)
 
+    def validate_runner_configuration(self) -> None:
+        """Fail before claiming jobs when the AI runner cannot start."""
+        missing = []
+        if not self.config.ai_project.is_dir():
+            missing.append(f"AI project directory not found: {self.config.ai_project}")
+        if not self.config.targets.is_file():
+            missing.append(f"AI targets file not found: {self.config.targets}")
+        general_path = self.config.question_bank_dir / "general.json"
+        if not general_path.is_file():
+            missing.append(f"Question bank not found: {general_path}")
+        if missing:
+            raise ValueError(
+                "Invalid AI runner configuration: " + "; ".join(missing)
+            )
+
     def discover(self) -> dict[str, int]:
         counts = {"discovered": 0, "duplicate": 0, "skipped": 0, "invalid": 0}
         for path in self._queue_files():
             outcome = self._discover_file(path)
             counts[outcome] += 1
+        return counts
+
+    def reconcile(self) -> dict[str, int]:
+        """Align unfinished database jobs with queue files without running AI."""
+        counts = {
+            "checked": 0,
+            "paths_updated": 0,
+            "resumed": 0,
+            "succeeded": 0,
+            "failed": 0,
+            "stale": 0,
+        }
+        for job in self.database.jobs_for_reconciliation():
+            counts["checked"] += 1
+            job_id = str(job["job_id"])
+            original_path = Path(str(job["trigger_path"]))
+            try:
+                path = self._find_queue_file(original_path)
+            except QueueFileMissingError as exc:
+                if job["status"] != "STALE":
+                    self.database.reconcile_status(
+                        job_id, status="STALE", error=str(exc)
+                    )
+                    counts["stale"] += 1
+                    log.warning("job reconciled job_id=%s status=STALE", job_id)
+                continue
+
+            if path != original_path:
+                self.database.update_trigger_path(job_id, path)
+                counts["paths_updated"] += 1
+
+            state = path.parent.name if self.config.queue_layout == "v5" else ""
+            if state == "completed" and job["status"] != "SUCCEEDED":
+                self.database.reconcile_status(
+                    job_id, status="SUCCEEDED", error=None
+                )
+                counts["succeeded"] += 1
+            elif state == "failed" and job["status"] != "DEAD":
+                self.database.reconcile_status(
+                    job_id,
+                    status="DEAD",
+                    error=f"Queue file was already in failed/: {path}",
+                )
+                counts["failed"] += 1
+            elif state in {"pending", "processing"} and job["status"] == "STALE":
+                if hashlib.sha256(path.read_bytes()).hexdigest() == job["trigger_sha256"]:
+                    if self.database.restore_stale(job_id, path):
+                        counts["resumed"] += 1
+                        log.info("stale job restored job_id=%s path=%s", job_id, path)
+                else:
+                    log.warning(
+                        "cannot restore stale job with different trigger content "
+                        "job_id=%s path=%s",
+                        job_id,
+                        path,
+                    )
         return counts
 
     def run_once(self, max_jobs: int | None = None) -> dict[str, Any]:
@@ -89,6 +168,7 @@ class PipelineWorker:
         }
 
     def run_forever(self) -> None:
+        log.info("queue reconciliation %s", self.reconcile())
         log.info(
             "worker started outbox=%s targets=%s output=%s s3=%s",
             self.config.outbox,
@@ -232,8 +312,30 @@ class PipelineWorker:
                 self.database.update_trigger_path(job_id, claimed_path)
                 path = claimed_path
             if not path.is_file():
-                raise FileNotFoundError(f"Claimed trigger file does not exist: {path}")
+                raise QueueFileMissingError(path)
+
+            queue_state = path.parent.name if self.config.queue_layout == "v5" else ""
+            if queue_state in {"completed", "failed"}:
+                status = "SUCCEEDED" if queue_state == "completed" else "DEAD"
+                error = (
+                    None
+                    if status == "SUCCEEDED"
+                    else f"Queue file was already in failed/: {path}"
+                )
+                self.database.reconcile_status(job_id, status=status, error=error)
+                log.info(
+                    "job reconciled from queue job_id=%s status=%s path=%s",
+                    job_id,
+                    status,
+                    path,
+                )
+                return status == "SUCCEEDED"
+
             result = self._invoke_ai(job_id, path)
+        except QueueFileMissingError as exc:
+            self.database.reconcile_status(job_id, status="STALE", error=str(exc))
+            log.warning("job stale job_id=%s error=%s", job_id, exc)
+            return False
         except Exception as exc:
             result = InvocationResult(
                 success=False,
@@ -347,13 +449,28 @@ class PipelineWorker:
             if not isinstance(summary, dict):
                 raise ValueError("summary is not a JSON object")
         except (json.JSONDecodeError, ValueError) as exc:
+            if completed.returncode != 0:
+                detail = next(
+                    (
+                        line.strip()
+                        for line in reversed(completed.stderr.splitlines())
+                        if line.strip()
+                    ),
+                    "AI runner produced no error output",
+                )
+                error = (
+                    f"AI runner exited with status {completed.returncode} before "
+                    f"producing a valid summary: {_bounded(detail, 2_000)}"
+                )
+            else:
+                error = f"Could not parse AI runner summary: {exc}"
             return InvocationResult(
                 success=False,
                 exit_code=completed.returncode,
                 stdout=completed.stdout,
                 stderr=completed.stderr,
                 summary=None,
-                error=f"Could not parse AI runner summary: {exc}",
+                error=error,
             )
 
         expected = int(summary.get("expected_probe_count", -1))
@@ -394,34 +511,48 @@ class PipelineWorker:
             log.info("S3 AI retry sync %s", result)
         return result
 
+    def _find_queue_file(self, path: Path) -> Path:
+        if self.config.queue_layout != "v5":
+            if path.is_file():
+                return path
+            raise QueueFileMissingError(path)
+
+        # Terminal states take precedence so a stale ledger never reruns paid
+        # probes when an acknowledgement had already moved the same file.
+        candidates = [
+            self.config.outbox / state / path.name
+            for state in ("completed", "failed", "processing", "pending")
+        ]
+        if path not in candidates:
+            candidates.append(path)
+        for candidate in candidates:
+            if candidate.is_file():
+                return candidate
+        raise QueueFileMissingError(path)
+
     def _claim_queue_file(self, path: Path) -> Path:
+        path = self._find_queue_file(path)
         if self.config.queue_layout != "v5" or path.parent.name != "pending":
             return path
         target = self.config.outbox / "processing" / path.name
-        if target.exists():
-            # The database can still point at pending after a previous worker
-            # moved the file to processing. Treat that state as already
-            # claimed so a stale path does not crash the worker.
-            if not path.exists():
-                return target
-            raise FileExistsError(f"Queue claim target already exists: {target}")
         try:
             return path.replace(target)
         except FileNotFoundError:
-            # A file can disappear between the existence check and replace()
-            # if an earlier attempt or another process moved it. If the claim
-            # target now exists, use that already-claimed file.
-            if target.exists():
-                return target
-            raise
+            # The file may have moved between discovery and the atomic claim.
+            # Reconcile its new location instead of entering generic retries.
+            return self._find_queue_file(path)
 
     def _ack_duplicate(self, job_id: str, path: Path) -> None:
+        job = self.database.get(job_id)
+        if job and job["status"] == "STALE":
+            if self.database.restore_stale(job_id, path):
+                log.info("stale job restored job_id=%s path=%s", job_id, path)
+            return
         if self.config.queue_layout != "v5" or path.parent.name not in {
             "pending",
             "processing",
         }:
             return
-        job = self.database.get(job_id)
         if (
             path.parent.name == "processing"
             and job
