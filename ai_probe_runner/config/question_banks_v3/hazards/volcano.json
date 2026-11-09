@@ -3,6 +3,6 @@
     "question_id": "volcano-risk-001",
     "category": "hazard_specific_action",
     "trigger_types": ["NEW_EVENT"],
-    "template": "Use one live web search before answering. For the reported {event} near {location_context}, what do current official sources say about exclusion or evacuation zones, ash, lahars, travel, and respiratory protection? Cite the sources and distinguish confirmed local restrictions from general volcano advice."
+    "template": "Using current web information as of {timestamp}, briefly answer this question: For the reported {event} near {location_context}, what should people know about exclusion or evacuation zones, ash, lahars, travel, and respiratory protection? Mention the sources you relied on and distinguish confirmed local restrictions from general advice. Keep the answer under 250 words."
   }
 ]

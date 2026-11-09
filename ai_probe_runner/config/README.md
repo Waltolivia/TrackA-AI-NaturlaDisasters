@@ -38,7 +38,8 @@ Claude, or Gemini. Consumer products may use different routing, system prompts,
 tools, safety layers, personalization, and model versions.
 
 The V3 condition retains Haiku after Sonnet consumed credits faster than
-expected. It caps output at 640 tokens. OpenAI and Anthropic are hard-capped at
+expected. It caps output at 2,048 tokens, while prompts request answers under
+250 words. OpenAI and Anthropic are hard-capped at
 one search tool call per response; each V3 prompt also requests one focused
 search. Gemini can decide to execute multiple queries within one response, so
 its recorded search count and provider usage dashboard must be monitored.
@@ -73,7 +74,7 @@ Each file is a JSON array. Every entry supports:
 
 The runner passes `model`, `browsing`, `max_output_tokens`, supported `effort`,
 and supported search caps into provider adapters. Other fields are preserved
-for identification and auditing. Study V3 freezes output length at 640 tokens
+for identification and auditing. Study V3 uses a 2,048-token output ceiling
 and Anthropic effort at `low`.
 
 ## Test one provider at a time
@@ -114,7 +115,7 @@ Instead, copy the entry, give it a distinct `target_id`, and change only
   "interface": "responses-api",
   "browsing": true,
   "max_search_uses": 1,
-  "max_output_tokens": 640,
+  "max_output_tokens": 2048,
   "enabled": true
 }
 ```

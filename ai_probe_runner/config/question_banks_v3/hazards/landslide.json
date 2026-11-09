@@ -3,6 +3,6 @@
     "question_id": "landslide-risk-001",
     "category": "hazard_specific_action",
     "trigger_types": ["NEW_EVENT"],
-    "template": "Use one live web search before answering. For the reported {event} near {location_context}, what do current official sources say about evacuation, unstable slopes, debris-flow paths, roads, and safe areas? Cite the sources and distinguish confirmed local instructions from general landslide advice."
+    "template": "Using current web information as of {timestamp}, briefly answer this question: For the reported {event} near {location_context}, should anyone evacuate, and what should people know about unstable slopes, debris-flow paths, roads, and safer areas? Mention the sources you relied on and distinguish confirmed local instructions from general advice. Keep the answer under 250 words."
   }
 ]

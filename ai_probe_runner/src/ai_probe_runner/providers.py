@@ -13,6 +13,9 @@ class ProviderResult:
     usage: dict[str, Any] | None
     raw: dict[str, Any]
     search_count: int = 0
+    completion_reason: str | None = None
+    response_complete: bool = True
+    response_truncated: bool = False
 
 
 class Provider(Protocol):
@@ -57,6 +60,7 @@ class MockProvider:
             usage=None,
             raw=raw,
             search_count=0,
+            completion_reason="mock_completed",
         )
 
 
@@ -89,6 +93,14 @@ class OpenAIProvider:
                 kwargs["max_tool_calls"] = max_search_uses
         response = self.client.responses.create(**kwargs)
         raw = response.model_dump(mode="json")
+        text = response.output_text or ""
+        status = raw.get("status")
+        incomplete_details = raw.get("incomplete_details") or {}
+        completion_reason = incomplete_details.get("reason") or status
+        response_truncated = _is_token_limit_reason(completion_reason)
+        response_complete = bool(text.strip()) and not (
+            status == "incomplete" or response_truncated
+        )
         citations = [
             annotation
             for item in raw.get("output", [])
@@ -97,7 +109,7 @@ class OpenAIProvider:
             if annotation.get("type") == "url_citation"
         ]
         return ProviderResult(
-            text=response.output_text,
+            text=text,
             response_id=raw.get("id"),
             resolved_model=raw.get("model"),
             citations=citations,
@@ -108,6 +120,9 @@ class OpenAIProvider:
                 for item in raw.get("output", [])
                 if item.get("type") == "web_search_call"
             ),
+            completion_reason=completion_reason,
+            response_complete=response_complete,
+            response_truncated=response_truncated,
         )
 
 
@@ -156,6 +171,11 @@ class AnthropicProvider:
             for block in raw.get("content", [])
             for citation in block.get("citations") or []
         ]
+        completion_reason = raw.get("stop_reason")
+        response_truncated = _is_token_limit_reason(completion_reason)
+        response_complete = bool(text.strip()) and not (
+            response_truncated or completion_reason == "pause_turn"
+        )
         return ProviderResult(
             text=text,
             response_id=raw.get("id"),
@@ -169,6 +189,9 @@ class AnthropicProvider:
                 if block.get("type") == "server_tool_use"
                 and block.get("name") == "web_search"
             ),
+            completion_reason=completion_reason,
+            response_complete=response_complete,
+            response_truncated=response_truncated,
         )
 
 
@@ -199,6 +222,14 @@ class GoogleProvider:
             kwargs["tools"] = [{"type": "google_search"}]
         response = self.client.interactions.create(**kwargs)
         raw = _model_to_dict(response)
+        text = response.output_text or ""
+        completion_reason = _google_completion_reason(raw)
+        response_truncated = _is_token_limit_reason(completion_reason)
+        response_complete = bool(text.strip()) and not (
+            response_truncated
+            or str(raw.get("status", "")).lower()
+            in {"cancelled", "failed", "incomplete"}
+        )
         citations = [
             annotation
             for step in raw.get("steps", [])
@@ -207,7 +238,7 @@ class GoogleProvider:
             if annotation.get("type") == "url_citation"
         ]
         return ProviderResult(
-            text=response.output_text,
+            text=text,
             response_id=raw.get("id"),
             resolved_model=raw.get("model") or model,
             citations=citations,
@@ -218,6 +249,9 @@ class GoogleProvider:
                 for step in raw.get("steps", [])
                 if step.get("type") == "google_search_call"
             ),
+            completion_reason=completion_reason,
+            response_complete=response_complete,
+            response_truncated=response_truncated,
         )
 
 
@@ -227,6 +261,24 @@ def _model_to_dict(value: Any) -> dict[str, Any]:
     if hasattr(value, "to_json_dict"):
         return value.to_json_dict()
     raise TypeError(f"Cannot serialize provider response type: {type(value).__name__}")
+
+
+def _google_completion_reason(raw: dict[str, Any]) -> str | None:
+    for key in ("finish_reason", "finishReason", "stop_reason", "status"):
+        if raw.get(key) is not None:
+            return str(raw[key])
+    return None
+
+
+def _is_token_limit_reason(reason: Any) -> bool:
+    normalized = str(reason or "").strip().lower().replace("-", "_")
+    return normalized in {
+        "length",
+        "max_output_tokens",
+        "max_tokens",
+        "max_tokens_reached",
+        "token_limit",
+    }
 
 
 def make_provider(name: str) -> Provider:

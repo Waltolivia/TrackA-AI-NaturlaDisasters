@@ -290,6 +290,11 @@ def run_cycle(
                         "search_requested": bool(target.get("browsing")),
                         "search_count": result.search_count,
                         "search_used": result.search_count > 0,
+                        "completion_reason": result.completion_reason,
+                        "response_complete": (
+                            result.response_complete and bool(result.text.strip())
+                        ),
+                        "response_truncated": result.response_truncated,
                         "raw_response_path": f"raw/{raw_name}",
                         "error": None,
                     }
@@ -302,6 +307,15 @@ def run_cycle(
                     question["question_id"],
                     record["latency_ms"],
                 )
+                if not record["response_complete"]:
+                    log.warning(
+                        "probe response incomplete provider=%s question=%s "
+                        "state=%s reason=%s",
+                        target["provider"],
+                        question["question_id"],
+                        _completion_state(record),
+                        result.completion_reason or "not reported",
+                    )
             except Exception as exc:
                 record.update(
                     {
@@ -316,6 +330,9 @@ def run_cycle(
                         "search_requested": bool(target.get("browsing")),
                         "search_count": None,
                         "search_used": None,
+                        "completion_reason": None,
+                        "response_complete": False,
+                        "response_truncated": False,
                         "raw_response_path": None,
                         "error": {"type": type(exc).__name__, "message": str(exc)},
                     }
@@ -570,6 +587,8 @@ def _compact_response(record: dict[str, Any]) -> dict[str, Any]:
         "search_requested": record.get("search_requested"),
         "search_used": record.get("search_used"),
         "search_count": record.get("search_count"),
+        "completion": _completion_state(record),
+        "completion_reason": record.get("completion_reason"),
         "citations": record.get("citations") or [],
         "response": record.get("response_text"),
         "error": error.get("message") if isinstance(error, dict) else error,
@@ -653,6 +672,8 @@ def _render_markdown_results(results: dict[str, Any]) -> str:
                 "",
                 f"**Live search:** {_search_summary(response)}",
                 "",
+                f"**Response completeness:** {_completion_summary(response)}",
+                "",
                 "**Response**",
                 "",
                 str(response.get("response") or response.get("error") or "No response"),
@@ -671,6 +692,26 @@ def _search_summary(response: dict[str, Any]) -> str:
     if response.get("search_used"):
         return f"used ({count} search call{'s' if count != 1 else ''} recorded)"
     return "requested; no search call was recorded"
+
+
+def _completion_state(record: dict[str, Any]) -> str:
+    if record.get("status") == "error":
+        return "error"
+    if not str(record.get("response_text") or "").strip():
+        return "empty"
+    if record.get("response_truncated"):
+        return "truncated"
+    if record.get("response_complete") is False:
+        return "incomplete"
+    return "complete"
+
+
+def _completion_summary(response: dict[str, Any]) -> str:
+    state = str(response.get("completion") or "unknown")
+    reason = response.get("completion_reason")
+    if reason:
+        return f"{state} (provider reason: {reason})"
+    return state
 
 
 def _verify_resume(

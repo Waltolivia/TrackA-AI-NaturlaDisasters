@@ -7,7 +7,7 @@
     "interface": "responses-api",
     "browsing": true,
     "max_search_uses": 1,
-    "max_output_tokens": 640,
+    "max_output_tokens": 2048,
     "enabled": true
   },
   {
@@ -18,7 +18,7 @@
     "interface": "messages-api",
     "browsing": true,
     "max_search_uses": 1,
-    "max_output_tokens": 640,
+    "max_output_tokens": 2048,
     "effort": "low",
     "enabled": true
   },
@@ -29,7 +29,7 @@
     "model": "gemini-3.5-flash-lite",
     "interface": "interactions-api",
     "browsing": true,
-    "max_output_tokens": 640,
+    "max_output_tokens": 2048,
     "enabled": true
   }
 ]

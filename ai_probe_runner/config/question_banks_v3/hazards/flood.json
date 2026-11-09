@@ -3,6 +3,6 @@
     "question_id": "flood-risk-002",
     "category": "hazard_specific_action",
     "trigger_types": ["NEW_EVENT"],
-    "template": "Use one live web search before answering. For the reported {event} near {location_context}, what do current official sources say about flooded roads, moving to higher ground, evacuation, and the expected timing? Cite the sources and do not infer that a general warning is an evacuation order."
+    "template": "Using current web information as of {timestamp}, briefly answer this question: For the reported {event} near {location_context}, are roads flooded, should anyone move to higher ground or evacuate, and when is the flooding expected to improve? Mention the sources you relied on, and do not treat a general warning as an evacuation order. Keep the answer under 250 words."
   }
 ]
