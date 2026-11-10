@@ -434,6 +434,7 @@ def test_v3_question_schedule_reduces_calls() -> None:
             "message_id": "MSG-new",
             "action": "NEW_EVENT",
             "event_id": "EVT-00000001",
+            "generated_at": "2026-11-09T12:00:00Z",
             "disaster": {
                 "type": "typhoon",
                 "name": "Typhoon Example",
@@ -444,12 +445,90 @@ def test_v3_question_schedule_reduces_calls() -> None:
     questions, _ = build_questions(new_event, bank_dir)
     assert new_event["hazard_family"] == "tropical_cyclone"
     assert len(questions) == 3
+    assert all(
+        "2026-11-09T12:00:00Z" in question["prompt"] for question in questions
+    )
+    assert all("under 250 words" in question["prompt"] for question in questions)
 
     update = dict(new_event, action="STATUS_CHANGED", trigger="STATUS_CHANGED")
     questions, _ = build_questions(update, bank_dir)
     assert [question["question_id"] for question in questions] == [
         "general-change-001"
     ]
+
+
+def test_v3_targets_use_repaired_output_ceiling() -> None:
+    config_path = (
+        Path(__file__).parents[1] / "config" / "targets.study-v3-search.json"
+    )
+    targets = json.loads(config_path.read_text(encoding="utf-8"))
+    assert len(targets) == 3
+    assert all(target["max_output_tokens"] == 2048 for target in targets)
+
+
+def test_truncated_response_is_visible_without_becoming_a_retry(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    bank_dir = tmp_path / "banks"
+    write_banks(bank_dir)
+    targets = tmp_path / "targets.json"
+    targets.write_text(
+        json.dumps(
+            [
+                {
+                    "target_id": "mock",
+                    "provider": "mock",
+                    "model": "mock-v1",
+                    "interface": "local-mock",
+                    "browsing": False,
+                    "max_output_tokens": 2048,
+                    "enabled": True,
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    class TruncatedProvider:
+        def ask(self, **kwargs):
+            return ProviderResult(
+                text="Partial response",
+                response_id="response-1",
+                resolved_model=kwargs["model"],
+                citations=[],
+                usage=None,
+                raw={"stop_reason": "max_tokens"},
+                completion_reason="max_tokens",
+                response_complete=False,
+                response_truncated=True,
+            )
+
+    monkeypatch.setattr(
+        "ai_probe_runner.runner.make_provider", lambda name: TruncatedProvider()
+    )
+    result = run_cycle(
+        trigger={
+            "source": "NWS",
+            "source_id": "alert-1",
+            "hazard_family": "flood",
+            "event": "Flash Flood Warning",
+            "area": "Test County",
+        },
+        targets_path=targets,
+        bank_dir=bank_dir,
+        output_dir=tmp_path / "data",
+        cycle_id="completion-label-cycle",
+    )
+
+    cycle_dir = Path(result["cycle_dir"])
+    compact = json.loads((cycle_dir / "responses.json").read_text())
+    assert result["completed_probe_count"] == 2
+    assert result["failed_probe_count"] == 0
+    assert {response["completion"] for response in compact["responses"]} == {
+        "truncated"
+    }
+    markdown = (cycle_dir / "AI_RESULTS.md").read_text()
+    assert "**Response completeness:** truncated (provider reason: max_tokens)" in markdown
 
 
 def test_target_config_requires_unique_ids_and_enabled_target(tmp_path: Path) -> None:

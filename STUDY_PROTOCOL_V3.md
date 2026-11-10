@@ -16,22 +16,33 @@ conditions and must not be analyzed as if they were V3 responses.
 - Non-probe lifecycle actions: `EVENT_ENDED`, `COLLECTION_COMPLETE`,
   `ROUTINE_UPDATE`, and `UPDATE`
 
-Do not edit the target file or question directory after V3 collection begins.
-Any wording, model, search, output-limit, trigger, or source change requires a
-new protocol version and a recorded UTC transition time.
+Do not edit the target file or question directory without recording a method
+transition. The response-completeness repair prepared on 2026-11-09 keeps the
+V3 filenames, question IDs, schedule, models, search settings, triggers, and
+sources, but changes the output ceiling and prompt wording described below.
+The operator must record the actual UTC deployment time; earlier and later V3
+runs must remain distinguishable during analysis.
 
 ## Targets and cost controls
 
 | Provider | Model | Search | Output ceiling | Search control |
 | --- | --- | --- | ---: | --- |
-| OpenAI | `gpt-5.4-nano-2026-03-17` | On | 640 tokens | At most 1 tool call |
-| Anthropic | `claude-haiku-5-5` | On | 640 tokens | `max_uses: 1`, low effort |
-| Google | `gemini-3.5-flash-lite` | On | 640 tokens | Prompt requests 1 focused search |
+| OpenAI | `gpt-5.4-nano-2026-03-17` | On | 2,048 tokens | At most 1 tool call |
+| Anthropic | `claude-haiku-5-5` | On | 2,048 tokens | `max_uses: 1`, low effort |
+| Google | `gemini-3.5-flash-lite` | On | 2,048 tokens | Prompt requests current web information |
 
 Google may execute multiple queries in one response. Actual search calls,
 citations, provider usage, requested model, and resolved model are retained in
 the run data. Operators must monitor all three provider dashboards and use
 account-level budget alerts or spending limits where available.
+
+The pre-repair V3 ceiling was 640 tokens. It produced visibly cut-off or empty
+answers while still reporting successful API calls. The repaired prompts ask
+for answers under 250 words and the ceiling is 2,048 tokens, giving the models
+room for search/tool processing and a complete concise answer. The runner now
+records and displays provider completion information but does not retry an
+empty or truncated answer automatically. This avoids silently increasing cost
+or changing the worker's queue behavior.
 
 Official pricing references, reviewed 2026-10-21:
 

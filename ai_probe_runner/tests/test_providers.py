@@ -75,6 +75,34 @@ def test_openai_search_is_capped_and_counted():
     assert result.search_count == 1
 
 
+def test_openai_records_token_limit_truncation():
+    recorder = Recorder(
+        FakeResponse(
+            {
+                "id": "openai-1",
+                "model": "gpt-test",
+                "status": "incomplete",
+                "incomplete_details": {"reason": "max_output_tokens"},
+                "output": [],
+                "usage": {},
+            }
+        )
+    )
+    provider = OpenAIProvider.__new__(OpenAIProvider)
+    provider.client = type("Client", (), {"responses": recorder})()
+
+    result = provider.ask(
+        prompt="test",
+        model="gpt-test",
+        browsing=False,
+        max_output_tokens=640,
+    )
+
+    assert result.completion_reason == "max_output_tokens"
+    assert result.response_truncated is True
+    assert result.response_complete is False
+
+
 def test_anthropic_receives_frozen_output_limit():
     recorder = Recorder(
         FakeResponse(
@@ -154,6 +182,33 @@ def test_anthropic_search_is_capped_and_counted():
     assert result.search_count == 1
 
 
+def test_anthropic_records_token_limit_truncation():
+    recorder = Recorder(
+        FakeResponse(
+            {
+                "id": "anthropic-1",
+                "model": "claude-test",
+                "content": [{"type": "text", "text": "Partial response"}],
+                "stop_reason": "max_tokens",
+                "usage": {},
+            }
+        )
+    )
+    provider = AnthropicProvider.__new__(AnthropicProvider)
+    provider.client = type("Client", (), {"messages": recorder})()
+
+    result = provider.ask(
+        prompt="test",
+        model="claude-test",
+        browsing=False,
+        max_output_tokens=640,
+    )
+
+    assert result.completion_reason == "max_tokens"
+    assert result.response_truncated is True
+    assert result.response_complete is False
+
+
 def test_google_receives_frozen_output_limit():
     recorder = Recorder(
         FakeResponse(
@@ -201,3 +256,30 @@ def test_google_search_calls_are_counted():
 
     assert recorder.kwargs["tools"] == [{"type": "google_search"}]
     assert result.search_count == 1
+
+
+def test_google_records_token_limit_truncation():
+    recorder = Recorder(
+        FakeResponse(
+            {
+                "id": "google-1",
+                "model": "gemini-test",
+                "finish_reason": "MAX_TOKENS",
+                "steps": [],
+                "usage": {},
+            }
+        )
+    )
+    provider = GoogleProvider.__new__(GoogleProvider)
+    provider.client = type("Client", (), {"interactions": recorder})()
+
+    result = provider.ask(
+        prompt="test",
+        model="gemini-test",
+        browsing=False,
+        max_output_tokens=640,
+    )
+
+    assert result.completion_reason == "MAX_TOKENS"
+    assert result.response_truncated is True
+    assert result.response_complete is False

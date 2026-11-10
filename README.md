@@ -229,8 +229,10 @@ python -m json.tool \
   ai_probe_runner/config/targets.study-v3-search.json >/dev/null
 ```
 
-It enables the three low-cost providers, live search, a 640-token output
-ceiling, and a one-search cap where the provider API exposes one. A recognized
+It enables the three low-cost providers, live search, a 2,048-token output
+ceiling, and a one-search cap where the provider API exposes one. Prompts ask
+for answers under 250 words so the larger ceiling prevents accidental cutoff
+without encouraging longer answers. A recognized
 new event runs three questions against three models, for 9 probes. A status,
 severity, or escalation update runs one question against three models, for 3
 probes. Use an ignored, isolated test queue so a previous mock run cannot
@@ -257,13 +259,14 @@ uv run --project pipeline_worker pipeline-worker \
 Expect `expected_probe_count` and `completed_probe_count` to both be 9, with
 `failed_probe_count` equal to zero. Inspect the manifest and `probes.jsonl` for
 all three providers. `responses.json` and `AI_RESULTS.md` also show whether a
-search call was recorded and retain citations. The worker reports success only
+search call was recorded, whether the provider reported a complete or
+truncated response, and retain citations. The worker reports success only
 when every expected probe completed. To troubleshoot one account, temporarily
 disable the other targets in an ignored `targets.local.json`; do not change the
 committed study file.
 
 Google's API may perform more than one billable query inside one grounded
-response even though the prompt asks for one focused search. Monitor its usage
+response. Monitor its usage
 dashboard as well as provider token balances during the pilot.
 
 ## 5. Configure the shared S3 archive

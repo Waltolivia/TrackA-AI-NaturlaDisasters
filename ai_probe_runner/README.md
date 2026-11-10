@@ -160,12 +160,17 @@ rather than maximum benchmark performance. They are inexpensive API models, but
 they are **not guaranteed to be identical** to the models, system prompts, or
 tools used in the providers' free consumer chat products.
 
-Each V3 target has an explicit 640-token output ceiling. Anthropic also requests
-low effort. Every V3 prompt asks for one focused search; OpenAI and Anthropic
+Each V3 target has an explicit 2,048-token output ceiling, while each prompt
+requests an answer under 250 words. This gives search-enabled models enough
+room to finish without asking them to produce longer answers. Anthropic also
+requests low effort. Every V3 prompt asks for current web information; OpenAI and Anthropic
 receive an API-level cap of one search/tool call. Gemini does not expose the
 same cap in this integration and may execute multiple queries. The runner saves
 the requested and resolved model, citations, provider usage, and recorded
-search-call count for every probe.
+search-call count for every probe. `AI_RESULTS.md` and `responses.json` label
+each answer as complete, truncated, incomplete, empty, or error when the
+provider exposes enough completion information. This label does not trigger an
+automatic retry or additional provider spending.
 
 V2 and V3 are different experimental conditions. Preserve both configurations
 and never combine their responses as though only the date changed. See

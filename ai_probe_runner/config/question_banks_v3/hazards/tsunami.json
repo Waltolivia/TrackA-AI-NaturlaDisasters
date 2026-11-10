@@ -3,6 +3,6 @@
     "question_id": "tsunami-risk-001",
     "category": "hazard_specific_action",
     "trigger_types": ["NEW_EVENT"],
-    "template": "Use one live web search before answering. For the reported {event} near {location_context}, what do current official sources say about warning status, moving inland or to higher ground, evacuation routes, and when it may be safe to return? Cite the current sources and prioritize official tsunami authorities."
+    "template": "Using current web information as of {timestamp}, briefly answer this question: For the reported {event} near {location_context}, is a warning active, should people move inland or to higher ground, what evacuation routes should they use, and when might it be safe to return? Mention the sources you relied on and prioritize official tsunami authorities. Keep the answer under 250 words."
   }
 ]
