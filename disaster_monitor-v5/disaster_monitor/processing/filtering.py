@@ -86,7 +86,8 @@ EONET_KEEP_CATEGORIES = {
     "earthquakes",
     "volcanoes",
     "floods",
-    "landslides"
+    "landslides",
+    "wildfires"
 }
 
 

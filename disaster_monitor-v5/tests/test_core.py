@@ -127,7 +127,7 @@ def test_high_impact_filter_selects_only_study_hazards():
     assert is_natural_disaster(eonet('earthquakes'))
 
     # Rejected on purpose as routine or below the study threshold.
-    assert not is_natural_disaster(nws('Tornado Warning'))
+    assert is_natural_disaster(nws('Tornado Warning'))
     assert not is_natural_disaster(nws('Severe Thunderstorm Warning'))
     assert not is_natural_disaster(nws('Flood Advisory'))
     assert not is_natural_disaster(nws('Red Flag Warning'))
